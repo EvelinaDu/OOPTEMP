@@ -4,6 +4,8 @@
 #include <iomanip>
 using namespace std;
 
+#include <algorithm> 
+
 #include <cstdlib>  // For rand() and srand()
 #include <ctime>    // For time()
 
@@ -102,6 +104,31 @@ void Ivertinimas_vid(Studentas& s){
     }
 
 
+}
+
+void Ivertinimas_med(Studentas &s){
+    int nd_kiekis = s.nd.size();
+
+    if (nd_kiekis == 0){
+        s.galutinis_med = 0.6 * s.egz;
+        return;
+    }
+    
+    sort(begin(s.nd), end(s.nd));
+
+
+// Medianos ieskojimas
+    double mediana = 0;
+    int nr = nd_kiekis / 2;
+    if (nd_kiekis % 2 == 0){
+        mediana = (s.nd[nr - 1] + s.nd[nr]) / 2.0;
+    } else {
+        mediana = s.nd[nr];
+    }
+
+// Ivertinimo apskaiciavimas naudojant mediana
+    s.galutinis_med = 0.4 * mediana + 0.6 * s.egz;
+    
 }
 
 void valymas(Studentas &s){
