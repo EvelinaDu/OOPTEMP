@@ -86,6 +86,24 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
+void Ivertinimas_vid(Studentas& s){
+    double suma = 0;
+    int nd_kiekis = s.nd.size();
+
+// Ivertinimo apskaiciavimas naudojant vidurki
+    for (int j = 0; j < nd_kiekis; j++){
+         suma += s.nd[j];
+    }
+
+    if (nd_kiekis > 0){
+        s.galutinis_vid = 0.4 * suma/nd_kiekis + 0.6 * s.egz;
+    } else {
+        s.galutinis_vid = 0.6 * s.egz;
+    }
+
+
+}
+
 void valymas(Studentas &s){
     s.vardas.clear();
     s.pavarde.clear();
