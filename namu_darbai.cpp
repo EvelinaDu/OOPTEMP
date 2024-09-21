@@ -90,5 +90,24 @@ int main() {
     vector<Studentas> stud;
     Studentas s;
 
+    int n;
+    cout << "Kiek studentų norite įtraukti į sistemą: ";
+    cin >> n;
+
+        for(int i = 0; i < n; i++){
+
+        string random_pasirinkimas;
+        cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
+        cin >> random_pasirinkimas;
+
+        if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
+            Duom_generavimas(s);
+            stud.push_back(s);
+        }
+        else{
+            Duom_ivedimas(s);
+            stud.push_back(s);
+        }
+    }
 
 }
