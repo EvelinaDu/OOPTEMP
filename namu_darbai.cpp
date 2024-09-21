@@ -86,6 +86,13 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
+void valymas(Studentas &s){
+    s.vardas.clear();
+    s.pavarde.clear();
+    s.nd.clear();
+    s.egz = 0; 
+}
+
 int main() {
     vector<Studentas> stud;
     Studentas s;
@@ -103,10 +110,12 @@ int main() {
         if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
             Duom_generavimas(s);
             stud.push_back(s);
+            valymas(s);
         }
         else{
             Duom_ivedimas(s);
             stud.push_back(s);
+            valymas(s);
         }
     }
 
