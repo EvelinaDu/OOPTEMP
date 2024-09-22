@@ -2,13 +2,13 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-using namespace std;
 
 #include <algorithm> 
 
 #include <cstdlib>  // For rand() and srand()
 #include <ctime>    // For time()
 
+using namespace std;
 
 struct Studentas{
   string vardas, pavarde;
@@ -88,7 +88,7 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
-void Ivertinimas_vid(Studentas& s){
+void Ivertinimas_vid(Studentas &s){
     double suma = 0;
     int nd_kiekis = s.nd.size();
 
@@ -131,6 +131,10 @@ void Ivertinimas_med(Studentas &s){
     
 }
 
+void Spausdinimas(Studentas &s){
+    cout << s.vardas << "         " << s.pavarde << "       " << fixed << setprecision(2) << s.galutinis_vid << "             " << s.galutinis_med << endl;
+}
+
 void valymas(Studentas &s){
     s.vardas.clear();
     s.pavarde.clear();
@@ -146,7 +150,7 @@ int main() {
     cout << "Kiek studentų norite įtraukti į sistemą: ";
     cin >> n;
 
-        for(int i = 0; i < n; i++){
+    for(int i = 0; i < n; i++){
 
         string random_pasirinkimas;
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
@@ -162,6 +166,15 @@ int main() {
             stud.push_back(s);
             valymas(s);
         }
+    }
+
+    cout << "Vardas" << "        " << "Pavarde" << "        " << "Galutinis (Vid.)" << "/ " << "Galutinis (Med.)" << endl;
+    cout << "-----------------------------------------------------------" << endl;
+
+    for (int i = 0; i < n; i++){
+        Ivertinimas_vid(stud[i]);
+        Ivertinimas_med(stud[i]);
+        Spausdinimas(stud.at(i));
     }
 
 }
