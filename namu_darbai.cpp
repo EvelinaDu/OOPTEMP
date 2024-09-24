@@ -131,8 +131,17 @@ void Ivertinimas_med(Studentas &s){
     
 }
 
-void Spausdinimas(Studentas &s){
-    cout << s.vardas << "         " << s.pavarde << "       " << fixed << setprecision(2) << s.galutinis_vid << "             " << s.galutinis_med << endl;
+void Spausdinimas(Studentas &s, string p){
+    if(p == "V"){
+        cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(3) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
+    }
+    else if(p == "M"){
+        cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(15) << left << fixed << setprecision(2) << s.galutinis_med << endl;
+    }
+    else if(p == "VM"){
+        cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(15) << left << fixed << setprecision(2) << s.galutinis_vid << setw(3) << left << s.galutinis_med << endl;
+    }
+
 }
 
 void Rez(string pasirinkimas){
@@ -193,7 +202,7 @@ int main() {
     for (int i = 0; i < n; i++){
         Ivertinimas_vid(stud[i]);
         Ivertinimas_med(stud[i]);
-        Spausdinimas(stud.at(i));
+        Spausdinimas(stud.at(i), rez_pasirinkimas);
     }
 
 }
