@@ -8,6 +8,9 @@
 #include <cstdlib>  // For rand() and srand()
 #include <ctime>    // For time()
 
+#include <fstream>
+#include <sstream>
+
 using namespace std;
 
 // Studento struktūra, kuri susideda iš vardo, pavardes, namų darbų vektoriaus, egzamino ir įvertinimu.
@@ -93,6 +96,21 @@ void Duom_generavimas(Studentas &s){
 
     s.egz = rand() % 10 + 1;
     cout << "Egzamino įvertinimas: " << s.egz << endl;
+}
+
+void Stud_is_failo(Studentas &s, string eil){
+    stringstream ss(eil);
+    ss >> s.vardas >> s.pavarde;
+
+    int ivertinimas;
+    while(ss >> ivertinimas){
+        s.nd.push_back(ivertinimas);
+    }
+
+    if(!s.nd.empty()){
+        s.egz = s.nd.back();
+        s.nd.pop_back();
+    }
 }
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
@@ -183,11 +201,44 @@ int main() {
     vector<Studentas> stud;
     Studentas s;
 
-    int n;
-    cout << "Kiek studentų norite įtraukti į sistemą: ";
-    cin >> n;
+    string ivedimo_skaitymo_p;
+    cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N) ";
+    cin >> ivedimo_skaitymo_p;
 
-    for(int i = 0; i < n; i++){
+    int n;
+    string random_pasirinkimas;
+
+    ifstream failas;
+
+    if(ivedimo_skaitymo_p == "N"){
+
+        failas.open("kursiokai.txt");
+
+        if(failas.is_open()){
+            string eil;
+            getline(failas, eil);
+
+            while(getline(failas, eil)){
+
+                Stud_is_failo(s, eil);
+
+                stud.push_back(s);
+                valymas(s);
+            }
+            n = stud.size();
+        }
+        else{
+            cout << "ERROR! FILE NOT FOUND!" << endl;
+        }
+
+        failas.close();
+
+    }
+    else {
+        cout << "Kiek studentų norite įtraukti į sistemą: ";
+        cin >> n;
+
+         for(int i = 0; i < n; i++){
 
         string random_pasirinkimas;
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
@@ -204,6 +255,9 @@ int main() {
             valymas(s);
         }
     }
+
+    }
+
 
     string rez_pasirinkimas;
     cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M', įvertinimas pagal abu 'VM': ";
