@@ -135,6 +135,22 @@ void Spausdinimas(Studentas &s){
     cout << s.vardas << "         " << s.pavarde << "       " << fixed << setprecision(2) << s.galutinis_vid << "             " << s.galutinis_med << endl;
 }
 
+void Rez(string pasirinkimas){
+    
+    if(pasirinkimas == "V"){
+        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Vid.)" << endl;
+        cout << "------------------------------------------------" << endl;
+    }
+    else if(pasirinkimas == "M"){
+        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Med.)" << endl;
+        cout << "------------------------------------------------" << endl;
+    }
+    else if(pasirinkimas == "VM"){
+        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Vid.) / " << setw(3) << left << "Galutinis (Med.)" << endl;
+        cout << "----------------------------------------------------------------" << endl;
+    }
+}
+
 void valymas(Studentas &s){
     s.vardas.clear();
     s.pavarde.clear();
@@ -168,8 +184,11 @@ int main() {
         }
     }
 
-    cout << "Vardas" << "        " << "Pavarde" << "        " << "Galutinis (Vid.)" << "/ " << "Galutinis (Med.)" << endl;
-    cout << "-----------------------------------------------------------" << endl;
+    string rez_pasirinkimas;
+    cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M', įvertinimas pagal abu 'VM': ";
+    cin >> rez_pasirinkimas;
+
+    Rez(rez_pasirinkimas);
 
     for (int i = 0; i < n; i++){
         Ivertinimas_vid(stud[i]);
