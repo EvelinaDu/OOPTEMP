@@ -10,13 +10,14 @@
 
 using namespace std;
 
+// Studento struktūra, kuri susideda iš vardo, pavardes, namų darbų vektoriaus, egzamino ir įvertinimu.
 struct Studentas{
   string vardas, pavarde;
   vector <double> nd;
   double egz, galutinis_vid, galutinis_med;
 };
 
-
+// Funkcija, kuri atsakinga dėl studento duomenų įvedimo rankiniu būdu.
 void Duom_ivedimas(Studentas &s){
         string pasirinkimas;
         bool ivertinimo_ivedimas = false;
@@ -40,6 +41,8 @@ void Duom_ivedimas(Studentas &s){
 
         int ivertinimas;
         int nd_nr = 1;
+
+        // While ciklas, skirtas įrašyti studento namų darbų įvertinimus tol, kol vartotojas nuspręs sustoti.
         while(ivertinimo_ivedimas){
             cout << nd_nr <<" Namų darbų" << " įvertinimas: ";
             nd_nr ++;
@@ -60,6 +63,7 @@ void Duom_ivedimas(Studentas &s){
         cin >> s.egz;
 }
 
+// Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
 void Duom_generavimas(Studentas &s){
     cout << "Įveskite studento vardą: ";
     cin >> s.vardas;
@@ -72,8 +76,11 @@ void Duom_generavimas(Studentas &s){
     cin >> nd_kiekis;
 
     int nd_nr = 1;
+    // srand - tai funkcija, kuri nustato atsitiktinių skaičių generatoriaus pradžios tašką.
+    // time(0) - ši funkcija grąžina dabartinį laiką sekundėmis.
     srand(time(0));
 
+// Sugeneruoja namų darbų įvertinimų kiekį, kurį nurodo vartotojas.
     for(int i = 0; i < nd_kiekis; i++){
 
         int nd_ivertinimas = rand() % 10 + 1;
@@ -88,11 +95,11 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
+// Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s){
     double suma = 0;
     int nd_kiekis = s.nd.size();
 
-// Ivertinimo apskaiciavimas naudojant vidurki
     for (int j = 0; j < nd_kiekis; j++){
          suma += s.nd[j];
     }
@@ -106,6 +113,7 @@ void Ivertinimas_vid(Studentas &s){
 
 }
 
+// Funkcija skirta galutiniam įvertinimui pagal medianą apskaičiuoti.
 void Ivertinimas_med(Studentas &s){
     int nd_kiekis = s.nd.size();
 
@@ -114,10 +122,11 @@ void Ivertinimas_med(Studentas &s){
         return;
     }
     
+    // Surušiuoname namų darbus
     sort(begin(s.nd), end(s.nd));
 
 
-// Medianos ieskojimas
+// Medianos ieškojimas
     double mediana = 0;
     int nr = nd_kiekis / 2;
     if (nd_kiekis % 2 == 0){
@@ -126,11 +135,12 @@ void Ivertinimas_med(Studentas &s){
         mediana = s.nd[nr];
     }
 
-// Ivertinimo apskaiciavimas naudojant mediana
+// Ivertinimo apskaičiavimas naudojant medianą.
     s.galutinis_med = 0.4 * mediana + 0.6 * s.egz;
     
 }
 
+// Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
 void Spausdinimas(Studentas &s, string p){
     if(p == "V"){
         cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(3) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
@@ -144,6 +154,7 @@ void Spausdinimas(Studentas &s, string p){
 
 }
 
+// Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
 void Rez(string pasirinkimas){
     
     if(pasirinkimas == "V"){
@@ -160,6 +171,7 @@ void Rez(string pasirinkimas){
     }
 }
 
+// Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s){
     s.vardas.clear();
     s.pavarde.clear();
