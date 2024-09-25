@@ -7,6 +7,7 @@
 #include <cstdlib>     // rand() ir srand() funkcijoms
 #include <ctime>       // Leidžia dirbti su laiku, funkcija time()
 
+#include <fstream>
 #include <sstream>
 
 #include <chrono>
@@ -21,3 +22,4 @@ using std::setprecision;
 using std::setw;
 using std::left;
 using std::stringstream;
+using std::ifstream;

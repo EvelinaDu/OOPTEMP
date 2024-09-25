@@ -62,6 +62,22 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
+void Stud_is_failo(Studentas &s, string eil){
+    stringstream ss(eil);
+    ss >> s.vardas >> s.pavarde;
+
+    int ivertinimas;
+    while(ss >> ivertinimas){
+        s.nd.push_back(ivertinimas);
+    }
+
+    if(!s.nd.empty()){
+        s.egz = s.nd.back();
+        s.nd.pop_back();
+    }
+
+}
+
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s){
     double suma = 0;
@@ -113,13 +129,13 @@ void Ivertinimas_med(Studentas &s){
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
 void Spausdinimas(Studentas &s, string p){
     if(p == "V"){
-        cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(3) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
+        cout << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
     }
     else if(p == "M"){
-        cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(15) << left << fixed << setprecision(2) << s.galutinis_med << endl;
+        cout << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
     }
     else if(p == "VM"){
-        cout << setw(15) << left << s.vardas << setw(15) << left << s.pavarde << setw(15) << left << fixed << setprecision(2) << s.galutinis_vid << setw(3) << left << s.galutinis_med << endl;
+        cout << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(19) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
     }
 
 }
@@ -128,15 +144,15 @@ void Spausdinimas(Studentas &s, string p){
 void Rez(string pasirinkimas){
     
     if(pasirinkimas == "V"){
-        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Vid.)" << endl;
+        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
         cout << "------------------------------------------------" << endl;
     }
     else if(pasirinkimas == "M"){
-        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Med.)" << endl;
+        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
         cout << "------------------------------------------------" << endl;
     }
     else if(pasirinkimas == "VM"){
-        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Vid.) / " << setw(3) << left << "Galutinis (Med.)" << endl;
+        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(18) << left << "Galutinis (Vid.) / " << setw(16) << left << "Galutinis (Med.)" << endl;
         cout << "-------------------------------------------------------------------" << endl;
     }
 }

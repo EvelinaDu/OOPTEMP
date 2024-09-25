@@ -1,5 +1,6 @@
 #include "Mylib.h"
 #include "Stud.h"
+#include "Stud.cpp"
 
 
 int main() {
@@ -8,11 +9,41 @@ int main() {
     vector<Studentas> stud;
     Studentas s;
 
-    int n;
-    cout << "Kiek studentų norite įtraukti į sistemą: ";
-    cin >> n;
+    string ivedimo_skaitymo_p;
+    cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N)";
+    cin >> ivedimo_skaitymo_p;
 
-    for(int i = 0; i < n; i++){
+    int n;
+
+    ifstream failas;
+
+    if(ivedimo_skaitymo_p == "N"){
+        failas.open("kursiokai.txt");
+
+        if(failas.is_open()){
+            string eil;
+            getline(failas, eil);
+
+            while(getline(failas, eil)){
+
+                Stud_is_failo(s, eil);
+
+                stud.push_back(s);
+                valymas(s);
+            }
+            n = stud.size();
+        }
+        else{
+            cout << "ERROR! FILE NOT FOUND!" << endl;
+        }
+
+        failas.close();
+    }
+    else{
+        cout << "Kiek studentų norite įtraukti į sistemą: ";
+        cin >> n;
+
+            for(int i = 0; i < n; i++){
 
         string random_pasirinkimas;
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
@@ -36,6 +67,9 @@ int main() {
             valymas(s);
         }
     }
+    }
+
+
 
 
     string rez_pasirinkimas;
