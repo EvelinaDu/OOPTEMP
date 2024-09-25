@@ -2,16 +2,23 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-
-#include <algorithm> 
-
-#include <cstdlib>  // For rand() and srand()
-#include <ctime>    // For time()
-
-#include <fstream>
 #include <sstream>
+#include <algorithm>   // sort() funkcijai
+#include <cstdlib>     // rand() ir srand() funkcijoms
+#include <ctime>       // Leidžia dirbti su laiku, funkcija time()
 
-using namespace std;
+#include <limits>
+
+using std::endl;
+using std::cout;
+using std::cin;
+using std::string;
+using std::vector;
+using std::fixed;
+using std::setprecision;
+using std::setw;
+using std::left;
+using std::stringstream;
 
 // Studento struktūra, kuri susideda iš vardo, pavardes, namų darbų vektoriaus, egzamino ir įvertinimu.
 struct Studentas{
@@ -20,50 +27,34 @@ struct Studentas{
   double egz, galutinis_vid, galutinis_med;
 };
 
-// Funkcija, kuri atsakinga dėl studento duomenų įvedimo rankiniu būdu.
+// Funkcija, skirta studento duomenų įvedimui rankiniu būdu.
 void Duom_ivedimas(Studentas &s){
-        string pasirinkimas;
-        bool ivertinimo_ivedimas = false;
 
+    cout << "Įveskite visus namų darbų įvertinimus. Norėdami baigti įvedimą spauskite dukart 'Enter' klavišą" << endl;
+    string input;        // Kintamasis įvesties eilutei saugoti
+    int ivertinimas;
 
-        cout << "Įveskite studento vardą: ";
-        cin >> s.vardas;
-
-        cout << "Įveskite studento pavarde: ";
-        cin >> s.pavarde;
-
-
-        cout << "Ar norite įvesti namų darbų įvertinimą? ";
-        cin >> pasirinkimas;
-
-        if (pasirinkimas == "Taip" || pasirinkimas == "taip"){
-            ivertinimo_ivedimas = true;
-        } else {
-            ivertinimo_ivedimas = false;
+    // While ciklas, skirtas įrašyti studento namų darbų įvertinimus. Vyksta tol kol vartotojas nuspaudžia du kart "Enter".
+    while(true){
+        getline(cin, input);   // Įvedama visą eilutė
+        if(input.empty()){     // Jei įvestis tuščia (buvo nuspaustas 'Enter'), nutraukiamas ciklas.  
+            break;
         }
 
-        int ivertinimas;
-        int nd_nr = 1;
-
-        // While ciklas, skirtas įrašyti studento namų darbų įvertinimus tol, kol vartotojas nuspręs sustoti.
-        while(ivertinimo_ivedimas){
-            cout << nd_nr <<" Namų darbų" << " įvertinimas: ";
-            nd_nr ++;
-            cin >> ivertinimas;
+        stringstream ss(input);
+        if(ss >> ivertinimas){
             s.nd.push_back(ivertinimas);
-
-            cout << "Ar norite įvesti namų darbų įvertinimą? ";
-            cin >> pasirinkimas;
-
-            if (pasirinkimas == "Taip" || pasirinkimas == "taip"){
-                ivertinimo_ivedimas = true;
-            } else {
-                ivertinimo_ivedimas = false;
-            }
         }
+        else{
+            cout << "Netinkama įvestis, bandykite dar kartą." << endl;
+        }
+    }
 
-        cout << "Įveskite studento egzamino įvertinimą: ";
-        cin >> s.egz;
+    cout << "Įveskite studento egzamino įvertinimą: ";
+    cin >> s.egz;
+    // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
+
 }
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
@@ -86,7 +77,7 @@ void Duom_generavimas(Studentas &s){
 // Sugeneruoja namų darbų įvertinimų kiekį, kurį nurodo vartotojas.
     for(int i = 0; i < nd_kiekis; i++){
 
-        int nd_ivertinimas = rand() % 10 + 1;
+        int nd_ivertinimas = rand() % 10 + 1;   // rand() % 10 - sugeneruoja atsitiktini skaičių nuo 0-9, todėl dar pridedame 1, kad gautume intervalą 1-10.
 
         cout << nd_nr <<" Namų darbų" << " įvertinimas: " << nd_ivertinimas << endl;
         s.nd.push_back(nd_ivertinimas);
@@ -98,30 +89,17 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
-void Stud_is_failo(Studentas &s, string eil){
-    stringstream ss(eil);
-    ss >> s.vardas >> s.pavarde;
-
-    int ivertinimas;
-    while(ss >> ivertinimas){
-        s.nd.push_back(ivertinimas);
-    }
-
-    if(!s.nd.empty()){
-        s.egz = s.nd.back();
-        s.nd.pop_back();
-    }
-}
-
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s){
     double suma = 0;
-    int nd_kiekis = s.nd.size();
+    int nd_kiekis = s.nd.size();   // Gauname namų darbų kiekį.
 
+    // Pridedame kiekievieną namų darbų įvertinimą prie bendros sumos.
     for (int j = 0; j < nd_kiekis; j++){
          suma += s.nd[j];
     }
 
+    // Jei yra bent vienas namų darbas, skaičiuojame galutinį įvertinimą pagal vidurkį.
     if (nd_kiekis > 0){
         s.galutinis_vid = 0.4 * suma/nd_kiekis + 0.6 * s.egz;
     } else {
@@ -135,6 +113,7 @@ void Ivertinimas_vid(Studentas &s){
 void Ivertinimas_med(Studentas &s){
     int nd_kiekis = s.nd.size();
 
+    // Jei namų darbų nėra, tai galutinį įvertinimą nustatome pagal egzaminą.
     if (nd_kiekis == 0){
         s.galutinis_med = 0.6 * s.egz;
         return;
@@ -185,7 +164,7 @@ void Rez(string pasirinkimas){
     }
     else if(pasirinkimas == "VM"){
         cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(3) << left << "Galutinis (Vid.) / " << setw(3) << left << "Galutinis (Med.)" << endl;
-        cout << "----------------------------------------------------------------" << endl;
+        cout << "-------------------------------------------------------------------" << endl;
     }
 }
 
@@ -201,44 +180,11 @@ int main() {
     vector<Studentas> stud;
     Studentas s;
 
-    string ivedimo_skaitymo_p;
-    cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N) ";
-    cin >> ivedimo_skaitymo_p;
-
     int n;
-    string random_pasirinkimas;
+    cout << "Kiek studentų norite įtraukti į sistemą: ";
+    cin >> n;
 
-    ifstream failas;
-
-    if(ivedimo_skaitymo_p == "N"){
-
-        failas.open("kursiokai.txt");
-
-        if(failas.is_open()){
-            string eil;
-            getline(failas, eil);
-
-            while(getline(failas, eil)){
-
-                Stud_is_failo(s, eil);
-
-                stud.push_back(s);
-                valymas(s);
-            }
-            n = stud.size();
-        }
-        else{
-            cout << "ERROR! FILE NOT FOUND!" << endl;
-        }
-
-        failas.close();
-
-    }
-    else {
-        cout << "Kiek studentų norite įtraukti į sistemą: ";
-        cin >> n;
-
-         for(int i = 0; i < n; i++){
+    for(int i = 0; i < n; i++){
 
         string random_pasirinkimas;
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
@@ -250,13 +196,20 @@ int main() {
             valymas(s);
         }
         else{
+            cout << "Įveskite studento vardą: ";
+            cin >> s.vardas;
+
+            cout << "Įveskite studento pavarde: ";
+            cin >> s.pavarde;
+            // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
+
             Duom_ivedimas(s);
             stud.push_back(s);
             valymas(s);
         }
     }
 
-    }
 
 
     string rez_pasirinkimas;
