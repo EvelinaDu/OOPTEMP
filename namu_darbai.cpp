@@ -54,7 +54,7 @@ void Duom_ivedimas(Studentas &s){
     cout << "Įveskite studento egzamino įvertinimą: ";
     cin >> s.egz;
     // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
-    cin.ignore(); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
+    cin.ignore(); 
 
 }
 
@@ -205,8 +205,7 @@ int main() {
             cout << "Įveskite studento pavarde: ";
             cin >> s.pavarde;
             // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
-            cin.ignore(); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
-
+            cin.ignore(); 
             Duom_ivedimas(s);
             stud.push_back(s);
             valymas(s);
