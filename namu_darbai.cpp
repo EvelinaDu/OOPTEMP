@@ -8,6 +8,7 @@
 #include <ctime>       // Leidžia dirbti su laiku, funkcija time()
 
 #include <limits>
+#include <chrono>
 
 using std::endl;
 using std::cout;
@@ -53,7 +54,7 @@ void Duom_ivedimas(Studentas &s){
     cout << "Įveskite studento egzamino įvertinimą: ";
     cin >> s.egz;
     // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
+    cin.ignore(); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
 
 }
 
@@ -177,6 +178,8 @@ void valymas(Studentas &s){
 }
 
 int main() {
+    auto start = std::chrono::high_resolution_clock::now();
+
     vector<Studentas> stud;
     Studentas s;
 
@@ -202,14 +205,13 @@ int main() {
             cout << "Įveskite studento pavarde: ";
             cin >> s.pavarde;
             // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
+            cin.ignore(); // Grąžina didžiausią galimą skaičių, kurį gali turėti streamsize tipo kintamasis, t.y., jis nurodo, kad ignoruosime tiek simbolių, kiek įmanoma.
 
             Duom_ivedimas(s);
             stud.push_back(s);
             valymas(s);
         }
     }
-
 
 
     string rez_pasirinkimas;
@@ -223,5 +225,11 @@ int main() {
         Ivertinimas_med(stud[i]);
         Spausdinimas(stud.at(i), rez_pasirinkimas);
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "Vykdymo laikas: " << duration.count() << " sekundžių" << std::endl;
+
+    return 0;
 
 }
