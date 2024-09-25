@@ -16,9 +16,13 @@ int main() {
     int n;
 
     ifstream failas;
+    string f_pav;
 
     if(ivedimo_skaitymo_p == "N"){
-        failas.open("kursiokai.txt");
+        cout << "Įveskite failo pavadinimą: ";
+        cin >> f_pav;
+
+        failas.open(f_pav);
 
         if(failas.is_open()){
             string eil;
