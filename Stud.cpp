@@ -18,11 +18,11 @@ void Duom_ivedimas(Studentas &s){
         try{
             stringstream ss(input);
             if(!(ss >> ivertinimas)){
-                throw invalid_argument("Netinkama įvestis, įvestas ne skaičius. ");
+                throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
             }
 
             if(ivertinimas < 1 || ivertinimas > 10){
-                throw out_of_range("Netinkama įvestis, įvertinimas turi būti 1-10. ");
+                throw out_of_range("Netinkama įvestis, įvertinimas turi būti nuo 1 iki 10. ");
             }
             s.nd.push_back(ivertinimas);
 
@@ -34,26 +34,26 @@ void Duom_ivedimas(Studentas &s){
     }
 
     // Egzamino įvertinimo įvedimas.
+    cout << "Įveskite studento egzamino įvertinimą: ";
     while(true){
-        cout << "Įveskite studento egzamino įvertinimą: ";
         getline(cin, input);   // Įvedama visą eilutė
 
         // Išimčių tvarkymas skirtas egzamino įvedimui.
         try{
             stringstream ss(input);
             if(!(ss >> s.egz)){
-                throw invalid_argument("Netinkama įvestis, įvestas ne skaičius. ");
+                throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
             }
 
             if(s.egz < 1 || s.egz > 10){
-                throw out_of_range("Netinkama įvestis, įvertinimas turi būti 1-10. ");
+                throw out_of_range("Netinkama įvestis, įvertinimas turi būti nuo 1 iki 10. ");
             }
             break;   // Išeiname iš while ciklo, jei įvestis teisinga.
 
         } catch (const invalid_argument &e){
-            cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
         } catch (const out_of_range &e){
-            cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
         }
     }
 
