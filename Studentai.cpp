@@ -14,21 +14,22 @@ int main() {
     cin >> ivedimo_skaitymo_p;
 
     int n;
+    string random_pasirinkimas;
 
-    ifstream failas;
+    ifstream failasIn;
     string f_pav;
 
     if(ivedimo_skaitymo_p == "N"){
         cout << "Įveskite failo pavadinimą: ";
         cin >> f_pav;
 
-        failas.open(f_pav);
+        failasIn.open(f_pav);
 
-        if(failas.is_open()){
+        if(failasIn.is_open()){
             string eil;
-            getline(failas, eil);
+            getline(failasIn, eil);
 
-            while(getline(failas, eil)){
+            while(getline(failasIn, eil)){
 
                 Stud_is_failo(s, eil);
 
@@ -41,7 +42,7 @@ int main() {
             cout << "ERROR! FILE NOT FOUND!" << endl;
         }
 
-        failas.close();
+        failasIn.close();
     }
     else{
         cout << "Kiek studentų norite įtraukti į sistemą: ";
@@ -49,7 +50,6 @@ int main() {
 
             for(int i = 0; i < n; i++){
 
-        string random_pasirinkimas;
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
         cin >> random_pasirinkimas;
 
@@ -80,13 +80,13 @@ int main() {
     cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M', įvertinimas pagal abu 'VM': ";
     cin >> rez_pasirinkimas;
 
-    Rez(rez_pasirinkimas);
 
-    for (int i = 0; i < n; i++){
-        Ivertinimas_vid(stud[i]);
-        Ivertinimas_med(stud[i]);
-        Spausdinimas(stud.at(i), rez_pasirinkimas);
-    }
+    string isvedimo_pasirinkimas;
+    cout << "Pasirinkite, kur rezultatą norite gauti, jei terminale įveskite 'T', jei faile įveskite 'F': ";
+    cin >> isvedimo_pasirinkimas;
+    
+    SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas);
+
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = end - start;

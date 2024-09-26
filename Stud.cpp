@@ -127,34 +127,70 @@ void Ivertinimas_med(Studentas &s){
 }
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
-void Spausdinimas(Studentas &s, string p){
+void Spausdinimas(Studentas &s, ostream &out, string p){
     if(p == "V"){
-        cout << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
+        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
     }
     else if(p == "M"){
-        cout << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
+        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
     }
     else if(p == "VM"){
-        cout << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(19) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
+        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(19) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
     }
 
 }
 
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
-void Rez(string pasirinkimas){
+void Rez(string pasirinkimas, ostream &out){
     
     if(pasirinkimas == "V"){
-        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
-        cout << "------------------------------------------------" << endl;
+        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
+        out << "------------------------------------------------" << endl;
     }
     else if(pasirinkimas == "M"){
-        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
-        cout << "------------------------------------------------" << endl;
+        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
+        out << "------------------------------------------------" << endl;
     }
     else if(pasirinkimas == "VM"){
-        cout  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(18) << left << "Galutinis (Vid.) / " << setw(16) << left << "Galutinis (Med.)" << endl;
-        cout << "-------------------------------------------------------------------" << endl;
+        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(18) << left << "Galutinis (Vid.) / " << setw(16) << left << "Galutinis (Med.)" << endl;
+        out << "-------------------------------------------------------------------" << endl;
     }
+}
+
+void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas){
+    ofstream failasOut;
+
+    if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
+        Rez(rez_pasirinkimas, cout);
+
+        for (int i = 0; i < n; i++){
+        Ivertinimas_vid(stud[i]);
+        Ivertinimas_med(stud[i]);
+        Spausdinimas(stud.at(i), cout, rez_pasirinkimas);
+    }
+    }
+    else if (isvedimo_pasirinkimas == "F" || isvedimo_pasirinkimas == "f"){
+        failasOut.open("Rez.txt");
+
+        if(failasOut.is_open()){
+            Rez(rez_pasirinkimas, failasOut);
+            for (int i = 0; i < n; i++){
+                Ivertinimas_vid(stud[i]);
+                Ivertinimas_med(stud[i]);
+                Spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
+            }
+            failasOut.close();
+            cout << "Rezultatas įrašytas Rez.txt faile" << endl;
+        }
+        else{
+            cout << "ERROR! Nepavyko atidaryti Rez.txt failo" << endl;
+        }
+    } 
+    else{
+        cout << "Neteisinga įvestis" << endl;
+    }
+
+
 }
 
 // Funkcija, skirta išvalyti studento duomenis.
