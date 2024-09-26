@@ -1,26 +1,22 @@
 #include "Mylib.h"
 #include "Stud.h"
-#include "Stud.cpp"
+// #include "Stud.cpp"
 
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
-
     vector<Studentas> stud;
     Studentas s;
-
     string eil;
 
     string ivedimo_skaitymo_p;
     cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N) ";
     while(true){
-
-        getline(cin, eil);   // Įvedama visą eilutė
-
-        // Išimčių tvarkymas skirtas egzamino įvedimui.
+        cin >> ivedimo_skaitymo_p;
+        
+        // Išimčių tvarkymas skirtas ivedimo ar skaitymo pasirinkimui.
         try{
-            stringstream ss(eil);
-            ss >> ivedimo_skaitymo_p;
+
 
             if(ivedimo_skaitymo_p != "N" && ivedimo_skaitymo_p != "n" && ivedimo_skaitymo_p != "I" && ivedimo_skaitymo_p != "i"){
                 throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'I' arba 'N'. ");
@@ -32,10 +28,10 @@ int main() {
         }
     }
 
-    int n;
-    string random_pasirinkimas;
+    int n;   // Skirtas išsaugoti studentų kiekį
+    string random_pasirinkimas;   // Skirtas išsaugoti vartotojo pasirinkimą dėl įvertinimų generavimo.
 
-    ifstream failasIn;
+    ifstream failasIn;   //Skirtas failo nuskaitymui
     string f_pav;
 
     if(ivedimo_skaitymo_p == "N" || ivedimo_skaitymo_p == "n"){
@@ -65,20 +61,22 @@ int main() {
     }
     else if(ivedimo_skaitymo_p == "I" || ivedimo_skaitymo_p == "i"){
         cout << "Kiek studentų norite įtraukti į sistemą: ";
+        cin.ignore();
         while(true){
-        getline(cin, eil);   // Įvedama visą eilutė
+            
+            getline(cin, eil);   // Įvedama visą eilutė
 
-        // Išimčių tvarkymas skirtas egzamino įvedimui.
-        try{
-            stringstream ss(eil);
-            if(!(ss >> n)){
-                throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
+            // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
+            try{
+                stringstream ss(eil);
+                if(!(ss >> n)){
+                    throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
             }
-            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+                break;   // Išeiname iš while ciklo, jei įvestis teisinga.
 
-        } catch (const invalid_argument &e){
+            } catch (const invalid_argument &e){
             cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
-        } 
+            } 
         }
 
         for(int i = 0; i < n; i++){
@@ -89,14 +87,30 @@ int main() {
         cin >> s.pavarde;
 
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
-        cin >> random_pasirinkimas;
+        while(true){
+
+            cin >> random_pasirinkimas;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
+            try{
+
+                if(random_pasirinkimas != "Taip" && random_pasirinkimas != "taip" && random_pasirinkimas != "Ne" && random_pasirinkimas != "ne"){
+                    throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'Taip' arba 'Ne'. ");
+                }
+                break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+            } catch (const out_of_range &e){
+                cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+            }
+        }
+
 
         if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
             Duom_generavimas(s);
             stud.push_back(s);
             valymas(s);
         }
-        else{
+        else if(random_pasirinkimas == "Ne" || random_pasirinkimas == "ne"){
 
             // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
             cin.ignore(); 
@@ -112,12 +126,43 @@ int main() {
 
     string rez_pasirinkimas;
     cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M', įvertinimas pagal abu 'VM': ";
-    cin >> rez_pasirinkimas;
+
+    while(true){ 
+        cin >> rez_pasirinkimas;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
+        try{
+
+            if(rez_pasirinkimas != "V" && rez_pasirinkimas != "v" && rez_pasirinkimas != "M" && rez_pasirinkimas != "m" && rez_pasirinkimas != "VM" && rez_pasirinkimas != "vm" ){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V', 'M' arba 'VM'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+        }
 
     string isvedimo_pasirinkimas;
     cout << "Pasirinkite, kur rezultatą norite gauti, jei terminale įveskite 'T', jei faile įveskite 'F': ";
-    cin >> isvedimo_pasirinkimas;
-    
+    // cin >> isvedimo_pasirinkimas;
+
+    while(true){
+        cin >> isvedimo_pasirinkimas;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
+        try{
+
+            if(isvedimo_pasirinkimas != "T" && isvedimo_pasirinkimas != "t" && isvedimo_pasirinkimas != "F" && isvedimo_pasirinkimas != "f"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'T' arba 'F'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+
+    }
     SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas);
 
 
