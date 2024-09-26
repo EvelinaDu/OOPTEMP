@@ -12,6 +12,8 @@
 
 #include <chrono>
 
+#include <stdexcept>
+
 using std::endl;
 using std::cout;
 using std::cin;
@@ -25,3 +27,5 @@ using std::stringstream;
 using std::ifstream;
 using std::ofstream;
 using std::ostream;
+using std::invalid_argument;
+using std::out_of_range;

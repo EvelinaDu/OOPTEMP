@@ -14,19 +14,48 @@ void Duom_ivedimas(Studentas &s){
             break;
         }
 
-        stringstream ss(input);
-        if(ss >> ivertinimas){
+        // Išimčių tvarkymas skirtas namų darbų įvedimui.
+        try{
+            stringstream ss(input);
+            if(!(ss >> ivertinimas)){
+                throw invalid_argument("Netinkama įvestis, įvestas ne skaičius. ");
+            }
+
+            if(ivertinimas < 1 || ivertinimas > 10){
+                throw out_of_range("Netinkama įvestis, įvertinimas turi būti 1-10. ");
+            }
             s.nd.push_back(ivertinimas);
-        }
-        else{
-            cout << "Netinkama įvestis, bandykite dar kartą." << endl;
+
+        } catch (const invalid_argument &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
         }
     }
 
-    cout << "Įveskite studento egzamino įvertinimą: ";
-    cin >> s.egz;
-    // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
-    cin.ignore(); 
+    // Egzamino įvertinimo įvedimas.
+    while(true){
+        cout << "Įveskite studento egzamino įvertinimą: ";
+        getline(cin, input);   // Įvedama visą eilutė
+
+        // Išimčių tvarkymas skirtas egzamino įvedimui.
+        try{
+            stringstream ss(input);
+            if(!(ss >> s.egz)){
+                throw invalid_argument("Netinkama įvestis, įvestas ne skaičius. ");
+            }
+
+            if(s.egz < 1 || s.egz > 10){
+                throw out_of_range("Netinkama įvestis, įvertinimas turi būti 1-10. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const invalid_argument &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
+        }
+    }
 
 }
 
