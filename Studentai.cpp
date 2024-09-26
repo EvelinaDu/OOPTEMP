@@ -2,7 +2,6 @@
 #include "Stud.h"
 #include "Stud.cpp"
 
-
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -10,7 +9,7 @@ int main() {
     Studentas s;
 
     string ivedimo_skaitymo_p;
-    cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N)";
+    cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N) ";
     cin >> ivedimo_skaitymo_p;
 
     int n;
@@ -48,7 +47,13 @@ int main() {
         cout << "Kiek studentų norite įtraukti į sistemą: ";
         cin >> n;
 
-            for(int i = 0; i < n; i++){
+        for(int i = 0; i < n; i++){
+        cout << "Įveskite studento vardą: ";
+        cin >> s.vardas;
+
+        cout << "Įveskite studento pavarde: ";
+        cin >> s.pavarde;
+
 
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
         cin >> random_pasirinkimas;
@@ -59,11 +64,7 @@ int main() {
             valymas(s);
         }
         else{
-            cout << "Įveskite studento vardą: ";
-            cin >> s.vardas;
 
-            cout << "Įveskite studento pavarde: ";
-            cin >> s.pavarde;
             // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
             cin.ignore(); 
             Duom_ivedimas(s);
@@ -74,7 +75,8 @@ int main() {
     }
 
 
-
+    //Rusiavimas
+    Studentu_rusiavimas(stud);
 
     string rez_pasirinkimas;
     cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M', įvertinimas pagal abu 'VM': ";
@@ -86,6 +88,9 @@ int main() {
     cin >> isvedimo_pasirinkimas;
     
     SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas);
+
+
+
 
 
     auto end = std::chrono::high_resolution_clock::now();

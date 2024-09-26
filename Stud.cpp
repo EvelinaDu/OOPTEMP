@@ -32,11 +32,6 @@ void Duom_ivedimas(Studentas &s){
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
 void Duom_generavimas(Studentas &s){
-    cout << "Įveskite studento vardą: ";
-    cin >> s.vardas;
-
-    cout << "Įveskite studento pavarde: ";
-    cin >> s.pavarde;
 
     int nd_kiekis;
     cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
@@ -62,6 +57,7 @@ void Duom_generavimas(Studentas &s){
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
+// Funkcija skirta nuskaityti studento įvertinimus iš failo.
 void Stud_is_failo(Studentas &s, string eil){
     stringstream ss(eil);
     ss >> s.vardas >> s.pavarde;
@@ -127,7 +123,7 @@ void Ivertinimas_med(Studentas &s){
 }
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
-void Spausdinimas(Studentas &s, ostream &out, string p){
+void Stud_spausdinimas(Studentas &s, ostream &out, string p){
     if(p == "V"){
         out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
     }
@@ -141,7 +137,7 @@ void Spausdinimas(Studentas &s, ostream &out, string p){
 }
 
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
-void Rez(string pasirinkimas, ostream &out){
+void Rez_antraste(string pasirinkimas, ostream &out){
     
     if(pasirinkimas == "V"){
         out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
@@ -157,27 +153,39 @@ void Rez(string pasirinkimas, ostream &out){
     }
 }
 
+// Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
+void Studentu_rusiavimas(vector<Studentas> &stud){
+    sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+        if(s1.vardas != s2.vardas){
+            return s1.vardas < s2.vardas;
+        }
+        return s1.pavarde < s2.pavarde;
+    });
+
+}
+
+// Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
 void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas){
     ofstream failasOut;
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
-        Rez(rez_pasirinkimas, cout);
+        Rez_antraste(rez_pasirinkimas, cout);
 
         for (int i = 0; i < n; i++){
         Ivertinimas_vid(stud[i]);
         Ivertinimas_med(stud[i]);
-        Spausdinimas(stud.at(i), cout, rez_pasirinkimas);
+        Stud_spausdinimas(stud.at(i), cout, rez_pasirinkimas);
     }
     }
     else if (isvedimo_pasirinkimas == "F" || isvedimo_pasirinkimas == "f"){
         failasOut.open("Rez.txt");
 
         if(failasOut.is_open()){
-            Rez(rez_pasirinkimas, failasOut);
+            Rez_antraste(rez_pasirinkimas, failasOut);
             for (int i = 0; i < n; i++){
                 Ivertinimas_vid(stud[i]);
                 Ivertinimas_med(stud[i]);
-                Spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
+                Stud_spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
             }
             failasOut.close();
             cout << "Rezultatas įrašytas Rez.txt faile" << endl;

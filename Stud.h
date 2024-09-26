@@ -16,6 +16,7 @@ void Duom_ivedimas(Studentas &s);
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
 void Duom_generavimas(Studentas &s);
 
+// Funkcija skirta nuskaityti studento įvertinimus iš failo.
 void Stud_is_failo(Studentas &s, string eil);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
@@ -25,10 +26,16 @@ void Ivertinimas_vid(Studentas &s);
 void Ivertinimas_med(Studentas &s);
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
-void Spausdinimas(Studentas &s, string p);
+void Stud_spausdinimas(Studentas &s, ostream &out, string p);
 
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
-void Rez(string pasirinkimas);
+void Rez_antraste(string pasirinkimas, ostream &out);
+
+// Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
+void Studentu_rusiavimas(vector<Studentas> &stud);
+
+// Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
+void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas);
 
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
