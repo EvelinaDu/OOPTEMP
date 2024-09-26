@@ -194,7 +194,7 @@ void Stud_spausdinimas(Studentas &s, ostream &out, string p){
         out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
     }
     else if(p == "VM" || p == "vm"){
-        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(19) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
+        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(18) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
     }
 
 }
@@ -211,7 +211,7 @@ void Rez_antraste(string pasirinkimas, ostream &out){
         out << "------------------------------------------------" << endl;
     }
     else if(pasirinkimas == "VM" || pasirinkimas == "vm"){
-        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(18) << left << "Galutinis (Vid.) / " << setw(16) << left << "Galutinis (Med.)" << endl;
+        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(17) << left << "Galutinis (Vid.)  " << setw(16) << left << "Galutinis (Med.)" << endl;
         out << "-------------------------------------------------------------------" << endl;
     }
 }
