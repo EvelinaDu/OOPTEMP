@@ -153,13 +153,13 @@ void Ivertinimas_med(Studentas &s){
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
 void Stud_spausdinimas(Studentas &s, ostream &out, string p){
-    if(p == "V"){
+    if(p == "V" || p == "v"){
         out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
     }
-    else if(p == "M"){
+    else if(p == "M" || p == "m"){
         out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
     }
-    else if(p == "VM"){
+    else if(p == "VM" || p == "vm"){
         out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(19) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
     }
 
@@ -168,15 +168,15 @@ void Stud_spausdinimas(Studentas &s, ostream &out, string p){
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
 void Rez_antraste(string pasirinkimas, ostream &out){
     
-    if(pasirinkimas == "V"){
+    if(pasirinkimas == "V" || pasirinkimas == "v"){
         out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
         out << "------------------------------------------------" << endl;
     }
-    else if(pasirinkimas == "M"){
+    else if(pasirinkimas == "M" || pasirinkimas == "m"){
         out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
         out << "------------------------------------------------" << endl;
     }
-    else if(pasirinkimas == "VM"){
+    else if(pasirinkimas == "VM" || pasirinkimas == "vm"){
         out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(18) << left << "Galutinis (Vid.) / " << setw(16) << left << "Galutinis (Med.)" << endl;
         out << "-------------------------------------------------------------------" << endl;
     }
@@ -199,7 +199,6 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
         Rez_antraste(rez_pasirinkimas, cout);
-
         for (int i = 0; i < n; i++){
         Ivertinimas_vid(stud[i]);
         Ivertinimas_med(stud[i]);
@@ -222,12 +221,7 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
         else{
             cout << "ERROR! Nepavyko atidaryti Rez.txt failo" << endl;
         }
-    } 
-    else{
-        cout << "Neteisinga įvestis" << endl;
     }
-
-
 }
 
 // Funkcija, skirta išvalyti studento duomenis.
