@@ -1,23 +1,20 @@
 #include "Mylib.h"
 #include "Stud.h"
-// #include "Stud.cpp"
 
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
     vector<Studentas> stud;
     Studentas s;
-    string eil;
+    string eil;   // Skirtas saugoti duomenu eilutei
 
     string ivedimo_skaitymo_p;
     cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N) ";
     while(true){
         cin >> ivedimo_skaitymo_p;
-        
+
         // Išimčių tvarkymas skirtas ivedimo ar skaitymo pasirinkimui.
         try{
-
-
             if(ivedimo_skaitymo_p != "N" && ivedimo_skaitymo_p != "n" && ivedimo_skaitymo_p != "I" && ivedimo_skaitymo_p != "i"){
                 throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'I' arba 'N'. ");
             }
@@ -32,31 +29,35 @@ int main() {
     string random_pasirinkimas;   // Skirtas išsaugoti vartotojo pasirinkimą dėl įvertinimų generavimo.
 
     ifstream failasIn;   //Skirtas failo nuskaitymui
-    string f_pav;
+    string f_pav;        //Failo pavadinimas
 
     if(ivedimo_skaitymo_p == "N" || ivedimo_skaitymo_p == "n"){
         cout << "Įveskite failo pavadinimą: ";
-        cin >> f_pav;
+        while(true){
+            try{
+                cin >> f_pav;
 
-        failasIn.open(f_pav);
+                failasIn.open(f_pav);
 
-        if(failasIn.is_open()){
-            string eil;
-            getline(failasIn, eil);
+                if (!failasIn.is_open()) {
+                    throw runtime_error("Klaida, failas nerastas! Bandykite dar kartą! ");
+                }  
+            
+                string eil;
+                getline(failasIn, eil);
 
-            while(getline(failasIn, eil)){
-
-                Stud_is_failo(s, eil);
-
-                stud.push_back(s);
-                valymas(s);
+                while(getline(failasIn, eil)){
+                    Stud_is_failo(s, eil);
+                    stud.push_back(s);
+                    valymas(s);
+                }
+                n = stud.size();
+                cout << "Failas sėkmingai perskaitytas. Studentų kiekis: " << n << endl; 
+                break;   //Išeiname is while ciklo, jei failas atsidarė
+            }catch (const runtime_error &e) {
+                cout << e.what();
             }
-            n = stud.size();
         }
-        else{
-            cout << "ERROR! FILE NOT FOUND!" << endl;
-        }
-
         failasIn.close();
     }
     else if(ivedimo_skaitymo_p == "I" || ivedimo_skaitymo_p == "i"){
@@ -64,8 +65,7 @@ int main() {
         cin.ignore();
         while(true){
             
-            getline(cin, eil);   // Įvedama visą eilutė
-
+            getline(cin, eil);   // Įvedama visą eilutė.
             // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
             try{
                 stringstream ss(eil);
@@ -130,7 +130,7 @@ int main() {
     while(true){ 
         cin >> rez_pasirinkimas;
 
-        // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/M/VM).
         try{
 
             if(rez_pasirinkimas != "V" && rez_pasirinkimas != "v" && rez_pasirinkimas != "M" && rez_pasirinkimas != "m" && rez_pasirinkimas != "VM" && rez_pasirinkimas != "vm" ){
@@ -144,13 +144,12 @@ int main() {
         }
 
     string isvedimo_pasirinkimas;
-    cout << "Pasirinkite, kur rezultatą norite gauti, jei terminale įveskite 'T', jei faile įveskite 'F': ";
-    // cin >> isvedimo_pasirinkimas;
+    cout << "Pasirinkite, kur norėtumėte gauti rezultatą, jei terminale įveskite 'T', jei faile įveskite 'F': ";
 
     while(true){
         cin >> isvedimo_pasirinkimas;
 
-        // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas teisingai pasirinko, kur bus pateiktas rezultatas (T/F).
         try{
 
             if(isvedimo_pasirinkimas != "T" && isvedimo_pasirinkimas != "t" && isvedimo_pasirinkimas != "F" && isvedimo_pasirinkimas != "f"){

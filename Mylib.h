@@ -29,3 +29,4 @@ using std::ofstream;
 using std::ostream;
 using std::invalid_argument;
 using std::out_of_range;
+using std::runtime_error;

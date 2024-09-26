@@ -4,19 +4,19 @@
 void Duom_ivedimas(Studentas &s){
 
     cout << "Įveskite visus namų darbų įvertinimus. Norėdami baigti įvedimą spauskite dukart 'Enter' klavišą" << endl;
-    string input;        // Kintamasis įvesties eilutei saugoti
+    string eil;        // Kintamasis įvesties eilutei saugoti
     int ivertinimas;
 
     // While ciklas, skirtas įrašyti studento namų darbų įvertinimus. Vyksta tol kol vartotojas nuspaudžia du kart "Enter".
     while(true){
-        getline(cin, input);   // Įvedama visą eilutė
-        if(input.empty()){     // Jei įvestis tuščia (buvo nuspaustas 'Enter'), nutraukiamas ciklas.  
+        getline(cin, eil);   // Įvedama visą eilutė
+        if(eil.empty()){     // Jei įvestis tuščia (buvo nuspaustas 'Enter'), nutraukiamas ciklas.  
             break;
         }
 
         // Išimčių tvarkymas skirtas namų darbų įvedimui.
         try{
-            stringstream ss(input);
+            stringstream ss(eil);
             if(!(ss >> ivertinimas)){
                 throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
             }
@@ -36,11 +36,11 @@ void Duom_ivedimas(Studentas &s){
     // Egzamino įvertinimo įvedimas.
     cout << "Įveskite studento egzamino įvertinimą: ";
     while(true){
-        getline(cin, input);   // Įvedama visą eilutė
+        getline(cin, eil);   // Įvedama visą eilutė
 
         // Išimčių tvarkymas skirtas egzamino įvedimui.
         try{
-            stringstream ss(input);
+            stringstream ss(eil);
             if(!(ss >> s.egz)){
                 throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
             }
@@ -63,15 +63,32 @@ void Duom_ivedimas(Studentas &s){
 void Duom_generavimas(Studentas &s){
 
     int nd_kiekis;
+    string eil;
     cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
-    cin >> nd_kiekis;
+        cin.ignore();
+        while(true){
+            
+            getline(cin, eil);   // Įvedama visą eilutė
+
+            // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
+            try{
+                stringstream ss(eil);
+                if(!(ss >> nd_kiekis)){
+                    throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
+            }
+                break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+            } catch (const invalid_argument &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+            } 
+        }
 
     int nd_nr = 1;
     // srand - tai funkcija, kuri nustato atsitiktinių skaičių generatoriaus pradžios tašką.
     // time(0) - ši funkcija grąžina dabartinį laiką sekundėmis.
     srand(time(0));
 
-// Sugeneruoja namų darbų įvertinimų kiekį, kurį nurodo vartotojas.
+// Sugeneruoja namų darbų įvertinimus pagal nurodyta kiekį, kurį nurodo vartotojas.
     for(int i = 0; i < nd_kiekis; i++){
 
         int nd_ivertinimas = rand() % 10 + 1;   // rand() % 10 - sugeneruoja atsitiktini skaičių nuo 0-9, todėl dar pridedame 1, kad gautume intervalą 1-10.
@@ -92,8 +109,25 @@ void Stud_is_failo(Studentas &s, string eil){
     ss >> s.vardas >> s.pavarde;
 
     int ivertinimas;
-    while(ss >> ivertinimas){
-        s.nd.push_back(ivertinimas);
+    while(true){
+        try{
+            if(!(ss >> ivertinimas)){
+                if(ss.eof()) break;   // eof - end of file
+                ss.clear();
+                ss.ignore();
+                throw invalid_argument("Netinkamas įvertinimas, įvertinimas nėra skaičius");
+            }
+            if (ivertinimas < 1 || ivertinimas > 10){
+                throw out_of_range("Netinkamas įvertinimas: " + std::to_string(ivertinimas));
+            }
+            s.nd.push_back(ivertinimas);
+        } catch(const invalid_argument &e){
+            cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
+            continue;   //einame prie kito elemento
+        } catch(const out_of_range &e){
+            cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
+            continue;   //einame prie kito elemento
+        }
     }
 
     if(!s.nd.empty()){
@@ -114,7 +148,7 @@ void Ivertinimas_vid(Studentas &s){
     }
 
     // Jei yra bent vienas namų darbas, skaičiuojame galutinį įvertinimą pagal vidurkį.
-    if (nd_kiekis > 0){
+    if (nd_kiekis > 0 ){
         s.galutinis_vid = 0.4 * suma/nd_kiekis + 0.6 * s.egz;
     } else {
         s.galutinis_vid = 0.6 * s.egz;
