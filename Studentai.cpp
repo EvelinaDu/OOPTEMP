@@ -3,7 +3,7 @@
 
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
-    
+
 
     vector<Studentas> stud;
     Studentas s;
@@ -163,6 +163,8 @@ int main() {
         }
 
     }
+
+    // auto start = std::chrono::high_resolution_clock::now();
 
     SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas);
 

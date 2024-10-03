@@ -24,14 +24,14 @@ Kodo vykdymo laikas kartu su vartotojo įvedimu ir pasirinkimais (vartotojas ran
 
 ## Rūšiavimas
 Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
-void Studentu_rusiavimas(vector<Studentas> &stud){
-    sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-        if(s1.vardas != s2.vardas){
-            return s1.vardas < s2.vardas;
-        }
-        return s1.pavarde < s2.pavarde;
-    });
-}
+    void Studentu_rusiavimas(vector<Studentas> &stud){
+        sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+            if(s1.vardas != s2.vardas){
+                return s1.vardas < s2.vardas;
+            }
+            return s1.pavarde < s2.pavarde;
+        });
+    }
 
 ## Vykdymo laikas
 (įrašoma antraštė, apskaičiuojamas galutinis įvertinimas pagal vidurkį ir mediana, atspausdinamas studentu vektorius su rezultatais)

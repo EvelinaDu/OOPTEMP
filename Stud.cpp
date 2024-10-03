@@ -84,14 +84,19 @@ void Duom_generavimas(Studentas &s){
         }
 
     int nd_nr = 1;
-    // srand - tai funkcija, kuri nustato atsitiktinių skaičių generatoriaus pradžios tašką.
-    // time(0) - ši funkcija grąžina dabartinį laiką sekundėmis.
-    srand(time(0));
+
+    int min_rezult = 1;
+    int max_result = 10;
+
+    random_device rd_genrator;   //Atsitiktiniu skaičiu generatorius
+    // Intervalas atsitiktinei reikšmei
+    uniform_int_distribution<int> Ivertinimas(min_rezult, max_result);
+
 
 // Sugeneruoja namų darbų įvertinimus pagal nurodyta kiekį, kurį nurodo vartotojas.
     for(int i = 0; i < nd_kiekis; i++){
 
-        int nd_ivertinimas = rand() % 10 + 1;   // rand() % 10 - sugeneruoja atsitiktini skaičių nuo 0-9, todėl dar pridedame 1, kad gautume intervalą 1-10.
+        int nd_ivertinimas = Ivertinimas(rd_genrator);
 
         cout << nd_nr <<" Namų darbų" << " įvertinimas: " << nd_ivertinimas << endl;
         s.nd.push_back(nd_ivertinimas);
@@ -99,7 +104,7 @@ void Duom_generavimas(Studentas &s){
 
     }
 
-    s.egz = rand() % 10 + 1;
+    s.egz = Ivertinimas(rd_genrator);
     cout << "Egzamino įvertinimas: " << s.egz << endl;
 }
 
@@ -109,13 +114,14 @@ void Stud_is_failo(Studentas &s, string eil){
     ss >> s.vardas >> s.pavarde;
 
     int ivertinimas;
+    string netinkantis_ivertinimas;
     while(true){
         try{
             if(!(ss >> ivertinimas)){
                 if(ss.eof()) break;   // eof - end of file
                 ss.clear();
-                ss.ignore();
-                throw invalid_argument("Netinkamas įvertinimas, įvertinimas nėra skaičius");
+                ss >> netinkantis_ivertinimas;
+                throw invalid_argument("Netinkamas įvertinimas, įvertinimas nėra skaičius: '" + netinkantis_ivertinimas + "'");
             }
             if (ivertinimas < 1 || ivertinimas > 10){
                 throw out_of_range("Netinkamas įvertinimas: " + std::to_string(ivertinimas));
