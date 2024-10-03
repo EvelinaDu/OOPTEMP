@@ -60,52 +60,28 @@ void Duom_ivedimas(Studentas &s){
 }
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
-void Duom_generavimas(Studentas &s){
-
-    int nd_kiekis;
-    string eil;
-    cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
-        cin.ignore();
-        while(true){
-            
-            getline(cin, eil);   // Įvedama visą eilutė
-
-            // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
-            try{
-                stringstream ss(eil);
-                if(!(ss >> nd_kiekis)){
-                    throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
-            }
-                break;   // Išeiname iš while ciklo, jei įvestis teisinga.
-
-            } catch (const invalid_argument &e){
-            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
-            } 
-        }
-
-    int nd_nr = 1;
+void Duom_generavimas(Studentas &s, int nd_kiekis){
 
     int min_rezult = 1;
     int max_result = 10;
 
-    random_device rd_genrator;   //Atsitiktiniu skaičiu generatorius
+    //Atsitiktiniu skaičiu generatorius
+    random_device rd_genrator;   
     // Intervalas atsitiktinei reikšmei
     uniform_int_distribution<int> Ivertinimas(min_rezult, max_result);
 
 
-// Sugeneruoja namų darbų įvertinimus pagal nurodyta kiekį, kurį nurodo vartotojas.
+// Sugeneruoja namų darbų įvertinimus pagal nurodyta kiekį.
     for(int i = 0; i < nd_kiekis; i++){
 
         int nd_ivertinimas = Ivertinimas(rd_genrator);
-
-        cout << nd_nr <<" Namų darbų" << " įvertinimas: " << nd_ivertinimas << endl;
+        cout << nd_ivertinimas << " ";
         s.nd.push_back(nd_ivertinimas);
-        nd_nr ++;
 
     }
 
     s.egz = Ivertinimas(rd_genrator);
-    cout << "Egzamino įvertinimas: " << s.egz << endl;
+    cout << s.egz << endl;
 }
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.

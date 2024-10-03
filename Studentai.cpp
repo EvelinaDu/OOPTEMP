@@ -107,7 +107,27 @@ int main() {
 
 
         if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
-            Duom_generavimas(s);
+            int nd_kiekis;
+            string eil;
+            cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
+            cin.ignore();
+            while(true){
+            
+                getline(cin, eil);   // Įvedama visą eilutė
+
+                // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
+                try{
+                    stringstream ss(eil);
+                    if(!(ss >> nd_kiekis)){
+                        throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
+                    }
+                    break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+                } catch (const invalid_argument &e){
+                    cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+                } 
+            }
+            Duom_generavimas(s, nd_kiekis);
             stud.push_back(s);
             valymas(s);
         }
