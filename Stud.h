@@ -8,6 +8,9 @@ struct Studentas{
   string vardas, pavarde;
   vector <double> nd;
   double egz, galutinis_vid, galutinis_med;
+
+  enum Kategorija {Vargsiukai, Kietiakai};
+  Kategorija kategorija;
 };
 
 // Funkcija, skirta studento duomenų įvedimui rankiniu būdu.
@@ -41,6 +44,8 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
 
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
+
+void KategorijosPriskirimas(vector<Studentas> &stud, int n, string pasirinkimas);
 
 
 #endif

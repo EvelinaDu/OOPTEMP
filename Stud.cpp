@@ -290,3 +290,23 @@ void valymas(Studentas &s){
     s.egz = 0; 
 }
 
+
+void KategorijosPriskirimas(vector<Studentas> &stud, int n, string pasirinkimas){
+    for (int i = 0; i < n; i++){
+        if (pasirinkimas == "V" || pasirinkimas == "v"){
+            if (stud[i].galutinis_vid < 5.0){
+                stud[i].kategorija = Studentas::Kategorija::Vargsiukai;
+            }else{
+                stud[i].kategorija = Studentas::Kategorija::Kietiakai;
+            }
+        } else if (pasirinkimas == "M" || pasirinkimas == "m"){
+            if (stud[i].galutinis_vid < 5.0){
+                stud[i].kategorija = Studentas::Kategorija::Vargsiukai;
+            }
+            else{
+                stud[i].kategorija = Studentas::Kategorija::Kietiakai;
+            }
+        }
+    }
+    
+}

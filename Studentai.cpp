@@ -2,7 +2,7 @@
 #include "Stud.h"
 
 int main() {
-    auto start = std::chrono::high_resolution_clock::now();
+    // auto start = std::chrono::high_resolution_clock::now();
 
     vector<Studentas> stud;
     // vector<Studentas> stud_generavimas;
@@ -165,9 +165,19 @@ int main() {
             }
         }
 
+
+        auto start = std::chrono::high_resolution_clock::now();
+
         Stud_failu_generavimas(stud, irasu_kiekis);
+
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = end - start;
+        cout << "Vykdymo laikas: " << duration.count() << " sekundžių" << endl;
+
         stud.clear();
 
+
+        // Sugeneruoto failo nuskaitymas.
         string pav = "Studentai_" + to_string(irasu_kiekis) + ".txt";
         failasIn.open(pav);
 
@@ -208,7 +218,7 @@ int main() {
         } catch (const out_of_range &e){
             cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
         }
-        }
+    }
 
     string isvedimo_pasirinkimas;
     cout << "Pasirinkite, kur norėtumėte gauti rezultatą, jei terminale įveskite 'T', jei faile įveskite 'F': ";
@@ -235,9 +245,13 @@ int main() {
     SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas);
 
 
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = end - start;
-    std::cout << "Vykdymo laikas: " << duration.count() << " sekundžių" << std::endl;
+    // Studentui priskiriama kategorija
+    KategorijosPriskirimas(stud, n, rez_pasirinkimas);
+
+
+    // auto end = std::chrono::high_resolution_clock::now();
+    // std::chrono::duration<double> duration = end - start;
+    // std::cout << "Vykdymo laikas: " << duration.count() << " sekundžių" << std::endl;
 
     return 0;
 
