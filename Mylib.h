@@ -22,6 +22,7 @@ using std::cin;
 using std::string;
 using std::vector;
 using std::stringstream;
+using std::to_string;
 
 using std::fixed;
 using std::setprecision;

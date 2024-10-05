@@ -4,9 +4,21 @@
 int main() {
     auto start = std::chrono::high_resolution_clock::now();
 
-
     vector<Studentas> stud;
+    // vector<Studentas> stud_generavimas;
     Studentas s;
+
+    Stud_failu_generavimas(stud, 15);
+
+
+
+
+
+
+
+    stud.clear();
+
+
     string eil;   // Skirtas saugoti duomenu eilutei
 
     string ivedimo_skaitymo_p;
@@ -87,6 +99,7 @@ int main() {
         cout << "Įveskite studento pavarde: ";
         cin >> s.pavarde;
 
+
         cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
         while(true){
 
@@ -127,7 +140,8 @@ int main() {
                     cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
                 } 
             }
-            Duom_generavimas(s, nd_kiekis);
+            
+            Duom_generavimas(s, cout, nd_kiekis);
             stud.push_back(s);
             valymas(s);
         }
@@ -141,6 +155,7 @@ int main() {
         }
     }
     }
+
 
     //Rusiavimas
     Studentu_rusiavimas(stud);

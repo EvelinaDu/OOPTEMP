@@ -14,10 +14,12 @@ struct Studentas{
 void Duom_ivedimas(Studentas &s);
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
-void Duom_generavimas(Studentas &s, int nd_kiekis);
+void Duom_generavimas(Studentas &s, ostream &out, int nd_kiekis);
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 void Stud_is_failo(Studentas &s, string eil);
+
+void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s);

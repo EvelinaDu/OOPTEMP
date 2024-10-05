@@ -60,8 +60,7 @@ void Duom_ivedimas(Studentas &s){
 }
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
-void Duom_generavimas(Studentas &s, int nd_kiekis){
-
+void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
     int min_rezult = 1;
     int max_result = 10;
 
@@ -75,13 +74,13 @@ void Duom_generavimas(Studentas &s, int nd_kiekis){
     for(int i = 0; i < nd_kiekis; i++){
 
         int nd_ivertinimas = Ivertinimas(rd_genrator);
-        cout << nd_ivertinimas << " ";
+        out << setw(5) << left << nd_ivertinimas;
         s.nd.push_back(nd_ivertinimas);
 
     }
 
     s.egz = Ivertinimas(rd_genrator);
-    cout << s.egz << endl;
+    out << s.egz << endl;
 }
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
@@ -115,6 +114,49 @@ void Stud_is_failo(Studentas &s, string eil){
     if(!s.nd.empty()){
         s.egz = s.nd.back();
         s.nd.pop_back();
+    }
+
+}
+
+void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
+    string pav = "Studentai_" + to_string(kiekis) + ".txt";
+
+    ofstream failas;
+    failas.open(pav);
+
+    if(failas.is_open()){
+
+        // stud.resize(kiekis);
+
+        // stud.reserve(kiekis);
+        stud.reserve(kiekis);  // Reserve memory for 'kiekis' students
+        for (int i = 0; i < kiekis; ++i) {
+            stud.emplace_back();  // Add default Studentas objects to the vector
+        }
+
+
+        failas << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde";
+        for(int i = 0; i < 15; i++){
+            failas << setw(5) << left << "ND" + to_string(i + 1);
+        }
+        failas << setw(5) << left << "EGZ" << endl;
+
+
+        for(int i = 0; i < kiekis; i++){
+            string vardas = "Vardas" + to_string(i + 1);
+            string pavarde = "Pavarde" + to_string(i + 1);
+
+            failas << setw(15) << left << vardas << setw(15) << left << pavarde  << " ";
+
+            Duom_generavimas(stud[i], failas, 15);
+
+        }
+        failas.close();
+        cout << "Failas "<< pav << "sugeneruotas sėkmingai! Sugeneruota: " << kiekis << " įrašų." << endl;
+        
+    }
+    else{
+        cout << "ERROR! Nepavyko atidaryti " << pav << " failo" << endl;
     }
 
 }
@@ -247,3 +289,4 @@ void valymas(Studentas &s){
     s.nd.clear();
     s.egz = 0; 
 }
+
