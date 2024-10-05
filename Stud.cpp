@@ -152,7 +152,7 @@ void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
 
         }
         failas.close();
-        cout << "Failas "<< pav << "sugeneruotas sėkmingai! Sugeneruota: " << kiekis << " įrašų." << endl;
+        cout << "Failas "<< pav << " sugeneruotas sėkmingai! Sugeneruota: " << kiekis << " įrašai(-ų)" << endl;
         
     }
     else{
@@ -274,7 +274,7 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
                 Stud_spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
             }
             failasOut.close();
-            cout << "Rezultatas įrašytas Rez.txt faile" << endl;
+            cout << "Rezultatas sėkmingai įrašytas į Rez.txt failą!" << endl;
         }
         else{
             cout << "ERROR! Nepavyko atidaryti Rez.txt failo" << endl;

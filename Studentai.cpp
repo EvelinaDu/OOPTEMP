@@ -8,27 +8,17 @@ int main() {
     // vector<Studentas> stud_generavimas;
     Studentas s;
 
-    Stud_failu_generavimas(stud, 15);
-
-
-
-
-
-
-
-    stud.clear();
-
 
     string eil;   // Skirtas saugoti duomenu eilutei
 
     string ivedimo_skaitymo_p;
-    cout << "Pasirinkite ar norite duomenis įvesti ar nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N) ";
+    cout << "Pasirinkite ar norite duomenis įvesti, nuskaityti juos iš failo ar sugeneruoti ir nuskaityti juos iš failo?(Įvesti - I, Nuskaityti - N, Sugeneruoti ir Nuskaityti - SN) ";
     while(true){
         cin >> ivedimo_skaitymo_p;
 
         // Išimčių tvarkymas skirtas ivedimo ar skaitymo pasirinkimui.
         try{
-            if(ivedimo_skaitymo_p != "N" && ivedimo_skaitymo_p != "n" && ivedimo_skaitymo_p != "I" && ivedimo_skaitymo_p != "i"){
+            if(ivedimo_skaitymo_p != "N" && ivedimo_skaitymo_p != "n" && ivedimo_skaitymo_p != "I" && ivedimo_skaitymo_p != "i" && ivedimo_skaitymo_p != "SN" && ivedimo_skaitymo_p != "sn"){
                 throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'I' arba 'N'. ");
             }
             break;   // Išeiname iš while ciklo, jei įvestis teisinga.
@@ -56,7 +46,7 @@ int main() {
                     throw runtime_error("Klaida, failas nerastas! Bandykite dar kartą! ");
                 }  
             
-                string eil;
+                // string eil;
                 getline(failasIn, eil);
 
                 while(getline(failasIn, eil)){
@@ -154,6 +144,47 @@ int main() {
             valymas(s);
         }
     }
+    } 
+    else if(ivedimo_skaitymo_p == "SN" || ivedimo_skaitymo_p == "sn"){
+        int irasu_kiekis = 0;
+        cout << "Kiek norėtumėte, kad faile būtų sugeneruota įrašų(eilučių)? ";
+        cin.ignore();
+        while(true){
+            getline(cin, eil);
+            try
+            {
+                stringstream ss(eil);
+                if(!(ss >> irasu_kiekis)){
+                    throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
+                }
+                break;
+            }
+            catch(const invalid_argument& e)
+            {
+                cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+            }
+        }
+
+        Stud_failu_generavimas(stud, irasu_kiekis);
+        stud.clear();
+
+        string pav = "Studentai_" + to_string(irasu_kiekis) + ".txt";
+        failasIn.open(pav);
+
+        // string eil;
+        getline(failasIn, eil);
+
+         while(getline(failasIn, eil)){
+            Stud_is_failo(s, eil);
+            stud.push_back(s);
+            valymas(s); 
+        }
+
+        n = stud.size();
+        cout << "Failas sėkmingai perskaitytas. Studentų kiekis: " << n << endl; 
+
+        failasIn.close();
+
     }
 
 
