@@ -47,5 +47,7 @@ void valymas(Studentas &s);
 
 void KategorijosPriskirimas(vector<Studentas> &stud, int n, string pasirinkimas);
 
+void DuFailaiPagalKategorija(vector<Studentas> &stud, string pasirinkimas);
+
 
 #endif

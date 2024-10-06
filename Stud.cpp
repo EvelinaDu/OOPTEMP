@@ -310,3 +310,34 @@ void KategorijosPriskirimas(vector<Studentas> &stud, int n, string pasirinkimas)
     }
     
 }
+
+void DuFailaiPagalKategorija(vector<Studentas> &stud, string pasirinkimas){
+    ofstream vargsiukaiF;
+    ofstream kietiakaiF;
+
+    vargsiukaiF.open("Vargsiukai.txt");
+    kietiakaiF.open("Kietiakai.txt");
+
+
+    if (!vargsiukaiF.is_open() || !kietiakaiF.is_open()){
+        cout << "Klaia atidarant failą. " << endl;
+    }
+
+    // Antraštė
+    Rez_antraste(pasirinkimas, vargsiukaiF);
+    Rez_antraste(pasirinkimas, kietiakaiF);
+
+    for (auto &s : stud) {
+        if (s.kategorija == 0){
+            Stud_spausdinimas(s, vargsiukaiF, pasirinkimas);
+        } else if (s.kategorija == 1){
+            Stud_spausdinimas(s, kietiakaiF, pasirinkimas);
+        }
+    }
+
+    vargsiukaiF.close();
+    kietiakaiF.close();
+    cout << "Rezultatas sėkmingai įrašytas į Vargsiukai.txt failą!" << endl;
+    cout << "Rezultatas sėkmingai įrašytas į Kietiakai.txt failą!" << endl;
+
+}

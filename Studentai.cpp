@@ -248,6 +248,9 @@ int main() {
     // Studentui priskiriama kategorija
     KategorijosPriskirimas(stud, n, rez_pasirinkimas);
 
+    //Studentai išvedami i du naujus failus
+    DuFailaiPagalKategorija(stud, rez_pasirinkimas);
+
 
     // auto end = std::chrono::high_resolution_clock::now();
     // std::chrono::duration<double> duration = end - start;
