@@ -217,9 +217,6 @@ void Stud_spausdinimas(Studentas &s, ostream &out, string p){
     else if(p == "M" || p == "m"){
         out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
     }
-    else if(p == "VM" || p == "vm"){
-        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(18) << left << fixed << setprecision(2) << s.galutinis_vid << setw(16) << left << s.galutinis_med << endl;
-    }
 
 }
 
@@ -234,34 +231,74 @@ void Rez_antraste(string pasirinkimas, ostream &out){
         out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
         out << "------------------------------------------------" << endl;
     }
-    else if(pasirinkimas == "VM" || pasirinkimas == "vm"){
-        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(17) << left << "Galutinis (Vid.)  " << setw(16) << left << "Galutinis (Med.)" << endl;
-        out << "-------------------------------------------------------------------" << endl;
-    }
 }
 
-// Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
-void Studentu_rusiavimas(vector<Studentas> &stud){
-    sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+// Funkcija skirta studentų vektoriui surušiuoti.
+void Studentu_rusiavimas(vector<Studentas> &stud, string pasirinkimas, string galutinis_pasirinkimas){
+    if(pasirinkimas == "V" || pasirinkimas == "v"){
+        // Rūšiavimas pagal vardą
+        sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.vardas < s2.vardas;
+        });
+
+    } else if(pasirinkimas == "P" || pasirinkimas == "p"){
+        // Rūšiavimas pagal pavardę
+        sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.pavarde < s2.pavarde;
+        });
+
+    } else if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+        // Rūšiavimas pagal vardą ir pavardę
+        sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
         if(s1.vardas != s2.vardas){
             return s1.vardas < s2.vardas;
         }
         return s1.pavarde < s2.pavarde;
     });
 
+    } else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
+        // Rušiavimas pagal galutinį įvertinimą
+        if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.galutinis_vid > s2.galutinis_vid;
+        });
+        } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.galutinis_med > s2.galutinis_med;
+        });
+        }
+    } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
+        // Rušiavimas pagal galutinį įvertinimą
+        if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.galutinis_vid < s2.galutinis_vid;
+        });
+        } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.galutinis_med < s2.galutinis_med;
+        });
+        }
+    }
 }
 
 // Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
-void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas){
+void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p){
     ofstream failasOut;
+
+    for (int i = 0; i < n; i++){
+        Ivertinimas_vid(stud[i]);
+        Ivertinimas_med(stud[i]);
+    }
+
+    //Rusiavimas
+    Studentu_rusiavimas(stud, rusiavimo_p, rez_pasirinkimas);
+
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
         Rez_antraste(rez_pasirinkimas, cout);
         for (int i = 0; i < n; i++){
-        Ivertinimas_vid(stud[i]);
-        Ivertinimas_med(stud[i]);
         Stud_spausdinimas(stud.at(i), cout, rez_pasirinkimas);
-    }
+        }
     }
     else if (isvedimo_pasirinkimas == "F" || isvedimo_pasirinkimas == "f"){
         failasOut.open("Rez.txt");
@@ -269,10 +306,9 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
         if(failasOut.is_open()){
             Rez_antraste(rez_pasirinkimas, failasOut);
             for (int i = 0; i < n; i++){
-                Ivertinimas_vid(stud[i]);
-                Ivertinimas_med(stud[i]);
                 Stud_spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
             }
+
             failasOut.close();
             cout << "Rezultatas sėkmingai įrašytas į Rez.txt failą!" << endl;
         }

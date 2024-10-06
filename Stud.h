@@ -37,10 +37,10 @@ void Stud_spausdinimas(Studentas &s, ostream &out, string p);
 void Rez_antraste(string pasirinkimas, ostream &out);
 
 // Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
-void Studentu_rusiavimas(vector<Studentas> &stud);
+void Studentu_rusiavimas(vector<Studentas> &stud, string pasirinkimas, string galutinis_pasirinkimas);
 
 // Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
-void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas);
+void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p);
 
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);

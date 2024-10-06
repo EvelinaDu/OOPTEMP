@@ -198,20 +198,17 @@ int main() {
     }
 
 
-    //Rusiavimas
-    Studentu_rusiavimas(stud);
-
     string rez_pasirinkimas;
-    cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M', įvertinimas pagal abu 'VM': ";
+    cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M': ";
 
     while(true){ 
         cin >> rez_pasirinkimas;
 
-        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/M/VM).
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/M).
         try{
 
-            if(rez_pasirinkimas != "V" && rez_pasirinkimas != "v" && rez_pasirinkimas != "M" && rez_pasirinkimas != "m" && rez_pasirinkimas != "VM" && rez_pasirinkimas != "vm" ){
-                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V', 'M' arba 'VM'. ");
+            if(rez_pasirinkimas != "V" && rez_pasirinkimas != "v" && rez_pasirinkimas != "M" && rez_pasirinkimas != "m"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V' ir 'M'. ");
             }
             break;   // Išeiname iš while ciklo, jei įvestis teisinga.
 
@@ -219,6 +216,27 @@ int main() {
             cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
         }
     }
+
+    string rusiavimo_p;
+    cout << "Pasirinkite, pagal ką norėtumėt rūšiuoti studentus, pagal vardą įrašykite 'V', pagal pavardę įrašykite 'P', pagal vardą ir pavardę įrašykite 'VP', pagal galutinį įvertinimą mažėjančia tvarka įveskite 'GM', pagal galutinį įvertinimą didėjančia tvarka įveskite 'GD': ";
+    
+    while(true){ 
+        cin >> rusiavimo_p;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/P/VP/GI).
+        try{
+
+            if(rusiavimo_p != "V" && rusiavimo_p != "v" && rusiavimo_p != "P" && rusiavimo_p != "p" && rusiavimo_p != "VP" && rusiavimo_p != "vp" && rusiavimo_p != "GM" && rusiavimo_p != "gm" && rusiavimo_p != "GD" && rusiavimo_p != "gd" ){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V', 'P', 'VP', 'GM' arba 'GD'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+
+
 
     string isvedimo_pasirinkimas;
     cout << "Pasirinkite, kur norėtumėte gauti rezultatą, jei terminale įveskite 'T', jei faile įveskite 'F': ";
@@ -242,8 +260,11 @@ int main() {
 
     // auto start = std::chrono::high_resolution_clock::now();
 
-    SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas);
+    SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p);
 
+
+    // //Rusiavimas
+    // Studentu_rusiavimas(stud, rusiavimo_p, rez_pasirinkimas);
 
     // Studentui priskiriama kategorija
     KategorijosPriskirimas(stud, n, rez_pasirinkimas);
