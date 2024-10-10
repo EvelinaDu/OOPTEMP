@@ -161,6 +161,54 @@ void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
 
 }
 
+vector<Studentas> Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Studentas& s, vector<Laikas>& Funkciju_Laikas, int laiko_vnt, int irasu_kiekis){
+        
+        string eil;
+        auto start_failo_generavimas = std::chrono::high_resolution_clock::now();
+
+        Stud_failu_generavimas(stud, irasu_kiekis);
+
+        auto end_failu_generavimas = std::chrono::high_resolution_clock::now();
+        // Funkciju_Laikas[laiko_vnt].failo_generavimas = end_failu_generavimas - start_failo_generavimas;
+        Funkciju_Laikas[laiko_vnt].failo_generavimas = std::chrono::duration<double>(end_failu_generavimas - start_failo_generavimas).count();
+        // cout << " Failo_generavimas "<< Funkciju_Laikas[laiko_vnt].failo_generavimas << endl;
+        // cout << std::chrono::duration<double>(end_failu_generavimas - start_failo_generavimas).count();
+        stud.clear();
+
+
+        // Sugeneruoto failo nuskaitymas.
+        auto start_failo_nuskaitymas = std::chrono::high_resolution_clock::now();
+
+        ifstream failasIn;
+        string pav = "Studentai_" + to_string(irasu_kiekis) + ".txt";
+        failasIn.open(pav);
+
+        // string eil;
+        getline(failasIn, eil);
+
+        while(getline(failasIn, eil)){
+            Stud_is_failo(s, eil);
+            stud.push_back(s);
+            valymas(s); 
+        }
+
+        // n = stud.size();
+        cout << "Failas sėkmingai perskaitytas. Studentų kiekis: " << irasu_kiekis << endl; 
+
+        failasIn.close();
+
+        auto end_failo_nuskaitymas = std::chrono::high_resolution_clock::now();
+        // std::chrono::duration<double> duration2 = end_failo_nuskaitymas - start_failo_nuskaitymas;
+        // failo_nuskaitymo_laikas = end_failo_nuskaitymas - start_failo_nuskaitymas;
+        Funkciju_Laikas[laiko_vnt].failo_nuskaitymas = std::chrono::duration<double>(end_failo_nuskaitymas - start_failo_nuskaitymas).count();
+        // cout  << "Failas iš " << n << " įrašų nuskaitymo laikas: " << duration2.count() << " sekundžių" << endl;
+
+        return stud;
+
+}
+
+
+
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s){
     double suma = 0;
@@ -327,53 +375,56 @@ void valymas(Studentas &s){
 }
 
 
-void KategorijosPriskirimas(vector<Studentas> &stud, int n, string pasirinkimas){
+void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas){
+    Studentas v, k;
     for (int i = 0; i < n; i++){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
             if (stud[i].galutinis_vid < 5.0){
-                stud[i].kategorija = Studentas::Kategorija::Vargsiukai;
+                v.vardas = stud[i].vardas;
+                v.pavarde = stud[i].pavarde;
+                v.galutinis_vid = stud[i].galutinis_vid;
+                stud_Vargsiukai.push_back(v);
             }else{
-                stud[i].kategorija = Studentas::Kategorija::Kietiakai;
+                k.vardas = stud[i].vardas;
+                k.pavarde = stud[i].pavarde;
+                k.galutinis_vid = stud[i].galutinis_vid;
+                stud_Kietiakai.push_back(k);
             }
         } else if (pasirinkimas == "M" || pasirinkimas == "m"){
             if (stud[i].galutinis_vid < 5.0){
-                stud[i].kategorija = Studentas::Kategorija::Vargsiukai;
+                v.vardas = stud[i].vardas;
+                v.pavarde = stud[i].pavarde;
+                v.galutinis_med = stud[i].galutinis_med;
+                stud_Vargsiukai.push_back(v);
             }
             else{
-                stud[i].kategorija = Studentas::Kategorija::Kietiakai;
+                k.vardas = stud[i].vardas;
+                k.pavarde = stud[i].pavarde;
+                k.galutinis_med = stud[i].galutinis_med;
+                stud_Kietiakai.push_back(k);
             }
         }
     }
     
 }
 
-void DuFailaiPagalKategorija(vector<Studentas> &stud, string pasirinkimas){
-    ofstream vargsiukaiF;
-    ofstream kietiakaiF;
+void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav){
+    ofstream failas;
 
-    vargsiukaiF.open("Vargsiukai.txt");
-    kietiakaiF.open("Kietiakai.txt");
+    failas.open(pav);
 
-
-    if (!vargsiukaiF.is_open() || !kietiakaiF.is_open()){
-        cout << "Klaia atidarant failą. " << endl;
+    if (!failas.is_open()){
+        cout << "Klaida atidarant failą. " << endl;
     }
 
     // Antraštė
-    Rez_antraste(pasirinkimas, vargsiukaiF);
-    Rez_antraste(pasirinkimas, kietiakaiF);
+    Rez_antraste(pasirinkimas, failas);
 
-    for (auto &s : stud) {
-        if (s.kategorija == 0){
-            Stud_spausdinimas(s, vargsiukaiF, pasirinkimas);
-        } else if (s.kategorija == 1){
-            Stud_spausdinimas(s, kietiakaiF, pasirinkimas);
-        }
+    for(auto &s : studentai){
+        Stud_spausdinimas(s, failas, pasirinkimas);
     }
 
-    vargsiukaiF.close();
-    kietiakaiF.close();
-    cout << "Rezultatas sėkmingai įrašytas į Vargsiukai.txt failą!" << endl;
-    cout << "Rezultatas sėkmingai įrašytas į Kietiakai.txt failą!" << endl;
+    failas.close();
 
+    cout << "Rezultatas sėkmingai įrašytas į "<< pav <<" failą!" << endl;
 }

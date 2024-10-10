@@ -9,8 +9,14 @@ struct Studentas{
   vector <double> nd;
   double egz, galutinis_vid, galutinis_med;
 
-  enum Kategorija {Vargsiukai, Kietiakai};
-  Kategorija kategorija;
+};
+
+struct Laikas{
+  double failo_generavimas;
+  double failo_nuskaitymas;
+  double stud_rusiavimas;
+  double stud_isvedimas_k;
+  double stud_isvedimas_v;
 };
 
 // Funkcija, skirta studento duomenų įvedimui rankiniu būdu.
@@ -45,9 +51,14 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
 
-void KategorijosPriskirimas(vector<Studentas> &stud, int n, string pasirinkimas);
+void KategorijosPriskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas);
 
-void DuFailaiPagalKategorija(vector<Studentas> &stud, string pasirinkimas);
+void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav);
 
+
+
+// vector<Studentas> Failo_Generavimas_Nuskaitymas(std::vector<Studentas>& stud, Studentas& s, vector<Laikas> Funkciju_Laikas, int laiko_vnt, int irasu_kiekis);
+
+vector<Studentas> Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Studentas& s, vector<Laikas>& Funkciju_Laikas, int laiko_vnt, int irasu_kiekis);
 
 #endif
