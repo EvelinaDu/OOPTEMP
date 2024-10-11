@@ -161,7 +161,7 @@ void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
 
 }
 
-vector<Studentas> Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Studentas& s, vector<Laikas>& Funkciju_Laikas, int laiko_vnt, int irasu_kiekis){
+void Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Studentas& s, vector<Laikas>& Funkciju_Laikas, int laiko_vnt, int irasu_kiekis){
         
         string eil;
         auto start_failo_generavimas = std::chrono::high_resolution_clock::now();
@@ -169,12 +169,10 @@ vector<Studentas> Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Student
         Stud_failu_generavimas(stud, irasu_kiekis);
 
         auto end_failu_generavimas = std::chrono::high_resolution_clock::now();
-        // Funkciju_Laikas[laiko_vnt].failo_generavimas = end_failu_generavimas - start_failo_generavimas;
         Funkciju_Laikas[laiko_vnt].failo_generavimas = std::chrono::duration<double>(end_failu_generavimas - start_failo_generavimas).count();
-        // cout << " Failo_generavimas "<< Funkciju_Laikas[laiko_vnt].failo_generavimas << endl;
-        // cout << std::chrono::duration<double>(end_failu_generavimas - start_failo_generavimas).count();
+        
+        
         stud.clear();
-
 
         // Sugeneruoto failo nuskaitymas.
         auto start_failo_nuskaitymas = std::chrono::high_resolution_clock::now();
@@ -183,7 +181,6 @@ vector<Studentas> Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Student
         string pav = "Studentai_" + to_string(irasu_kiekis) + ".txt";
         failasIn.open(pav);
 
-        // string eil;
         getline(failasIn, eil);
 
         while(getline(failasIn, eil)){
@@ -192,18 +189,12 @@ vector<Studentas> Failo_Generavimas_Nuskaitymas(vector<Studentas>& stud, Student
             valymas(s); 
         }
 
-        // n = stud.size();
         cout << "Failas sėkmingai perskaitytas. Studentų kiekis: " << irasu_kiekis << endl; 
 
         failasIn.close();
 
         auto end_failo_nuskaitymas = std::chrono::high_resolution_clock::now();
-        // std::chrono::duration<double> duration2 = end_failo_nuskaitymas - start_failo_nuskaitymas;
-        // failo_nuskaitymo_laikas = end_failo_nuskaitymas - start_failo_nuskaitymas;
         Funkciju_Laikas[laiko_vnt].failo_nuskaitymas = std::chrono::duration<double>(end_failo_nuskaitymas - start_failo_nuskaitymas).count();
-        // cout  << "Failas iš " << n << " įrašų nuskaitymo laikas: " << duration2.count() << " sekundžių" << endl;
-
-        return stud;
 
 }
 
@@ -330,17 +321,17 @@ void Studentu_rusiavimas(vector<Studentas> &stud, string pasirinkimas, string ga
 }
 
 // Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
-void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p){
+void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p){
     ofstream failasOut;
 
     for (int i = 0; i < n; i++){
         Ivertinimas_vid(stud[i]);
         Ivertinimas_med(stud[i]);
+
     }
 
     //Rusiavimas
     Studentu_rusiavimas(stud, rusiavimo_p, rez_pasirinkimas);
-
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
         Rez_antraste(rez_pasirinkimas, cout);
@@ -348,9 +339,8 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
         Stud_spausdinimas(stud.at(i), cout, rez_pasirinkimas);
         }
     }
-    else if (isvedimo_pasirinkimas == "F" || isvedimo_pasirinkimas == "f"){
+    else if (isvedimo_pasirinkimas == "F" || isvedimo_pasirinkimas == "f" || ivedimo_skaitymo_p == "SN" || ivedimo_skaitymo_p == "sn"){
         failasOut.open("Rez.txt");
-
         if(failasOut.is_open()){
             Rez_antraste(rez_pasirinkimas, failasOut);
             for (int i = 0; i < n; i++){
@@ -405,6 +395,7 @@ void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Va
             }
         }
     }
+
     
 }
 
@@ -427,4 +418,103 @@ void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, stri
     failas.close();
 
     cout << "Rezultatas sėkmingai įrašytas į "<< pav <<" failą!" << endl;
+}
+
+
+string pasirinkimas_del_galutinio(){
+    string rez_pasirinkimas;
+    cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M': ";
+
+    while(true){ 
+        cin >> rez_pasirinkimas;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/M).
+        try{
+
+            if(rez_pasirinkimas != "V" && rez_pasirinkimas != "v" && rez_pasirinkimas != "M" && rez_pasirinkimas != "m"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V' ir 'M'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+
+    return rez_pasirinkimas;
+}
+
+string pasirinkimas_del_rusiavimo(){
+
+    string rusiavimo_p;
+    cout << "Pasirinkite, pagal ką norėtumėt rūšiuoti studentus, pagal vardą įrašykite 'V', pagal pavardę įrašykite 'P', pagal vardą ir pavardę įrašykite 'VP', pagal galutinį įvertinimą mažėjančia tvarka įveskite 'GM', pagal galutinį įvertinimą didėjančia tvarka įveskite 'GD': ";
+    
+    while(true){ 
+        cin >> rusiavimo_p;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/P/VP/GI).
+        try{
+
+            if(rusiavimo_p != "V" && rusiavimo_p != "v" && rusiavimo_p != "P" && rusiavimo_p != "p" && rusiavimo_p != "VP" && rusiavimo_p != "vp" && rusiavimo_p != "GM" && rusiavimo_p != "gm" && rusiavimo_p != "GD" && rusiavimo_p != "gd" ){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V', 'P', 'VP', 'GM' arba 'GD'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+
+    return rusiavimo_p;
+}
+
+string pasirinkimas_isvedimo(){
+    string isvedimo_pasirinkimas;
+    cout << "Pasirinkite, kur norėtumėte gauti rezultatą, jei terminale įveskite 'T', jei faile įveskite 'F': ";
+
+    while(true){
+        cin >> isvedimo_pasirinkimas;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas teisingai pasirinko, kur bus pateiktas rezultatas (T/F).
+        try{
+
+            if(isvedimo_pasirinkimas != "T" && isvedimo_pasirinkimas != "t" && isvedimo_pasirinkimas != "F" && isvedimo_pasirinkimas != "f"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'T' arba 'F'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+
+    }
+
+    return isvedimo_pasirinkimas;
+}
+
+void Duom_tvarkymas(vector<Studentas>& stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, vector<Laikas>& Funkciju_Laikas, int laiko_vnt, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis){
+        SpausdinimasRez(stud, kiekis, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
+
+        auto start_kategorijos_priskirimas = std::chrono::high_resolution_clock::now();
+        // Studentui priskiriama kategorijai
+        Kategorijos_Priskirimas(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
+        auto end_kategorijos_priskirimas = std::chrono::high_resolution_clock::now();
+        Funkciju_Laikas[laiko_vnt].stud_rusiavimas = std::chrono::duration<double>(end_kategorijos_priskirimas - start_kategorijos_priskirimas).count();
+
+
+        auto start_iskirstymas_i_vargsiukus = std::chrono::high_resolution_clock::now();
+        // Studentai įrašyti i Vargsiukai.txt failą
+        FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, "Vargsiukai.txt");
+        stud_Vargsiukai.clear();
+        auto end_iskirstymas_i_vargsiukus = std::chrono::high_resolution_clock::now();
+        Funkciju_Laikas[laiko_vnt].stud_isvedimas_v = std::chrono::duration<double>(end_iskirstymas_i_vargsiukus - start_iskirstymas_i_vargsiukus).count();
+
+
+        auto start_iskirstymas_i_kietiakus = std::chrono::high_resolution_clock::now();
+        // Studentai įrašyti i Kietiakai.txt failą
+        FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, "Kietiakai.txt");
+        stud_Kietiakai.clear();
+        auto end_iskirstymas_i_kietiakus = std::chrono::high_resolution_clock::now();
+        Funkciju_Laikas[laiko_vnt].stud_isvedimas_k = std::chrono::duration<double>(end_iskirstymas_i_kietiakus - start_iskirstymas_i_kietiakus).count();
+
 }
