@@ -11,14 +11,6 @@ struct Studentas{
 
 };
 
-struct Laikas{
-  double failo_generavimas;
-  double failo_nuskaitymas;
-  double stud_rusiavimas;
-  double stud_isvedimas_k;
-  double stud_isvedimas_v;
-};
-
 // Funkcija, skirta studento duomenų įvedimui rankiniu būdu.
 void Duom_ivedimas(Studentas &s);
 
@@ -51,8 +43,6 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
 
-void Failo_Generavimas_Nuskaitymas(vector<Studentas> &stud, Studentas &s, vector<Laikas> &Funkciju_Laikas, int laiko_vnt, int irasu_kiekis);
-
 void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas);
 
 void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav);
@@ -63,6 +53,8 @@ string pasirinkimas_del_rusiavimo();
 
 string pasirinkimas_isvedimo();
 
-void Duom_tvarkymas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, vector<Laikas> &Funkciju_Laikas, int laiko_vnt, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
+void Duom_tvarkymas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
+
+void Duom_is_failo(vector<Studentas>& stud, Studentas& s);
 
 #endif
