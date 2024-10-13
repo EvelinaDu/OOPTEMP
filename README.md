@@ -34,31 +34,31 @@ Failo su 10000000 įrašų generavimo laikas: **89.5782 s.**
 
 # Programos veikimo greičio (spartos) analizė:
 # 1000 įrašų
-Duomenų nuskaitymas iš failo: ** 0.008387 s.**
-studentų rūšiavimas į dvi grupes/kategorijas: ** 0.000698 s.**
-Surūšiuotų studentų išvedimą į Vargšelių.txt failą: ** 0.005074 s.**
-Surūšiuotų studentų išvedimą į Kietiakus.txt failą: ** 0.004745 s.**
+- Duomenų nuskaitymas iš failo: **0.008387 s.**
+- Studentų rūšiavimas į dvi grupes/kategorijas: **0.000698 s.**
+- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **0.005074 s.**
+- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **0.004745 s.**
 
 # 10000 įrašų
-Duomenų nuskaitymas iš failo: ** 0.328642 s.**
-studentų rūšiavimas į dvi grupes/kategorijas: ** 0.010864 s.**
-Surūšiuotų studentų išvedimą į Vargšelių.txt failą: ** 0.030321 s.**
-Surūšiuotų studentų išvedimą į Kietiakus.txt failą: ** 0.037418 s.**
+- Duomenų nuskaitymas iš failo: **0.328642 s.**
+- Studentų rūšiavimas į dvi grupes/kategorijas: **0.010864 s.**
+- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **0.030321 s.**
+- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **0.037418 s.**
 
 # 100000 įrašų
-Duomenų nuskaitymas iš failo: ** 0.922479 s.**
-studentų rūšiavimas į dvi grupes/kategorijas: ** 0.024367 s.**
-Surūšiuotų studentų išvedimą į Vargšelių.txt failą: ** 0.198887 s.**
-Surūšiuotų studentų išvedimą į Kietiakus.txt failą: ** 0.288225 s.**
+- Duomenų nuskaitymas iš failo: **0.922479 s.**
+- Studentų rūšiavimas į dvi grupes/kategorijas: **0.024367 s.**
+- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **0.198887 s.**
+- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **0.288225 s.**
 
 # 1000000 įrašų
-Duomenų nuskaitymas iš failo: ** 5.728837 **
-studentų rūšiavimas į dvi grupes/kategorijas: ** 0.21695 **
-Surūšiuotų studentų išvedimą į Vargšelių.txt failą: ** 30.96127 **
-Surūšiuotų studentų išvedimą į Kietiakus.txt failą: ** 2.541053 **
+- Duomenų nuskaitymas iš failo: **5.728837**
+- Studentų rūšiavimas į dvi grupes/kategorijas: **0.21695**
+- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **30.96127**
+- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **2.541053**
 
 # 10000000 įrašų
-Duomenų nuskaitymas iš failo: ** 53.09053 **
-studentų rūšiavimas į dvi grupes/kategorijas: ** 2.099277 **
-Surūšiuotų studentų išvedimą į Vargšelių.txt failą: ** 154.318 **
-Surūšiuotų studentų išvedimą į Kietiakus.txt failą: ** 30.06403 **
+- Duomenų nuskaitymas iš failo: **53.09053**
+- Studentų rūšiavimas į dvi grupes/kategorijas: **2.099277**
+- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **154.318**
+- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **30.06403**
