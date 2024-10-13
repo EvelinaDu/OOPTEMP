@@ -47,7 +47,7 @@ void valymas(Studentas &s);
 void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas);
 
 // Funkcija, įrašo į failą pateiktą vektorių.
-void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav);
+void FailasPgalKategorija(vector<Studentas> &studentai, string pasirinkimas, string pav);
 
 // Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
 string pasirinkimas_del_galutinio();

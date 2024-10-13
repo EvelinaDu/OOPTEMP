@@ -392,7 +392,7 @@ void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Va
 }
 
 // Funkcija, įrašo į failą pateiktą vektorių.
-void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav){
+void FailasPgalKategorija(vector<Studentas> &studentai, string pasirinkimas, string pav){
     ofstream failas;
 
     failas.open(pav);
@@ -494,22 +494,19 @@ void Duom_tvarkymas(vector<Studentas>& stud, vector<Studentas> &stud_Vargsiukai,
 
         Timer t1;
         Kategorijos_Priskirimas(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
-        stud.clear();
-        cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s\n";
+        cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
         cout << endl;
 
         Timer t2;
         // Studentai įrašyti i Vargsiukai.txt failą
         FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, "Vargsiukai.txt");
-        stud_Vargsiukai.clear();
-        cout << "Failo iš "<< kiekis << " įrašų vargšelių įrašymas į failą laikas:: " << t2.elapsed() << " s\n";
+        cout << "Failo iš "<< kiekis << " įrašų vargšelių įrašymas į failą laikas: " << t2.elapsed() << " s.\n";
         cout << endl;
 
         Timer t3;
         // Studentai įrašyti i Kietiakai.txt failą
         FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, "Kietiakai.txt");
-        stud_Kietiakai.clear();
-        cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s\n";
+        cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
         cout << endl;
 
 }
