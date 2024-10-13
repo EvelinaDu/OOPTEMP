@@ -85,45 +85,10 @@ void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
 }
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
-void Stud_is_failo(Studentas &s, string eil){
-    stringstream ss(eil);
-    ss >> s.vardas >> s.pavarde;
-
-    int ivertinimas;
-    string netinkantis_ivertinimas;
-    while(true){
-        try{
-            if(!(ss >> ivertinimas)){
-                if(ss.eof()) break;   // eof - end of file
-                ss.clear();
-                ss >> netinkantis_ivertinimas;
-                throw invalid_argument("Netinkamas įvertinimas, įvertinimas nėra skaičius: '" + netinkantis_ivertinimas + "'");
-            }
-            if (ivertinimas < 1 || ivertinimas > 10){
-                throw out_of_range("Netinkamas įvertinimas: " + std::to_string(ivertinimas));
-            }
-            s.nd.push_back(ivertinimas);
-        } catch(const invalid_argument &e){
-            cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
-            continue;   //einame prie kito elemento
-        } catch(const out_of_range &e){
-            cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
-            continue;   //einame prie kito elemento
-        }
-    }
-
-    if(!s.nd.empty()){
-        s.egz = s.nd.back();
-        s.nd.pop_back();
-    }
-
-}
-
 void Duom_is_failo(vector<Studentas>& stud, Studentas& s){
     ifstream failasIn;   //Skirtas failo nuskaitymui
     string f_pav;        //Failo pavadinimas
     string eil;
-    // int n;
 
     cout << "Įveskite failo pavadinimą: ";
     while(true){
@@ -189,22 +154,16 @@ void Duom_is_failo(vector<Studentas>& stud, Studentas& s){
     failasIn.close();
 }
 
-
+// Funkcija skirta failo generavimui pagal įrašų kiekį
 void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
     string pav = "Studentai_" + to_string(kiekis) + ".txt";
 
     ofstream failas;
     failas.open(pav);
 
-    
-    // cout << "Failo su "<< k << " įrašų generavimo laikas: " << t.elapsed() << " s\n";
-
     if(failas.is_open()){
 
-        // stud.resize(kiekis);
-
-        // stud.reserve(kiekis);
-        stud.reserve(kiekis);  // Reserve memory for 'kiekis' students
+        stud.reserve(kiekis);  // Reservuoja atmintį stud vektoriuje pagal įrašų kiekį
         for (int i = 0; i < kiekis; ++i) {
             stud.emplace_back();  // Add default Studentas objects to the vector
         }
@@ -399,7 +358,7 @@ void valymas(Studentas &s){
     s.egz = 0; 
 }
 
-
+// Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas){
     Studentas v, k;
     for (int i = 0; i < n; i++){
@@ -430,10 +389,9 @@ void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Va
             }
         }
     }
-
-    
 }
 
+// Funkcija, įrašo į failą pateiktą vektorių.
 void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav){
     ofstream failas;
 
@@ -455,7 +413,7 @@ void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, stri
     cout << "Rezultatas sėkmingai įrašytas į "<< pav <<" failą!" << endl;
 }
 
-
+// Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
 string pasirinkimas_del_galutinio(){
     string rez_pasirinkimas;
     cout << "Pasirinkite, kokį rezultatą norite matyti, įvertinimas pagal vidurkį įrašykite 'V', įvertinimas pagal medianą įrašykite 'M': ";
@@ -475,10 +433,10 @@ string pasirinkimas_del_galutinio(){
             cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
         }
     }
-
     return rez_pasirinkimas;
 }
 
+// Funkcija, skirta vartotojui pasirinkti pagal ką reikia surūšiuoti studentus.
 string pasirinkimas_del_rusiavimo(){
 
     string rusiavimo_p;
@@ -487,7 +445,7 @@ string pasirinkimas_del_rusiavimo(){
     while(true){ 
         cin >> rusiavimo_p;
 
-        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (V/P/VP/GI).
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (VP/PV/GM/GD).
         try{
 
             if(rusiavimo_p != "VP" && rusiavimo_p != "vp" && rusiavimo_p != "PV" && rusiavimo_p != "pv" && rusiavimo_p != "GM" && rusiavimo_p != "gm" && rusiavimo_p != "GD" && rusiavimo_p != "gd" ){
@@ -503,6 +461,7 @@ string pasirinkimas_del_rusiavimo(){
     return rusiavimo_p;
 }
 
+// Funkcija, skirta vartotojui pasirinkti kur nori matyti rezultatą, ar terminale, ar faile.
 string pasirinkimas_isvedimo(){
     string isvedimo_pasirinkimas;
     cout << "Pasirinkite, kur norėtumėte gauti rezultatą, jei terminale įveskite 'T', jei faile įveskite 'F': ";
@@ -527,6 +486,7 @@ string pasirinkimas_isvedimo(){
     return isvedimo_pasirinkimas;
 }
 
+// Funkcija skirta duomenų tvarkymui, tai atspausdinimui, kategorijos priskirimui, naujų failų sukurimui.
 void Duom_tvarkymas(vector<Studentas>& stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis){
         cout << endl;
         SpausdinimasRez(stud, kiekis, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
@@ -534,6 +494,7 @@ void Duom_tvarkymas(vector<Studentas>& stud, vector<Studentas> &stud_Vargsiukai,
 
         Timer t1;
         Kategorijos_Priskirimas(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
+        stud.clear();
         cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s\n";
         cout << endl;
 

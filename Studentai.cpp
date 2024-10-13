@@ -6,14 +6,19 @@ int main() {
     vector<Studentas> stud;
     vector<Studentas> stud_Vargsiukai, stud_Kietiakai;
     Studentas s;
-    vector<int> kiekis;
+    vector<int> kiekis;         // Skirtas saugoti generuojamų failų dydžius
 
-    string eil;   // Skirtas saugoti duomenu eilutei
+    string eil;         // Skirtas saugoti duomenu eilutei
+
+    int n;                           // Skirtas išsaugoti studentų kiekį
+    string random_pasirinkimas;      // Skirtas išsaugoti vartotojo pasirinkimą dėl įvertinimų generavimo.
+
+    ifstream failasIn;               //Skirtas failo nuskaitymui
+    string f_pav;                    //Failo pavadinimas
 
     string rez_pasirinkimas;
     string rusiavimo_p;
     string isvedimo_pasirinkimas;
-
 
     string ivedimo_skaitymo_p;
     cout << "Pasirinkite ar norite duomenis įvesti, nuskaityti juos iš failo, sugeneruoti ar testuoti duomenų failą?(Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T) ";
@@ -31,12 +36,6 @@ int main() {
             cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
         }
     }
-
-    int n;   // Skirtas išsaugoti studentų kiekį
-    string random_pasirinkimas;   // Skirtas išsaugoti vartotojo pasirinkimą dėl įvertinimų generavimo.
-
-    ifstream failasIn;   //Skirtas failo nuskaitymui
-    string f_pav;        //Failo pavadinimas
 
     if(ivedimo_skaitymo_p == "N" || ivedimo_skaitymo_p == "n"){
         Duom_is_failo(stud, s);
@@ -89,7 +88,6 @@ int main() {
 
     if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
         int nd_kiekis;
-        string eil;
         cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
         cin.ignore();
         while(true){
@@ -120,15 +118,9 @@ int main() {
         Duom_ivedimas(s);
         stud.push_back(s);
         valymas(s);
-    }
-    
-    if(ivedimo_skaitymo_p == "S" || ivedimo_skaitymo_p == "s" || ivedimo_skaitymo_p == "T" || ivedimo_skaitymo_p == "t"){
-        rez_pasirinkimas = pasirinkimas_del_galutinio();
-        rusiavimo_p = pasirinkimas_del_rusiavimo();
-    }
-
-    if(ivedimo_skaitymo_p == "S" || ivedimo_skaitymo_p == "s"){
-        kiekis = {1000, 10000, 100000};
+    } 
+    else if(ivedimo_skaitymo_p == "S" || ivedimo_skaitymo_p == "s"){
+        kiekis = {1000, 10000, 100000, 1000000, 10000000};
         cout << endl;
         for (int k: kiekis){
             Timer t;
@@ -141,8 +133,8 @@ int main() {
         }
     }
     else if(ivedimo_skaitymo_p == "T" || ivedimo_skaitymo_p == "t"){
-        // system("dir *.txt");
-        // system("dir /b *.txt");
+        rez_pasirinkimas = pasirinkimas_del_galutinio();
+        rusiavimo_p = pasirinkimas_del_rusiavimo();
 
         Duom_is_failo(stud, s);
 

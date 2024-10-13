@@ -18,7 +18,7 @@ void Duom_ivedimas(Studentas &s);
 void Duom_generavimas(Studentas &s, ostream &out, int nd_kiekis);
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
-void Stud_is_failo(Studentas &s, string eil);
+void Duom_is_failo(vector<Studentas>& stud, Studentas& s);
 
 void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis);
 
@@ -43,18 +43,22 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
 
+// Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas);
 
+// Funkcija, įrašo į failą pateiktą vektorių.
 void FailasPgalKategorija(vector<Studentas> studentai, string pasirinkimas, string pav);
 
+// Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
 string pasirinkimas_del_galutinio();
 
+// Funkcija, skirta vartotojui pasirinkti pagal ką reikia surūšiuoti studentus.
 string pasirinkimas_del_rusiavimo();
 
+// Funkcija, skirta vartotojui pasirinkti kur nori matyti rezultatą, ar terminale, ar faile.
 string pasirinkimas_isvedimo();
 
+// Funkcija skirta duomenų tvarkymui, tai atspausdinimui, kategorijos priskirimui, naujų failų sukurimui.
 void Duom_tvarkymas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
-
-void Duom_is_failo(vector<Studentas>& stud, Studentas& s);
 
 #endif
