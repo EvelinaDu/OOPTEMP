@@ -20,6 +20,25 @@ int main() {
     string rusiavimo_p;
     string isvedimo_pasirinkimas;
 
+
+    string vektorius_arba_sarasas;
+    cout << "Pasirinkite su kokia duomenų struktūra norite dirbti, su vektoriumi ar su sąrašu (V - vektoriumi, S - sąrašu): ";
+    while(true){
+        cin >> vektorius_arba_sarasas;
+
+        // Išimčių tvarkymas skirtas vektoriaus arba sąrašo pasirinkimui.
+        try{
+            if(vektorius_arba_sarasas != "V" && vektorius_arba_sarasas != "v" && vektorius_arba_sarasas != "S" && vektorius_arba_sarasas != "s"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V' arba 'S'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+
+
     string ivedimo_skaitymo_p = pasirinkimas_del_programos_vykdymo();
 
     if(ivedimo_skaitymo_p == "N" || ivedimo_skaitymo_p == "n"){
@@ -48,11 +67,9 @@ int main() {
         // system("dir /b *.txt");
         // system("dir *.txt /B");
         Duom_is_failo(stud, s);
-        
 
         n = stud.size();
         Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, n);
-
     }
     
 
