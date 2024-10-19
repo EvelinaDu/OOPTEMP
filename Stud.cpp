@@ -83,6 +83,7 @@ void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
     out << s.egz << endl;
 }
 
+
 void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n){
     string eil;
     string random_pasirinkimas;
@@ -167,7 +168,9 @@ void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n){
 }
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
-void Duom_is_failo(vector<Studentas>& stud, Studentas& s){
+
+template <typename Container>
+void Duom_is_failo(Container &stud, Studentas &s){
     ifstream failasIn;   //Skirtas failo nuskaitymui
     string f_pav;        //Failo pavadinimas
     string eil;
@@ -235,6 +238,10 @@ void Duom_is_failo(vector<Studentas>& stud, Studentas& s){
 
     failasIn.close();
 }
+
+template void Duom_is_failo<vector<Studentas>>(vector<Studentas>&, Studentas& s);
+template void Duom_is_failo<list<Studentas>>(list<Studentas>&, Studentas& s);
+
 
 // Funkcija skirta failo generavimui pagal įrašų kiekį
 void Stud_failu_generavimas(vector<Studentas> &stud, Studentas &s, int kiekis){

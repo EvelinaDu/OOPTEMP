@@ -22,7 +22,8 @@ void Duom_generavimas(Studentas &s, ostream &out, int nd_kiekis);
 void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n);
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
-void Duom_is_failo(vector<Studentas>& stud, Studentas& s);
+template <typename Container>
+void Duom_is_failo(Container &stud, Studentas &s);
 
 // Funkcija skirta studentų failo generavimui.
 void Stud_failu_generavimas(vector<Studentas> &stud, Studentas& s, int kiekis);
