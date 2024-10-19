@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <list>
 
 #include <algorithm>   // sort() funkcijai
 
@@ -23,6 +24,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 using std::to_string;
+using std::list;
 
 using std::fixed;
 using std::setprecision;
