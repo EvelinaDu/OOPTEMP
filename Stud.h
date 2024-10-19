@@ -17,6 +17,10 @@ void Duom_ivedimas(Studentas &s);
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
 void Duom_generavimas(Studentas &s, ostream &out, int nd_kiekis);
 
+// Funkcija, kurioje klausiama kiek studentų vartotojas norėtų įtraukti, klausiama studentų vardų bei pavardžių, 
+// klausiama koks įvertinimų įvedimas(rankinis ar generavimas) ir pagal tai įvykdoma. 
+void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n);
+
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 void Duom_is_failo(vector<Studentas>& stud, Studentas& s);
 
@@ -48,6 +52,9 @@ void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Va
 
 // Funkcija, įrašo į failą pateiktą vektorių.
 void FailasPgalKategorija(vector<Studentas> &studentai, string pasirinkimas, string pav);
+
+// Funkcija, skirta vartotojui pasirinkti programos vykdymą (Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T).
+string pasirinkimas_del_programos_vykdymo();
 
 // Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
 string pasirinkimas_del_galutinio();

@@ -84,6 +84,89 @@ void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
     out << s.egz << endl;
 }
 
+void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n){
+    string eil;
+    string random_pasirinkimas;
+
+    cout << "Kiek studentų norite įtraukti į sistemą: ";
+    cin.ignore();
+    while(true){
+        
+        getline(cin, eil);   // Įvedama visą eilutė.
+        // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
+        try{
+            stringstream ss(eil);
+            if(!(ss >> n)){
+                throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
+        }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const invalid_argument &e){
+        cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        } 
+    }
+
+    for(int i = 0; i < n; i++){
+        cout << "Įveskite studento vardą: ";
+        cin >> s.vardas;
+
+        cout << "Įveskite studento pavarde: ";
+        cin >> s.pavarde;
+
+        cout << "Ar norite, kad mokinio gautieji balai už namų darbus bei egzaminą būtų generuojami atsitiktinai?(Taip/Ne) ";
+        while(true){
+
+            cin >> random_pasirinkimas;
+
+        // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
+            try{
+
+                if(random_pasirinkimas != "Taip" && random_pasirinkimas != "taip" && random_pasirinkimas != "Ne" && random_pasirinkimas != "ne"){
+                    throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'Taip' arba 'Ne'. ");
+                }
+                break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+            } catch (const out_of_range &e){
+                cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+            }
+        }
+
+        if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
+            int nd_kiekis;
+            cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
+            cin.ignore();
+            while(true){
+            
+                getline(cin, eil);   // Įvedama visą eilutė
+
+                // Išimčių tvarkymas skirtas studentų skaičiaus įvedimui.
+                try{
+                    stringstream ss(eil);
+                    if(!(ss >> nd_kiekis)){
+                        throw invalid_argument("Netinkama įvestis, įvestis nėra skaičius. ");
+                    }
+                    break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+                } catch (const invalid_argument &e){
+                    cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+                } 
+            }
+            
+            Duom_generavimas(s, cout, nd_kiekis);
+            stud.push_back(s);
+            valymas(s);
+        }
+        else if(random_pasirinkimas == "Ne" || random_pasirinkimas == "ne"){
+
+            // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
+            cin.ignore(); 
+            Duom_ivedimas(s);
+            stud.push_back(s);
+            valymas(s);
+        }
+    } 
+}
+
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 void Duom_is_failo(vector<Studentas>& stud, Studentas& s){
     ifstream failasIn;   //Skirtas failo nuskaitymui
@@ -163,19 +246,19 @@ void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
 
     if(failas.is_open()){
 
-        stud.reserve(kiekis);  // Reservuoja atmintį stud vektoriuje pagal įrašų kiekį
+        stud.reserve(kiekis);               // Reservuoja atmintį stud vektoriuje pagal įrašų kiekį
         for (int i = 0; i < kiekis; ++i) {
-            stud.emplace_back();  // Add default Studentas objects to the vector
+            stud.emplace_back();            // Į vektorių įtraukiamas studento tipo objektas
         }
 
-
+        // Antraštė
         failas << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde";
         for(int i = 0; i < 15; i++){
             failas << setw(5) << left << "ND" + to_string(i + 1);
         }
         failas << setw(5) << left << "EGZ" << endl;
 
-
+        // Sukuriami studentų duomenys
         for(int i = 0; i < kiekis; i++){
             string vardas = "Vardas" + to_string(i + 1);
             string pavarde = "Pavarde" + to_string(i + 1);
@@ -411,6 +494,27 @@ void FailasPgalKategorija(vector<Studentas> &studentai, string pasirinkimas, str
     failas.close();
 
     cout << "Rezultatas sėkmingai įrašytas į "<< pav <<" failą!" << endl;
+}
+
+string pasirinkimas_del_programos_vykdymo(){
+    string ivedimo_skaitymo_p;
+    cout << "Pasirinkite ar norite duomenis įvesti, nuskaityti juos iš failo, sugeneruoti ar testuoti duomenų failą?(Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T) ";
+    while(true){
+        cin >> ivedimo_skaitymo_p;
+
+        // Išimčių tvarkymas skirtas ivedimo ar skaitymo pasirinkimui.
+        try{
+            if(ivedimo_skaitymo_p != "N" && ivedimo_skaitymo_p != "n" && ivedimo_skaitymo_p != "I" && ivedimo_skaitymo_p != "i" && ivedimo_skaitymo_p != "S" && ivedimo_skaitymo_p != "s" && ivedimo_skaitymo_p != "T" && ivedimo_skaitymo_p != "t"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'I' arba 'N'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+
+    return ivedimo_skaitymo_p;
 }
 
 // Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
