@@ -24,7 +24,8 @@ void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n);
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 void Duom_is_failo(vector<Studentas>& stud, Studentas& s);
 
-void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis);
+// Funkcija skirta studentų failo generavimui.
+void Stud_failu_generavimas(vector<Studentas> &stud, Studentas& s, int kiekis);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s);

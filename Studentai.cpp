@@ -34,7 +34,7 @@ int main() {
         for (int k: kiekis){
             Timer t;
 
-            Stud_failu_generavimas(stud, k);
+            Stud_failu_generavimas(stud, s, k);
 
             cout << "Failo su "<< stud.size() << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
             stud.clear();

@@ -60,18 +60,17 @@ void Duom_ivedimas(Studentas &s){
 
 }
 
+int min_rezult = 1;
+int max_result = 10;
+
+//Atsitiktiniu skaičiu generatorius
+random_device rd_genrator;   
+// Intervalas atsitiktinei reikšmei
+uniform_int_distribution<int> Ivertinimas(min_rezult, max_result);
+
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
 void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
-    int min_rezult = 1;
-    int max_result = 10;
 
-    //Atsitiktiniu skaičiu generatorius
-    random_device rd_genrator;   
-    // Intervalas atsitiktinei reikšmei
-    uniform_int_distribution<int> Ivertinimas(min_rezult, max_result);
-
-
-// Sugeneruoja namų darbų įvertinimus pagal nurodyta kiekį.
     for(int i = 0; i < nd_kiekis; i++){
 
         int nd_ivertinimas = Ivertinimas(rd_genrator);
@@ -238,7 +237,7 @@ void Duom_is_failo(vector<Studentas>& stud, Studentas& s){
 }
 
 // Funkcija skirta failo generavimui pagal įrašų kiekį
-void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
+void Stud_failu_generavimas(vector<Studentas> &stud, Studentas &s, int kiekis){
     string pav = "Studentai_" + to_string(kiekis) + ".txt";
 
     ofstream failas;
@@ -246,10 +245,7 @@ void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
 
     if(failas.is_open()){
 
-        stud.reserve(kiekis);               // Reservuoja atmintį stud vektoriuje pagal įrašų kiekį
-        for (int i = 0; i < kiekis; ++i) {
-            stud.emplace_back();            // Į vektorių įtraukiamas studento tipo objektas
-        }
+        stud.resize(kiekis);
 
         // Antraštė
         failas << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde";
@@ -264,10 +260,16 @@ void Stud_failu_generavimas(vector<Studentas> &stud, int kiekis){
             string pavarde = "Pavarde" + to_string(i + 1);
 
             failas << setw(15) << left << vardas << setw(15) << left << pavarde  << " ";
-
-            Duom_generavimas(stud[i], failas, 15);
-
+            for(int i = 0; i < 15; i++){
+                int nd_ivertinimas = Ivertinimas(rd_genrator);
+                failas << setw(5) << left << nd_ivertinimas;
+                s.nd.push_back(nd_ivertinimas);
+            }
+            s.egz = Ivertinimas(rd_genrator);
+            failas << s.egz << endl;
         }
+        
+
         failas.close();
         cout << "Failas "<< pav << " sugeneruotas sėkmingai! Sugeneruota: " << kiekis << " įrašai(-ų)" << endl;
         
