@@ -41,3 +41,5 @@ using std::runtime_error;
 
 using std::random_device;
 using std::uniform_int_distribution;
+
+using std::is_same_v;

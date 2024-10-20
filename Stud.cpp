@@ -83,8 +83,8 @@ void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
     out << s.egz << endl;
 }
 
-
-void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n){
+template <typename Container>
+void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
     string eil;
     string random_pasirinkimas;
 
@@ -166,6 +166,11 @@ void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n){
         }
     } 
 }
+
+// Info_ivedimas_ranka(Container &stud, Studentas &s, int n)
+template void Info_ivedimas_ranka<vector<Studentas>>(vector<Studentas>&, Studentas&, int);
+template void Info_ivedimas_ranka<list<Studentas>>(list<Studentas>&, Studentas&, int);
+
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 
@@ -361,57 +366,151 @@ void Rez_antraste(string pasirinkimas, ostream &out){
 }
 
 // Funkcija skirta studentų vektoriui surušiuoti.
-void Studentu_rusiavimas(vector<Studentas> &stud, string pasirinkimas, string galutinis_pasirinkimas){
-    if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+template <typename Container>
+void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_pasirinkimas){
+    if constexpr (is_same_v<Container, vector<Studentas>>){
+        if(pasirinkimas == "VP" || pasirinkimas == "vp"){
         // Rūšiavimas pagal vardą ir pavardę
-        sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-        if(s1.vardas != s2.vardas){
-            return s1.vardas < s2.vardas;
-        }
-        return s1.pavarde < s2.pavarde;
-        });
-    } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
-         // Rūšiavimas pagal pavardę ir vardą
-        sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-        if(s1.pavarde != s2.pavarde){
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+            if(s1.vardas != s2.vardas){
+                return s1.vardas < s2.vardas;
+            }
             return s1.pavarde < s2.pavarde;
+            });
+        } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
+            // Rūšiavimas pagal pavardę ir vardą
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+            if(s1.pavarde != s2.pavarde){
+                return s1.pavarde < s2.pavarde;
+            }
+            return s1.vardas < s2.vardas;
+            });
         }
-        return s1.vardas < s2.vardas;
-        });
+        else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
+            // Rušiavimas pagal galutinį įvertinimą
+            if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+                sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+                return s1.galutinis_vid > s2.galutinis_vid;
+            });
+            } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+                sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+                return s1.galutinis_med > s2.galutinis_med;
+            });
+            }
+        } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
+            // Rušiavimas pagal galutinį įvertinimą
+            if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+                sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+                return s1.galutinis_vid < s2.galutinis_vid;
+            });
+            } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+                sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+                return s1.galutinis_med < s2.galutinis_med;
+            });
+            }
+        }
+    } else {
+        if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+            stud.sort([](const Studentas &s1, const Studentas &s2) {
+                if (s1.vardas != s2.vardas) {
+                    return s1.vardas < s2.vardas;
+                }
+                return s1.pavarde < s2.pavarde;
+            });
+        } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
+            // Rūšiavimas pagal pavardę ir vardą
+            stud.sort([](const Studentas &s1, const Studentas &s2) {
+                if (s1.pavarde != s2.pavarde) {
+                    return s1.pavarde < s2.pavarde;
+                }
+                return s1.vardas < s2.vardas;
+            });
+        } else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
+            // Rušiavimas pagal galutinį įvertinimą
+            if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+                stud.sort([](const Studentas &s1, const Studentas &s2) {
+                    return s1.galutinis_vid > s2.galutinis_vid;
+                });
+            } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+                stud.sort([](const Studentas &s1, const Studentas &s2){
+                    return s1.galutinis_med > s2.galutinis_med;
+                });
+            }
+        } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
+            // Rušiavimas pagal galutinį įvertinimą
+            if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+                stud.sort([](const Studentas &s1, const Studentas &s2) {
+                    return s1.galutinis_vid < s2.galutinis_vid;
+                });
+            } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+                stud.sort([](const Studentas &s1, const Studentas &s2){
+                    return s1.galutinis_med < s2.galutinis_med;
+                });
+            }
+        }
     }
-    else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
-        // Rušiavimas pagal galutinį įvertinimą
-        if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
-            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-            return s1.galutinis_vid > s2.galutinis_vid;
-        });
-        } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
-            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-            return s1.galutinis_med > s2.galutinis_med;
-        });
-        }
-    } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
-        // Rušiavimas pagal galutinį įvertinimą
-        if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
-            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-            return s1.galutinis_vid < s2.galutinis_vid;
-        });
-        } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
-            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-            return s1.galutinis_med < s2.galutinis_med;
-        });
-        }
-    }
+
+
+
+
+    // if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+    //     // Rūšiavimas pagal vardą ir pavardę
+    //     sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+    //     if(s1.vardas != s2.vardas){
+    //         return s1.vardas < s2.vardas;
+    //     }
+    //     return s1.pavarde < s2.pavarde;
+    //     });
+    // } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
+    //      // Rūšiavimas pagal pavardę ir vardą
+    //     sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
+    //     if(s1.pavarde != s2.pavarde){
+    //         return s1.pavarde < s2.pavarde;
+    //     }
+    //     return s1.vardas < s2.vardas;
+    //     });
+    // }
+    // else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
+    //     // Rušiavimas pagal galutinį įvertinimą
+    //     if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+    //         return s1.galutinis_vid > s2.galutinis_vid;
+    //     });
+    //     } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+    //         return s1.galutinis_med > s2.galutinis_med;
+    //     });
+    //     }
+    // } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
+    //     // Rušiavimas pagal galutinį įvertinimą
+    //     if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
+    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+    //         return s1.galutinis_vid < s2.galutinis_vid;
+    //     });
+    //     } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
+    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+    //         return s1.galutinis_med < s2.galutinis_med;
+    //     });
+    //     }
+    // }
 }
 
+
 // Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
-void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p){
+template <typename Container>
+void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p){
     ofstream failasOut;
 
-    for (int i = 0; i < n; i++){
-        Ivertinimas_vid(stud[i]);
-        Ivertinimas_med(stud[i]);
+    // for (int i = 0; i < n; i++){
+    //     Ivertinimas_vid(stud[i]);
+    //     Ivertinimas_med(stud[i]);
 
+    // }
+    auto i = stud.begin();
+    while(i != stud.end()){
+        Ivertinimas_vid(*i);
+        Ivertinimas_med(*i);
+        ++i;
     }
 
     //Rusiavimas
@@ -419,9 +518,14 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
         Rez_antraste(rez_pasirinkimas, cout);
-        for (int i = 0; i < n; i++){
-        Stud_spausdinimas(stud.at(i), cout, rez_pasirinkimas);
+        // for (int i = 0; i < n; i++){
+        // Stud_spausdinimas(stud.at(i), cout, rez_pasirinkimas);
+        // }
+
+        for (auto &studentas : stud){
+            Stud_spausdinimas(studentas, cout, rez_pasirinkimas);
         }
+
     }
     else if (isvedimo_pasirinkimas == "F" || isvedimo_pasirinkimas == "f" || ivedimo_skaitymo_p == "T" || ivedimo_skaitymo_p == "t"){
         failasOut.open("Rez.txt");
@@ -429,8 +533,12 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
         if(failasOut.is_open()){
 
             Rez_antraste(rez_pasirinkimas, failasOut);
-            for (int i = 0; i < n; i++){
-                Stud_spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
+            // for (int i = 0; i < n; i++){
+            //     Stud_spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
+            // }
+
+            for (auto &studentas : stud){
+            Stud_spausdinimas(studentas, failasOut, rez_pasirinkimas);
             }
 
             failasOut.close();
@@ -441,6 +549,10 @@ void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkima
         }
     }
 }
+
+template void SpausdinimasRez<vector<Studentas>>(vector<Studentas>&, int, string, string, string, string);
+template void SpausdinimasRez<list<Studentas>>(list<Studentas>&, int, string, string, string, string);
+
 
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s){

@@ -19,14 +19,15 @@ void Duom_generavimas(Studentas &s, ostream &out, int nd_kiekis);
 
 // Funkcija, kurioje klausiama kiek studentų vartotojas norėtų įtraukti, klausiama studentų vardų bei pavardžių, 
 // klausiama koks įvertinimų įvedimas(rankinis ar generavimas) ir pagal tai įvykdoma. 
-void Info_ivedimas_ranka(vector<Studentas>& stud, Studentas& s, int n);
+template <typename Container>
+void Info_ivedimas_ranka(Container &stud, Studentas &s, int n);
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 template <typename Container>
 void Duom_is_failo(Container &stud, Studentas &s);
 
 // Funkcija skirta studentų failo generavimui.
-void Stud_failu_generavimas(vector<Studentas> &stud, Studentas& s, int kiekis);
+void Stud_failu_generavimas(vector<Studentas> &stud, Studentas &s, int kiekis);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s);
@@ -41,10 +42,12 @@ void Stud_spausdinimas(Studentas &s, ostream &out, string p);
 void Rez_antraste(string pasirinkimas, ostream &out);
 
 // Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
-void Studentu_rusiavimas(vector<Studentas> &stud, string pasirinkimas, string galutinis_pasirinkimas);
+template <typename Container>
+void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_pasirinkimas);
 
 // Funkcija skirta rezultatams atspausdinti į terminalą (vartotojui pasirinkus 'T') arba įrašyti į failą (vartotojui pasirinkus 'F').
-void SpausdinimasRez(vector<Studentas> &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p);
+template <typename Container>
+void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p);
 
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
