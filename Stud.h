@@ -27,7 +27,8 @@ template <typename Container>
 void Duom_is_failo(Container &stud, Studentas &s);
 
 // Funkcija skirta studentų failo generavimui.
-void Stud_failu_generavimas(vector<Studentas> &stud, Studentas &s, int kiekis);
+template <typename Container>
+void Stud_failu_generavimas(Container &stud, Studentas &s, int kiekis);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s);

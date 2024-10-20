@@ -249,7 +249,8 @@ template void Duom_is_failo<list<Studentas>>(list<Studentas>&, Studentas& s);
 
 
 // Funkcija skirta failo generavimui pagal įrašų kiekį
-void Stud_failu_generavimas(vector<Studentas> &stud, Studentas &s, int kiekis){
+template <typename Container>
+void Stud_failu_generavimas(Container &stud, Studentas &s, int kiekis){
     string pav = "Studentai_" + to_string(kiekis) + ".txt";
 
     ofstream failas;
@@ -291,6 +292,9 @@ void Stud_failu_generavimas(vector<Studentas> &stud, Studentas &s, int kiekis){
     }
 
 }
+
+template void Stud_failu_generavimas<vector<Studentas>>(vector<Studentas> &stud, Studentas &s, int kiekis);
+template void Stud_failu_generavimas<list<Studentas>>(list<Studentas> &stud, Studentas &s, int kiekis);
 
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
