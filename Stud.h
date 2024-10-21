@@ -27,8 +27,7 @@ template <typename Container>
 void Duom_is_failo(Container &stud, Studentas &s);
 
 // Funkcija skirta studentų failo generavimui.
-template <typename Container>
-void Stud_failu_generavimas(Container &stud, Studentas &s, int kiekis);
+void Stud_failu_generavimas(int kiekis);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
 void Ivertinimas_vid(Studentas &s);
@@ -54,10 +53,12 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
 void valymas(Studentas &s);
 
 // Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
-void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas);
+template <typename Container>
+void Kategorijos_Priskirimas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, int n, string pasirinkimas);
 
 // Funkcija, įrašo į failą pateiktą vektorių.
-void FailasPgalKategorija(vector<Studentas> &studentai, string pasirinkimas, string pav);
+template <typename Container>
+void FailasPgalKategorija(Container &studentai, string pasirinkimas, string pav);
 
 // Funkcija, skirta vartotojui pasirinkti programos vykdymą (Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T).
 string pasirinkimas_del_programos_vykdymo();
@@ -72,6 +73,7 @@ string pasirinkimas_del_rusiavimo();
 string pasirinkimas_isvedimo();
 
 // Funkcija skirta duomenų tvarkymui, tai atspausdinimui, kategorijos priskirimui, naujų failų sukurimui.
-void Duom_tvarkymas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
+template <typename Container>
+void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
 
 #endif

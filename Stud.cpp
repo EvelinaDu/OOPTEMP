@@ -249,16 +249,13 @@ template void Duom_is_failo<list<Studentas>>(list<Studentas>&, Studentas& s);
 
 
 // Funkcija skirta failo generavimui pagal įrašų kiekį
-template <typename Container>
-void Stud_failu_generavimas(Container &stud, Studentas &s, int kiekis){
+void Stud_failu_generavimas(int kiekis){
     string pav = "Studentai_" + to_string(kiekis) + ".txt";
 
     ofstream failas;
     failas.open(pav);
 
     if(failas.is_open()){
-
-        stud.resize(kiekis);
 
         // Antraštė
         failas << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde";
@@ -276,10 +273,9 @@ void Stud_failu_generavimas(Container &stud, Studentas &s, int kiekis){
             for(int i = 0; i < 15; i++){
                 int nd_ivertinimas = Ivertinimas(rd_genrator);
                 failas << setw(5) << left << nd_ivertinimas;
-                s.nd.push_back(nd_ivertinimas);
             }
-            s.egz = Ivertinimas(rd_genrator);
-            failas << s.egz << endl;
+            int egz = Ivertinimas(rd_genrator);
+            failas << setw(5) << left << egz << "\n";
         }
         
 
@@ -292,9 +288,6 @@ void Stud_failu_generavimas(Container &stud, Studentas &s, int kiekis){
     }
 
 }
-
-template void Stud_failu_generavimas<vector<Studentas>>(vector<Studentas> &stud, Studentas &s, int kiekis);
-template void Stud_failu_generavimas<list<Studentas>>(list<Studentas> &stud, Studentas &s, int kiekis);
 
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
@@ -453,50 +446,6 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
             }
         }
     }
-
-
-
-
-    // if(pasirinkimas == "VP" || pasirinkimas == "vp"){
-    //     // Rūšiavimas pagal vardą ir pavardę
-    //     sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-    //     if(s1.vardas != s2.vardas){
-    //         return s1.vardas < s2.vardas;
-    //     }
-    //     return s1.pavarde < s2.pavarde;
-    //     });
-    // } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
-    //      // Rūšiavimas pagal pavardę ir vardą
-    //     sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-    //     if(s1.pavarde != s2.pavarde){
-    //         return s1.pavarde < s2.pavarde;
-    //     }
-    //     return s1.vardas < s2.vardas;
-    //     });
-    // }
-    // else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
-    //     // Rušiavimas pagal galutinį įvertinimą
-    //     if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
-    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-    //         return s1.galutinis_vid > s2.galutinis_vid;
-    //     });
-    //     } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
-    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-    //         return s1.galutinis_med > s2.galutinis_med;
-    //     });
-    //     }
-    // } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
-    //     // Rušiavimas pagal galutinį įvertinimą
-    //     if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
-    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-    //         return s1.galutinis_vid < s2.galutinis_vid;
-    //     });
-    //     } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
-    //         sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-    //         return s1.galutinis_med < s2.galutinis_med;
-    //     });
-    //     }
-    // }
 }
 
 
@@ -567,40 +516,29 @@ void valymas(Studentas &s){
 }
 
 // Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
-void Kategorijos_Priskirimas(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, int n, string pasirinkimas){
-    Studentas v, k;
-    for (int i = 0; i < n; i++){
+template <typename Container>
+void Kategorijos_Priskirimas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, int n, string pasirinkimas){
+    for (const auto& studentas : stud){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
-            if (stud[i].galutinis_vid < 5.0){
-                v.vardas = stud[i].vardas;
-                v.pavarde = stud[i].pavarde;
-                v.galutinis_vid = stud[i].galutinis_vid;
-                stud_Vargsiukai.push_back(v);
-            }else{
-                k.vardas = stud[i].vardas;
-                k.pavarde = stud[i].pavarde;
-                k.galutinis_vid = stud[i].galutinis_vid;
-                stud_Kietiakai.push_back(k);
+            if (studentas.galutinis_vid < 5.0){
+                stud_Vargsiukai.push_back(studentas);
+            } else {
+                stud_Kietiakai.push_back(studentas);
             }
-        } else if (pasirinkimas == "M" || pasirinkimas == "m"){
-            if (stud[i].galutinis_vid < 5.0){
-                v.vardas = stud[i].vardas;
-                v.pavarde = stud[i].pavarde;
-                v.galutinis_med = stud[i].galutinis_med;
-                stud_Vargsiukai.push_back(v);
-            }
-            else{
-                k.vardas = stud[i].vardas;
-                k.pavarde = stud[i].pavarde;
-                k.galutinis_med = stud[i].galutinis_med;
-                stud_Kietiakai.push_back(k);
+        } 
+        else if(pasirinkimas == "M" || pasirinkimas == "m"){
+            if (studentas.galutinis_med < 5.0){
+                stud_Vargsiukai.push_back(studentas);
+            } else {
+                stud_Kietiakai.push_back(studentas);
             }
         }
     }
 }
 
 // Funkcija, įrašo į failą pateiktą vektorių.
-void FailasPgalKategorija(vector<Studentas> &studentai, string pasirinkimas, string pav){
+template <typename Container>
+void FailasPgalKategorija(Container &studentai, string pasirinkimas, string pav){
     ofstream failas;
 
     failas.open(pav);
@@ -716,7 +654,8 @@ string pasirinkimas_isvedimo(){
 }
 
 // Funkcija skirta duomenų tvarkymui, tai atspausdinimui, kategorijos priskirimui, naujų failų sukurimui.
-void Duom_tvarkymas(vector<Studentas>& stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis){
+template <typename Container>
+void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis){
         cout << endl;
         SpausdinimasRez(stud, kiekis, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
         cout << endl;
@@ -739,3 +678,6 @@ void Duom_tvarkymas(vector<Studentas>& stud, vector<Studentas> &stud_Vargsiukai,
         cout << endl;
 
 }
+
+template void Duom_tvarkymas<vector<Studentas>>(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
+template void Duom_tvarkymas<list<Studentas>>(list<Studentas> &stud, list<Studentas> &stud_Vargsiukai, list<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);

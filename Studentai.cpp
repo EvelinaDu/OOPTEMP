@@ -2,6 +2,7 @@
 #include "Stud.h"
 #include "timer.h"
 
+
 int main() {
     // vector<Studentas> stud;
     // vector<Studentas> stud_Vargsiukai, stud_Kietiakai;
@@ -58,7 +59,7 @@ int main() {
             for (int k: kiekis){
                 Timer t;
 
-                Stud_failu_generavimas(stud, s, k);
+                Stud_failu_generavimas(k);
 
                 cout << "Failo su "<< stud.size() << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
                 stud.clear();
@@ -84,6 +85,7 @@ int main() {
             n = stud.size();
             SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
         }
+
     } 
     else{
         list<Studentas> stud;
@@ -103,9 +105,9 @@ int main() {
             for (int k: kiekis){
                 Timer t;
 
-                Stud_failu_generavimas(stud, s, k);
+                Stud_failu_generavimas(k);
 
-                cout << "Failo su "<< stud.size() << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
+                cout << "Failo su "<< k << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
                 stud.clear();
                 cout << endl;
             }
@@ -122,15 +124,14 @@ int main() {
             Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, n);
         }
         
-
         if(ivedimo_skaitymo_p != "S" && ivedimo_skaitymo_p != "s" && ivedimo_skaitymo_p != "T" && ivedimo_skaitymo_p != "t"){
-            rez_pasirinkimas = pasirinkimas_del_galutinio();
-            rusiavimo_p = pasirinkimas_del_rusiavimo();
-            isvedimo_pasirinkimas = pasirinkimas_isvedimo();
-            n = stud.size();
-            SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
+        rez_pasirinkimas = pasirinkimas_del_galutinio();
+        rusiavimo_p = pasirinkimas_del_rusiavimo();
+        isvedimo_pasirinkimas = pasirinkimas_isvedimo();
+        n = stud.size();
+        SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
 
-        }
+    }
     }
 
     
