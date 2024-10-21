@@ -63,6 +63,9 @@ void FailasPgalKategorija(Container &studentai, string pasirinkimas, string pav)
 // Funkcija, skirta vartotojui pasirinkti programos vykdymą (Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T).
 string pasirinkimas_del_programos_vykdymo();
 
+// Funkcija, skirta vartotojui pasirinkti duomenų struktūrą (V - vektorius, S - sąrašas).
+string pasirinkimas_del_duom_strukturos();
+
 // Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
 string pasirinkimas_del_galutinio();
 

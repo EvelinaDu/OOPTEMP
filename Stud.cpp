@@ -454,11 +454,6 @@ template <typename Container>
 void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p){
     ofstream failasOut;
 
-    // for (int i = 0; i < n; i++){
-    //     Ivertinimas_vid(stud[i]);
-    //     Ivertinimas_med(stud[i]);
-
-    // }
     auto i = stud.begin();
     while(i != stud.end()){
         Ivertinimas_vid(*i);
@@ -471,9 +466,6 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
         Rez_antraste(rez_pasirinkimas, cout);
-        // for (int i = 0; i < n; i++){
-        // Stud_spausdinimas(stud.at(i), cout, rez_pasirinkimas);
-        // }
 
         for (auto &studentas : stud){
             Stud_spausdinimas(studentas, cout, rez_pasirinkimas);
@@ -486,9 +478,6 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
         if(failasOut.is_open()){
 
             Rez_antraste(rez_pasirinkimas, failasOut);
-            // for (int i = 0; i < n; i++){
-            //     Stud_spausdinimas(stud.at(i), failasOut, rez_pasirinkimas);
-            // }
 
             for (auto &studentas : stud){
             Stud_spausdinimas(studentas, failasOut, rez_pasirinkimas);
@@ -578,6 +567,27 @@ string pasirinkimas_del_programos_vykdymo(){
     }
 
     return ivedimo_skaitymo_p;
+}
+
+string pasirinkimas_del_duom_strukturos(){
+    string vektorius_arba_sarasas;
+    cout << "Pasirinkite su kokia duomenų struktūra norite dirbti, su vektoriumi ar su sąrašu (V - vektorius, S - sąrašas): ";
+
+    while(true){
+        cin >> vektorius_arba_sarasas;
+
+        // Išimčių tvarkymas skirtas vektoriaus arba sąrašo pasirinkimui.
+        try{
+            if(vektorius_arba_sarasas != "V" && vektorius_arba_sarasas != "v" && vektorius_arba_sarasas != "S" && vektorius_arba_sarasas != "s"){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V' arba 'S'. ");
+            }
+            break;   // Išeiname iš while ciklo, jei įvestis teisinga.
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+    return vektorius_arba_sarasas;
 }
 
 // Funkcija, skirta vartotojui pasirinkti galutinį įvertinimą, pagal vidurkį arba pagal medianą.
