@@ -164,16 +164,15 @@ void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
             stud.push_back(s);
             valymas(s);
         }
+
     } 
 }
 
-// Info_ivedimas_ranka(Container &stud, Studentas &s, int n)
 template void Info_ivedimas_ranka<vector<Studentas>>(vector<Studentas>&, Studentas&, int);
 template void Info_ivedimas_ranka<list<Studentas>>(list<Studentas>&, Studentas&, int);
 
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
-
 template <typename Container>
 void Duom_is_failo(Container &stud, Studentas &s){
     ifstream failasIn;   //Skirtas failo nuskaitymui
@@ -339,27 +338,50 @@ void Ivertinimas_med(Studentas &s){
 }
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
-void Stud_spausdinimas(Studentas &s, ostream &out, string p){
-    if(p == "V" || p == "v"){
-        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
+void Stud_spausdinimas(Studentas &s, ostream &out, string p, string isvedimo_pasirinkimas){
+    if(isvedimo_pasirinkimas  == "T" || isvedimo_pasirinkimas == "t"){
+        if(p == "V" || p == "v"){
+            out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(20) << left << fixed << setprecision(2) << s.galutinis_vid  << setw(20) << left << &s << endl;
+        }
+        else if(p == "M" || p == "m"){
+            out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(20) << left << fixed << setprecision(2) << s.galutinis_med  << setw(20) << left << &s << endl;
+        }
+    } else{
+        if(p == "V" || p == "v"){
+            out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_vid << endl;
+        }
+        else if(p == "M" || p == "m"){
+            out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
+        }
     }
-    else if(p == "M" || p == "m"){
-        out << setw(15) << left << s.vardas << setw(16) << left << s.pavarde << setw(16) << left << fixed << setprecision(2) << s.galutinis_med << endl;
-    }
+    
 
 }
 
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
-void Rez_antraste(string pasirinkimas, ostream &out){
+void Rez_antraste(string pasirinkimas, ostream &out, string isvedimo_pasirinkimas){
     
-    if(pasirinkimas == "V" || pasirinkimas == "v"){
-        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
-        out << "------------------------------------------------" << endl;
+    if (isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
+        if(pasirinkimas == "V" || pasirinkimas == "v"){
+            out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(20) << left << "Galutinis (Vid.)" << setw(20) << left << "Adresas atmintyje" << endl;
+            out << "-------------------------------------------------------------------------" << endl;
+        }
+        else if(pasirinkimas == "M" || pasirinkimas == "m"){
+            out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(20) << left << "Galutinis (Med.)" << setw(20) << left << "Adresas atmintyje" << endl;
+            out << "-------------------------------------------------------------------------" << endl;
+        }
+    } else {
+        if(pasirinkimas == "V" || pasirinkimas == "v"){
+            out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Vid.)" << endl;
+            out << "------------------------------------------------" << endl;
+        }
+        else if(pasirinkimas == "M" || pasirinkimas == "m"){
+            out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
+            out << "------------------------------------------------" << endl;
+        }
     }
-    else if(pasirinkimas == "M" || pasirinkimas == "m"){
-        out  << setw(15) << left << "Vardas" << setw(15) << left << "Pavarde" << setw(16) << left << "Galutinis (Med.)" << endl;
-        out << "------------------------------------------------" << endl;
-    }
+    
+
 }
 
 // Funkcija skirta studentų vektoriui surušiuoti.
@@ -465,10 +487,10 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
     Studentu_rusiavimas(stud, rusiavimo_p, rez_pasirinkimas);
 
     if(isvedimo_pasirinkimas == "T" || isvedimo_pasirinkimas == "t"){
-        Rez_antraste(rez_pasirinkimas, cout);
+        Rez_antraste(rez_pasirinkimas, cout, isvedimo_pasirinkimas);
 
         for (auto &studentas : stud){
-            Stud_spausdinimas(studentas, cout, rez_pasirinkimas);
+            Stud_spausdinimas(studentas, cout, rez_pasirinkimas, isvedimo_pasirinkimas);
         }
 
     }
@@ -477,10 +499,10 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
 
         if(failasOut.is_open()){
 
-            Rez_antraste(rez_pasirinkimas, failasOut);
+            Rez_antraste(rez_pasirinkimas, failasOut, isvedimo_pasirinkimas);
 
             for (auto &studentas : stud){
-            Stud_spausdinimas(studentas, failasOut, rez_pasirinkimas);
+            Stud_spausdinimas(studentas, failasOut, rez_pasirinkimas, isvedimo_pasirinkimas);
             }
 
             failasOut.close();
@@ -527,7 +549,7 @@ void Kategorijos_Priskirimas(Container &stud, Container &stud_Vargsiukai, Contai
 
 // Funkcija, įrašo į failą pateiktą vektorių.
 template <typename Container>
-void FailasPgalKategorija(Container &studentai, string pasirinkimas, string pav){
+void FailasPgalKategorija(Container &studentai, string pasirinkimas, string isvedimo_pasirinkimas, string pav){
     ofstream failas;
 
     failas.open(pav);
@@ -537,10 +559,10 @@ void FailasPgalKategorija(Container &studentai, string pasirinkimas, string pav)
     }
 
     // Antraštė
-    Rez_antraste(pasirinkimas, failas);
+    Rez_antraste(pasirinkimas, failas, isvedimo_pasirinkimas);
 
     for(auto &s : studentai){
-        Stud_spausdinimas(s, failas, pasirinkimas);
+        Stud_spausdinimas(s, failas, pasirinkimas, isvedimo_pasirinkimas);
     }
 
     failas.close();
@@ -677,13 +699,13 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
 
         Timer t2;
         // Studentai įrašyti i Vargsiukai.txt failą
-        FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, "Vargsiukai.txt");
+        FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, isvedimo_pasirinkimas, "Vargsiukai.txt");
         cout << "Failo iš "<< kiekis << " įrašų vargšelių įrašymas į failą laikas: " << t2.elapsed() << " s.\n";
         cout << endl;
 
         Timer t3;
         // Studentai įrašyti i Kietiakai.txt failą
-        FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, "Kietiakai.txt");
+        FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
         cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
         cout << endl;
 

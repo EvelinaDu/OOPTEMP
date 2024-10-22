@@ -36,10 +36,10 @@ void Ivertinimas_vid(Studentas &s);
 void Ivertinimas_med(Studentas &s);
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
-void Stud_spausdinimas(Studentas &s, ostream &out, string p);
+void Stud_spausdinimas(Studentas &s, ostream &out, string p, string isvedimo_pasirinkimas);
 
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
-void Rez_antraste(string pasirinkimas, ostream &out);
+void Rez_antraste(string pasirinkimas, ostream &out, string isvedimo_pasirinkimas);
 
 // Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
 template <typename Container>
@@ -58,7 +58,7 @@ void Kategorijos_Priskirimas(Container &stud, Container &stud_Vargsiukai, Contai
 
 // Funkcija, įrašo į failą pateiktą vektorių.
 template <typename Container>
-void FailasPgalKategorija(Container &studentai, string pasirinkimas, string pav);
+void FailasPgalKategorija(Container &studentai, string pasirinkimas, string isvedimo_pasirinkimas, string pav);
 
 // Funkcija, skirta vartotojui pasirinkti programos vykdymą (Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T).
 string pasirinkimas_del_programos_vykdymo();
