@@ -11,54 +11,42 @@
 
 
 ## Aprašymas
-Vartotojui suteikiamas pasirinkimas tarp duomenų įvedimo ranka, nuskaitymo iš failo, failų generavimo (generuojami 5 testiniai failai) ir failų testavimo. Vartotojui pasirinkus įvedima ranka, vartotojas privalo įvesti kiekį studentų, kuriuos nori įvesti į sistemą, taip pat privalo pateikti jų varbus bei pavardes, yra suteikiama galimybė namų darbų bei egzamino įvertinimus generuoti atsitiktinai dešimtbalėje sistemoe. Pagal vartotojo įvestus ar sugeneruotus duomenis yra apskaičiuojamas galutinis įvertinimas pagal vidurkį ir galutinis įvertinimas pagal medianą. Resultatai pateikiami pagal pasirinkimą arba terminale arba 'Rez.txt' faile. Vartotojui pasirinkus failo nuskaitymą, reikės suvesti failo pavadinimą ir bus atlikti tokie patys veiksmai kaip ir su įvedimu ranka. Vartotojui pasirinkus failų generavimą bus sugeneruoti 5 failai su įrašų kiekių: 1000, 10000, 100000, 1000000, 10000000. Vartotojui pasirinkus failų testavimą, pasirinkus ir įvedus norimo failo pavadinimą bus atliktie tokie veiksai: studentų rezultatai bus apskaičiuoti ir įrašyti į txt.failą, studentai rūšiuojami pagal vardą ir pavardę, pavardę ir vardą, galutionio įvertinimo mažėjimo arba didėjimo tvarka, studentai bus suskirstomi į dvi grupes pagal galutinį įvertinimą į 'vargškiukus'(galutinis balas < 5.0 ) ir 'kietiakus' (galutinis balas >= 5.0), sugrupuoti duomenis įrašomi į skirtingus failus.
+Vartotojui suteikiamas pasirinkimas tarp duomenų įvedimo ranka, nuskaitymo iš failo, failų generavimo (generuojami 5 testiniai failai) ir failų testavimo. Vartotojui pasirinkus įvedima ranka, vartotojas privalo įvesti kiekį studentų, kuriuos nori įvesti į sistemą, taip pat privalo pateikti jų varbus bei pavardes, yra suteikiama galimybė namų darbų bei egzamino įvertinimus generuoti atsitiktinai dešimtbalėje sistemoje. Pagal vartotojo įvestus ar sugeneruotus duomenis yra apskaičiuojamas galutinis įvertinimas pagal vidurkį ir galutinis įvertinimas pagal medianą. Resultatai pateikiami pagal pasirinkimą arba terminale arba 'Rez.txt' faile. Vartotojui pasirinkus failo nuskaitymą, reikės suvesti failo pavadinimą ir bus atlikti tokie patys veiksmai kaip ir su įvedimu ranka. Vartotojui pasirinkus failų generavimą bus sugeneruoti 5 failai su įrašų kiekių: 1000, 10000, 100000, 1000000, 10000000. Vartotojui pasirinkus failų testavimą, pasirinkus ir įvedus norimo failo pavadinimą bus atliktie tokie veiksai: studentų rezultatai bus apskaičiuoti ir įrašyti į 'Rez.txt' failą, studentai rūšiuojami pagal vardą ir pavardę, pavardę ir vardą, galutionio įvertinimo mažėjimo arba didėjimo tvarka, studentai bus suskirstomi į dvi grupes pagal galutinį įvertinimą į 'vargškiukus'(galutinis balas < 5.0 ) ir 'kietiakus' (galutinis balas >= 5.0), sugrupuoti duomenis įrašomi į skirtingus failus.
 
 ## Programos vykdymo laikai:
 
-# Failų generavimas:
-Failas Studentai_1000.txt sugeneruotas sėkmingai! Sugeneruota: 1000 įrašai(-ų)
-Failo su 1000 įrašų generavimo laikas: **0.0173236 s.**
-
-Failas Studentai_10000.txt sugeneruotas sėkmingai! Sugeneruota: 10000 įrašai(-ų)
-Failo su 10000 įrašų generavimo laikas: **0.119076 s.**
-
-Failas Studentai_100000.txt sugeneruotas sėkmingai! Sugeneruota: 100000 įrašai(-ų)
-Failo su 100000 įrašų generavimo laikas: **1.39498 s.**
-
-Failas Studentai_1000000.txt sugeneruotas sėkmingai! Sugeneruota: 1000000 įrašai(-ų)
-Failo su 1000000 įrašų generavimo laikas: **8.87131 s.**
-
-Failas Studentai_10000000.txt sugeneruotas sėkmingai! Sugeneruota: 10000000 įrašai(-ų)
-Failo su 10000000 įrašų generavimo laikas: **89.5782 s.**
-
+# Failų generavimo laikas:
+- `1000` įrašų: **0.0038736 s.**
+- `10000` įrašų: **0.02257958 s.**
+- `100000` įrašų: **0.192953 s.**
+- `1000000` įrašų: **1.9046325 s.**
+- `10000000` įrašų: **19.2343 s.**
 
 # Programos veikimo greičio (spartos) analizė:
-# 1000 įrašų
-- Duomenų nuskaitymas iš failo: **0.008387 s.**
-- Studentų rūšiavimas į dvi grupes/kategorijas: **0.000698 s.**
-- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **0.005074 s.**
-- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **0.004745 s.**
 
-# 10000 įrašų
-- Duomenų nuskaitymas iš failo: **0.328642 s.**
-- Studentų rūšiavimas į dvi grupes/kategorijas: **0.010864 s.**
-- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **0.030321 s.**
-- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **0.037418 s.**
+Duomenų struktūra: **Vektorius**									
+                                    
+Kiekis	    Skaitymas		Rūšiavimas į grupes		Įrašymas į Vargšiukus	Įrašymas į kietiakus
+-------------------------------------------------------------------------------------------------		
+1000	    0,014106067		0,002211467		        0,0026483		         0,004467933		
+10000	    0,328121667		0,146104		        0,0226423		         0,023366133		
+100000	    0,929635667		0,870818667		        0,219891		         0,300425333		
+1000000	    5,7608		    1,75895		            3,303086667		         3,894093333		
+10000000	55,69046667		10,22129667		        30,0815		             50,04513333		
+      
 
-# 100000 įrašų
-- Duomenų nuskaitymas iš failo: **0.922479 s.**
-- Studentų rūšiavimas į dvi grupes/kategorijas: **0.024367 s.**
-- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **0.198887 s.**
-- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **0.288225 s.**
+Duomenų struktūra: **Sąrašas**									
+                                    
+Kiekis	    Skaitymas	    Rūšiavimas į grupes		Įrašymas į Vargšiukus	Įrašymas į kietiakus	
+-------------------------------------------------------------------------------------------------		
+1000	    0,007558633		0,0013061		        0,0027216		        0,0043609		
+10000	    0,063555433		0,012328767		        0,022743967		        0,033940633		
+100000	    0,570272333		0,125617667		        0,224325667		        0,319672		
+1000000	    5,625933		1,30252		            2,186376667		        3,349966667		
+10000000	57,85096667		14,05743		        43,69873333		        61,9650		
 
-# 1000000 įrašų
-- Duomenų nuskaitymas iš failo: **5.728837**
-- Studentų rūšiavimas į dvi grupes/kategorijas: **0.21695**
-- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **30.96127**
-- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **2.541053**
+# Testavimo sistemos parametrai:
 
-# 10000000 įrašų
-- Duomenų nuskaitymas iš failo: **53.09053**
-- Studentų rūšiavimas į dvi grupes/kategorijas: **2.099277**
-- Surūšiuotų studentų išvedimą į Vargšelių.txt failą: **154.318**
-- Surūšiuotų studentų išvedimą į Kietiakus.txt failą: **30.06403**
+- CPU - AMD Ryzen 7 7730U with Radeon Graphics  2.00 GHz
+- RAM - 16.0 GB
+- SSD - INTEL SSDPEKNU512GZH

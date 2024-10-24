@@ -4,13 +4,6 @@
 
 
 int main() {
-    // vector<Studentas> stud;
-    // vector<Studentas> stud_Vargsiukai, stud_Kietiakai;
-    // Studentas s;
-    // vector<int> kiekis;              // Skirtas saugoti generuojamų failų dydžius
-
-    string eil;                         // Skirtas saugoti duomenu eilutei
-
     int n;                              // Skirtas išsaugoti studentų kiekį
 
     ifstream failasIn;                  //Skirtas failo nuskaitymui
@@ -45,7 +38,7 @@ int main() {
 
                 Stud_failu_generavimas(k);
 
-                cout << "Failo su "<< stud.size() << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
+                cout << "Failo su "<< k << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
                 stud.clear();
                 cout << endl;
             }
@@ -87,6 +80,7 @@ int main() {
             kiekis = {1000, 10000, 100000, 1000000, 10000000};
             cout << endl;
             for (int k: kiekis){
+
                 Timer t;
 
                 Stud_failu_generavimas(k);
@@ -94,6 +88,7 @@ int main() {
                 cout << "Failo su "<< k << " įrašų generavimo laikas: " << t.elapsed() << " s.\n";
                 stud.clear();
                 cout << endl;
+
             }
         }
         else if(ivedimo_skaitymo_p == "T" || ivedimo_skaitymo_p == "t"){
