@@ -15,7 +15,6 @@
 #include <stdexcept>
 
 
-
 using std::endl;
 using std::cout;
 using std::cin;
