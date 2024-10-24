@@ -100,6 +100,7 @@ int main() {
             n = stud.size();
             Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, n);
         }
+
         
         if(ivedimo_skaitymo_p != "S" && ivedimo_skaitymo_p != "s" && ivedimo_skaitymo_p != "T" && ivedimo_skaitymo_p != "t"){
         rez_pasirinkimas = pasirinkimas_del_galutinio();
@@ -108,7 +109,7 @@ int main() {
         n = stud.size();
         SpausdinimasRez(stud, n, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
 
-    }
+        }
     }
     return 0;
 }

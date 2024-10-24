@@ -5,7 +5,7 @@
 void Duom_ivedimas(Studentas &s){
 
     cout << "Įveskite visus namų darbų įvertinimus. Norėdami baigti įvedimą spauskite dukart 'Enter' klavišą" << endl;
-    string eil;        // Kintamasis įvesties eilutei saugoti
+    string eil;             // Kintamasis įvesties eilutei saugoti
     int ivertinimas;
 
     // While ciklas, skirtas įrašyti studento namų darbų įvertinimus. Vyksta tol kol vartotojas nuspaudžia du kart "Enter".
@@ -406,7 +406,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
             });
         }
         else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
-            // Rušiavimas pagal galutinį įvertinimą
+            // Rušiavimas pagal galutinį įvertinimą mažėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
                 return s1.galutinis_vid > s2.galutinis_vid;
@@ -417,7 +417,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
             });
             }
         } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
-            // Rušiavimas pagal galutinį įvertinimą
+            // Rušiavimas pagal galutinį įvertinimą didėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
                 return s1.galutinis_vid < s2.galutinis_vid;
@@ -430,6 +430,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
         }
     } else {
         if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+            // Rūšiavimas pagal vardą ir pavardę
             stud.sort([](const Studentas &s1, const Studentas &s2) {
                 if (s1.vardas != s2.vardas) {
                     return s1.vardas < s2.vardas;
@@ -445,7 +446,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
                 return s1.vardas < s2.vardas;
             });
         } else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
-            // Rušiavimas pagal galutinį įvertinimą
+            // Rušiavimas pagal galutinį įvertinimą mažėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
                     return s1.galutinis_vid > s2.galutinis_vid;
@@ -456,7 +457,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
                 });
             }
         } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
-            // Rušiavimas pagal galutinį įvertinimą
+            // Rušiavimas pagal galutinį įvertinimą didėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
                     return s1.galutinis_vid < s2.galutinis_vid;
@@ -476,9 +477,10 @@ template <typename Container>
 void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, string rez_pasirinkimas, string rusiavimo_p, string ivedimo_skaitymo_p){
     ofstream failasOut;
 
-    auto i = stud.begin();
+    // Kiekvienam studentui apskaičiuojamas įvertinimas pagal vidurkį ir medianą
+    auto i = stud.begin();          // i - iteratorius, nurodantis į pirmąjį studentą
     while(i != stud.end()){
-        Ivertinimas_vid(*i);
+        Ivertinimas_vid(*i);        // *i - studentas, į kuri rodo iteratorius
         Ivertinimas_med(*i);
         ++i;
     }
@@ -685,7 +687,7 @@ string pasirinkimas_isvedimo(){
     return isvedimo_pasirinkimas;
 }
 
-// Funkcija skirta duomenų tvarkymui, tai atspausdinimui, kategorijos priskirimui, naujų failų sukurimui.
+// Funkcija skirta duomenų tvarkymui, tai rezultatų įrašymui, kategorijos priskirimui, naujų failų sukūrimui.
 template <typename Container>
 void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis){
         cout << endl;
@@ -693,6 +695,7 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
         cout << endl;
 
         Timer t1;
+        // Studentų rūšiavimas į dvi grupes
         Kategorijos_Priskirimas(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
         cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
         cout << endl;
