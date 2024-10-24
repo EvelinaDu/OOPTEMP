@@ -24,7 +24,12 @@ Vartotojui suteikiamas pasirinkimas tarp duomenų įvedimo ranka, nuskaitymo iš
 
 ### Testavimo laikai:
 
-![alt text](image.png)
+![alt text](image-2.png)
+
+### Trumpa analizė:
+- **Duomenų skaitymas:** Sąrašas (list) greičiau nuskaitynėja duomenis mažesniose failuose, tačiau vektorius (vector) greičiau skaito failą su 10 mln. įrašų.
+- **Rūšiavimas į grupes:** Sąrašas greičiau rūšiuoja, skirsto į dvi grupes duomenis mažesniose failuose, tačiau vektorius greičiau skirsto failą su 10 mln. įrašų.
+- **Įrašymas į failus:** Tiek sąrašas, tiek vektorius užtrunka panašiai laiko įrašydamas duomenis į "Vargšiukus" ir "Kietiakus" failus. Tačiau vektorius greičiau įrašynėja su didesniu kiekiu įrašų (10 mln.).
 
 ## Testavimo sistemos parametrai:
 
