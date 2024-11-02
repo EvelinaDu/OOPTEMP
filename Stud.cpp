@@ -530,7 +530,7 @@ void valymas(Studentas &s){
 
 // Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 template <typename Container>
-void Kategorijos_Priskirimas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, int n, string pasirinkimas){
+void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, int n, string pasirinkimas){
     for (const auto& studentas : stud){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
             if (studentas.galutinis_vid < 5.0){
@@ -546,6 +546,28 @@ void Kategorijos_Priskirimas(Container &stud, Container &stud_Vargsiukai, Contai
                 stud_Kietiakai.push_back(studentas);
             }
         }
+    }
+}
+
+template <typename Container>
+void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, string pasirinkimas){
+    for (auto it = stud.begin(); it != stud.end();){
+        if (pasirinkimas == "V" || pasirinkimas == "v"){
+            if ((*it).galutinis_vid < 5.0){
+                stud_Vargsiukai.push_back(*it);
+            it = stud.erase(it);
+            } else {
+                ++it;
+            }
+	    }
+        if (pasirinkimas == "M" || pasirinkimas == "m"){
+            if ((*it).galutinis_med < 5.0){
+                stud_Vargsiukai.push_back(*it);
+            it = stud.erase(it);
+            } else {
+                ++it;
+            }
+	    }
     }
 }
 
@@ -696,7 +718,8 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
 
         Timer t1;
         // Studentų rūšiavimas į dvi grupes
-        Kategorijos_Priskirimas(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
+        Kategorijos_Priskirimas1(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
+        // Kategorijos_Priskirimas2(stud, stud_Vargsiukai, rez_pasirinkimas);
         cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
         cout << endl;
 
@@ -708,7 +731,8 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
 
         Timer t3;
         // Studentai įrašyti i Kietiakai.txt failą
-        FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+        // FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+        FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
         cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
         cout << endl;
 
