@@ -709,34 +709,77 @@ string pasirinkimas_isvedimo(){
     return isvedimo_pasirinkimas;
 }
 
+int pasirinkimas_del_kategorijos(){
+    int kategorijos_pasirinkimas;
+    cout << "Pasirinkite kategorijos priskirimo strategija (1 Strategija - įveskite 1, 2 Strategija - 2, 3 Strategija - 3): ";
+
+    while(true){
+        cin >> kategorijos_pasirinkimas;
+
+        try{
+            if(kategorijos_pasirinkimas != 1 && kategorijos_pasirinkimas != 2 && kategorijos_pasirinkimas != 3){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp: '1', '2', '3' strategijų");
+            }
+            break;
+
+        } catch (const out_of_range &e){
+            cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+        }
+    }
+    return kategorijos_pasirinkimas;
+}
+
 // Funkcija skirta duomenų tvarkymui, tai rezultatų įrašymui, kategorijos priskirimui, naujų failų sukūrimui.
 template <typename Container>
-void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis){
+void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kategorijos_strategija, int kiekis){
         cout << endl;
         SpausdinimasRez(stud, kiekis, isvedimo_pasirinkimas, rez_pasirinkimas, rusiavimo_p, ivedimo_skaitymo_p);
         cout << endl;
 
-        Timer t1;
-        // Studentų rūšiavimas į dvi grupes
-        Kategorijos_Priskirimas1(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
-        // Kategorijos_Priskirimas2(stud, stud_Vargsiukai, rez_pasirinkimas);
-        cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
-        cout << endl;
+        if (kategorijos_strategija == 1){
+            Timer t1;
+            // Studentų rūšiavimas į dvi grupes
+            Kategorijos_Priskirimas1(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
+            cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
+            cout << endl;
+
+        } else if (kategorijos_strategija == 2){
+            Timer t1;
+            // Studentų rūšiavimas į dvi grupes
+            Kategorijos_Priskirimas2(stud, stud_Vargsiukai, rez_pasirinkimas);
+            cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
+            cout << endl;
+
+        } else if (kategorijos_strategija == 3){
+
+        }
+
 
         Timer t2;
         // Studentai įrašyti i Vargsiukai.txt failą
         FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, isvedimo_pasirinkimas, "Vargsiukai.txt");
         cout << "Failo iš "<< kiekis << " įrašų vargšelių įrašymas į failą laikas: " << t2.elapsed() << " s.\n";
         cout << endl;
+        
+        if (kategorijos_strategija == 1){
+            Timer t3;
+            // Studentai įrašyti i Kietiakai.txt failą
+            FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+            cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
+            cout << endl;
 
-        Timer t3;
-        // Studentai įrašyti i Kietiakai.txt failą
-        // FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
-        FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
-        cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
-        cout << endl;
+        } else if (kategorijos_strategija == 2){
+            Timer t3;
+            // Studentai įrašyti i Kietiakai.txt failą
+            FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+            cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
+            cout << endl;
+
+        } else if (kategorijos_strategija == 3){
+
+        }
 
 }
 
-template void Duom_tvarkymas<vector<Studentas>>(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
-template void Duom_tvarkymas<list<Studentas>>(list<Studentas> &stud, list<Studentas> &stud_Vargsiukai, list<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
+template void Duom_tvarkymas<vector<Studentas>>(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kategorijos_strategija, int kiekis);
+template void Duom_tvarkymas<list<Studentas>>(list<Studentas> &stud, list<Studentas> &stud_Vargsiukai, list<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kategorijos_strategija, int kiekis);

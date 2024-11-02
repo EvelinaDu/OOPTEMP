@@ -13,6 +13,7 @@ int main() {
     string rusiavimo_p;
     string isvedimo_pasirinkimas;
     string vektorius_arba_sarasas;
+    int kategorijos_strategija;
 
     vektorius_arba_sarasas = pasirinkimas_del_duom_strukturos();
 
@@ -44,6 +45,7 @@ int main() {
             }
         }
         else if(ivedimo_skaitymo_p == "T" || ivedimo_skaitymo_p == "t"){
+            kategorijos_strategija = pasirinkimas_del_kategorijos();
             rez_pasirinkimas = pasirinkimas_del_galutinio();
             rusiavimo_p = pasirinkimas_del_rusiavimo();
 
@@ -52,7 +54,7 @@ int main() {
             Duom_is_failo(stud, s);
 
             n = stud.size();
-            Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, n);
+            Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, kategorijos_strategija, n);
         }
         
         if(ivedimo_skaitymo_p != "S" && ivedimo_skaitymo_p != "s" && ivedimo_skaitymo_p != "T" && ivedimo_skaitymo_p != "t"){
@@ -92,13 +94,14 @@ int main() {
             }
         }
         else if(ivedimo_skaitymo_p == "T" || ivedimo_skaitymo_p == "t"){
+            kategorijos_strategija = pasirinkimas_del_kategorijos();
             rez_pasirinkimas = pasirinkimas_del_galutinio();
             rusiavimo_p = pasirinkimas_del_rusiavimo();
 
             Duom_is_failo(stud, s);
 
             n = stud.size();
-            Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, n);
+            Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, kategorijos_strategija, n);
         }
 
         

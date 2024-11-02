@@ -78,8 +78,11 @@ string pasirinkimas_del_rusiavimo();
 // Funkcija, skirta vartotojui pasirinkti kur nori matyti rezultatą, ar terminale, ar faile.
 string pasirinkimas_isvedimo();
 
+// Funkcija, suteikianti galimybę vartotojui pasirinkti norimą strategiją.
+int pasirinkimas_del_kategorijos();
+
 // Funkcija skirta duomenų tvarkymui, tai rezultatų įrašymui, kategorijos priskirimui, naujų failų sukūrimui.
 template <typename Container>
-void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kiekis);
+void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kategorijos_strategija, int kiekis);
 
 #endif
