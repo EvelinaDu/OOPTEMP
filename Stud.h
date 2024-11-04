@@ -54,10 +54,13 @@ void valymas(Studentas &s);
 
 // Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 template <typename Container>
-void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, int n, string pasirinkimas);
+void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas);
 
 template <typename Container>
 void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, string pasirinkimas);
+
+template <typename Container>
+void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas);
 
 // Funkcija, įrašo į failą pateiktą vektorių.
 template <typename Container>

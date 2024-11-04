@@ -530,7 +530,7 @@ void valymas(Studentas &s){
 
 // Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 template <typename Container>
-void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, int n, string pasirinkimas){
+void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas){
     for (const auto& studentas : stud){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
             if (studentas.galutinis_vid < 5.0){
@@ -555,7 +555,7 @@ void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, strin
         if (pasirinkimas == "V" || pasirinkimas == "v"){
             if ((*it).galutinis_vid < 5.0){
                 stud_Vargsiukai.push_back(*it);
-            it = stud.erase(it);
+                it = stud.erase(it);
             } else {
                 ++it;
             }
@@ -563,11 +563,46 @@ void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, strin
         if (pasirinkimas == "M" || pasirinkimas == "m"){
             if ((*it).galutinis_med < 5.0){
                 stud_Vargsiukai.push_back(*it);
-            it = stud.erase(it);
+                it = stud.erase(it);
             } else {
                 ++it;
             }
 	    }
+    }
+}
+
+template <typename Container>
+void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas){
+    if constexpr (is_same_v<Container, vector<Studentas>>){
+        auto it = std::stable_partition(stud.begin(), stud.end(), [&](const auto &studentas){
+            if (pasirinkimas == "V" || pasirinkimas == "v"){
+                return studentas.galutinis_vid >= 5.0;
+            }
+            return studentas.galutinis_med >= 5.0;
+        });
+
+        stud_Kietiakai.assign(stud.begin(), it);
+        stud_Vargsiukai.assign(it, stud.end());
+
+    } else if constexpr (is_same_v<Container, list<Studentas>>){
+        for (auto it = stud.begin(); it != stud.end();){
+            if (pasirinkimas == "V" || pasirinkimas == "v"){
+                if ((*it).galutinis_vid < 5.0){
+                    stud_Vargsiukai.push_back(*it);
+                    it = stud.erase(it);
+                } else {
+                    ++it;
+                }
+            }
+            if (pasirinkimas == "M" || pasirinkimas == "m"){
+                if ((*it).galutinis_med < 5.0){
+                    stud_Vargsiukai.push_back(*it);
+                    it = stud.erase(it);
+                } else {
+                    ++it;
+                }
+            }
+        }
     }
 }
 
@@ -739,7 +774,7 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
         if (kategorijos_strategija == 1){
             Timer t1;
             // Studentų rūšiavimas į dvi grupes
-            Kategorijos_Priskirimas1(stud, stud_Vargsiukai, stud_Kietiakai, kiekis, rez_pasirinkimas);
+            Kategorijos_Priskirimas1(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas);
             cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
             cout << endl;
 
@@ -751,7 +786,11 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
             cout << endl;
 
         } else if (kategorijos_strategija == 3){
-
+            Timer t1;
+            // Studentų rūšiavimas į dvi grupes
+            Kategorijos_Priskirimas3(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas);
+            cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
+            cout << endl;
         }
 
 
@@ -776,10 +815,23 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
             cout << endl;
 
         } else if (kategorijos_strategija == 3){
-
+            if constexpr (is_same_v<Container, vector<Studentas>>){
+                Timer t3;
+                // Studentai įrašyti i Kietiakai.txt failą
+                FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+                cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
+                cout << endl;
+            } else if constexpr (is_same_v<Container, list<Studentas>>){
+                Timer t3;
+                // Studentai įrašyti i Kietiakai.txt failą
+                FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+                cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
+                cout << endl;
+            }
         }
 
 }
 
 template void Duom_tvarkymas<vector<Studentas>>(vector<Studentas> &stud, vector<Studentas> &stud_Vargsiukai, vector<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kategorijos_strategija, int kiekis);
 template void Duom_tvarkymas<list<Studentas>>(list<Studentas> &stud, list<Studentas> &stud_Vargsiukai, list<Studentas> &stud_Kietiakai, string rez_pasirinkimas, string rusiavimo_p, string isvedimo_pasirinkimas, string ivedimo_skaitymo_p, int kategorijos_strategija, int kiekis);
+
