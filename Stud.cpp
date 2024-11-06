@@ -83,6 +83,8 @@ void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
     out << s.egz << endl;
 }
 
+// Funkcija, kurioje klausiama kiek studentų vartotojas norėtų įtraukti, klausiama studentų vardų bei pavardžių, 
+// klausiama koks įvertinimų įvedimas(rankinis ar generavimas) ir pagal tai įvykdoma. 
 template <typename Container>
 void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
     string eil;
@@ -192,7 +194,6 @@ void Duom_is_failo(Container &stud, Studentas &s){
                 throw runtime_error("Klaida, failas nerastas! Bandykite dar kartą! ");
             }  
             
-            // string eil;
             getline(failasIn, eil);
 
             while(getline(failasIn, eil)){
@@ -247,7 +248,7 @@ template void Duom_is_failo<vector<Studentas>>(vector<Studentas>&, Studentas& s)
 template void Duom_is_failo<list<Studentas>>(list<Studentas>&, Studentas& s);
 
 
-// Funkcija skirta failo generavimui pagal įrašų kiekį
+// Funkcija skirta failo generavimui pagal įrašų kiekį.
 void Stud_failu_generavimas(int kiekis){
     string pav = "Studentai_" + to_string(kiekis) + ".txt";
 
@@ -337,7 +338,7 @@ void Ivertinimas_med(Studentas &s){
     
 }
 
-// Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
+// Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą).
 void Stud_spausdinimas(Studentas &s, ostream &out, string p, string isvedimo_pasirinkimas){
     if(isvedimo_pasirinkimas  == "T" || isvedimo_pasirinkimas == "t"){
         if(p == "V" || p == "v"){
@@ -384,11 +385,11 @@ void Rez_antraste(string pasirinkimas, ostream &out, string isvedimo_pasirinkima
 
 }
 
-// Funkcija skirta studentų vektoriui surušiuoti.
+// Funkcija skirta studentų rūšiavimui.
 template <typename Container>
 void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_pasirinkimas){
     if constexpr (is_same_v<Container, vector<Studentas>>){
-        if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+        if(pasirinkimas == "VP" || pasirinkimas == "vp" || pasirinkimas == "Vp" || pasirinkimas == "vP"){
         // Rūšiavimas pagal vardą ir pavardę
             sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
             if(s1.vardas != s2.vardas){
@@ -396,7 +397,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
             }
             return s1.pavarde < s2.pavarde;
             });
-        } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
+        } else if(pasirinkimas == "PV" || pasirinkimas == "pv" || pasirinkimas == "Pv" || pasirinkimas == "pV"){
             // Rūšiavimas pagal pavardę ir vardą
             sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
             if(s1.pavarde != s2.pavarde){
@@ -405,7 +406,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
             return s1.vardas < s2.vardas;
             });
         }
-        else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
+        else if(pasirinkimas == "GM" || pasirinkimas == "gm" || pasirinkimas == "Gm" || pasirinkimas == "gM"){
             // Rušiavimas pagal galutinį įvertinimą mažėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
@@ -416,7 +417,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
                 return s1.galutinis_med > s2.galutinis_med;
             });
             }
-        } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
+        } else if(pasirinkimas == "GD" || pasirinkimas == "gd" || pasirinkimas == "Gd" || pasirinkimas == "gD"){
             // Rušiavimas pagal galutinį įvertinimą didėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
@@ -429,7 +430,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
             }
         }
     } else {
-        if(pasirinkimas == "VP" || pasirinkimas == "vp"){
+        if(pasirinkimas == "VP" || pasirinkimas == "vp" || pasirinkimas == "Vp" || pasirinkimas == "vP"){
             // Rūšiavimas pagal vardą ir pavardę
             stud.sort([](const Studentas &s1, const Studentas &s2) {
                 if (s1.vardas != s2.vardas) {
@@ -437,7 +438,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
                 }
                 return s1.pavarde < s2.pavarde;
             });
-        } else if(pasirinkimas == "PV" || pasirinkimas == "PV"){
+        } else if(pasirinkimas == "PV" || pasirinkimas == "pv" || pasirinkimas == "Pv" || pasirinkimas == "pV"){
             // Rūšiavimas pagal pavardę ir vardą
             stud.sort([](const Studentas &s1, const Studentas &s2) {
                 if (s1.pavarde != s2.pavarde) {
@@ -445,7 +446,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
                 }
                 return s1.vardas < s2.vardas;
             });
-        } else if(pasirinkimas == "GM" || pasirinkimas == "gm"){
+        } else if(pasirinkimas == "GM" || pasirinkimas == "gm" || pasirinkimas == "Gm" || pasirinkimas == "gM"){
             // Rušiavimas pagal galutinį įvertinimą mažėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
@@ -456,7 +457,7 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
                     return s1.galutinis_med > s2.galutinis_med;
                 });
             }
-        } else if(pasirinkimas == "GD" || pasirinkimas == "gd"){
+        } else if(pasirinkimas == "GD" || pasirinkimas == "gd" || pasirinkimas == "Gd" || pasirinkimas == "gD"){
             // Rušiavimas pagal galutinį įvertinimą didėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
@@ -528,7 +529,7 @@ void valymas(Studentas &s){
     s.egz = 0; 
 }
 
-// Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
+// Funkcija, skirta sukurti du naujus kontainerius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 template <typename Container>
 void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas){
     for (const auto& studentas : stud){
@@ -549,6 +550,8 @@ void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Conta
     }
 }
 
+// Funkcija, kuri surūšiuoja studentus į dvi grupes, jei studento įvertinimas < 5.0, priskiriamas "Vargšiukų" kontaineriui
+// ir studentas ištrinamas iš bendro. Taip bendrame liks tik tie studentai, kurių įvertinimas >= 5.0.
 template <typename Container>
 void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, string pasirinkimas){
     for (auto it = stud.begin(); it != stud.end();){
@@ -571,6 +574,8 @@ void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, strin
     }
 }
 
+// Funkcija, kuri surūšiuoja studentus į dvi grupes, jei vartotojo pasirinkta duomenų struktūra yra vektorius, tai rūšiuojama pagal pirmą strategiją,
+// jei duomenų struktūra - sąrašas, tai rūšiuojama pagal 2 strategiją.
 template <typename Container>
 void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas){
     if constexpr (is_same_v<Container, vector<Studentas>>){
@@ -606,7 +611,7 @@ void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Conta
     }
 }
 
-// Funkcija, įrašo į failą pateiktą vektorių.
+// Funkcija, kuri įrašo į failą pateiktą kontainerį.
 template <typename Container>
 void FailasPgalKategorija(Container &studentai, string pasirinkimas, string isvedimo_pasirinkimas, string pav){
     ofstream failas;
@@ -629,6 +634,7 @@ void FailasPgalKategorija(Container &studentai, string pasirinkimas, string isve
     cout << "Rezultatas sėkmingai įrašytas į "<< pav <<" failą!" << endl;
 }
 
+// Funkcija, skirta vartotojui pasirinkti programos vykdymą (Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T).
 string pasirinkimas_del_programos_vykdymo(){
     string ivedimo_skaitymo_p;
     cout << "Pasirinkite ar norite duomenis įvesti, nuskaityti juos iš failo, sugeneruoti ar testuoti duomenų failą?(Įvesti - I, Nuskaityti - N, Sugeneruoti - S, Testuoti - T) ";
@@ -638,7 +644,7 @@ string pasirinkimas_del_programos_vykdymo(){
         // Išimčių tvarkymas skirtas ivedimo ar skaitymo pasirinkimui.
         try{
             if(ivedimo_skaitymo_p != "N" && ivedimo_skaitymo_p != "n" && ivedimo_skaitymo_p != "I" && ivedimo_skaitymo_p != "i" && ivedimo_skaitymo_p != "S" && ivedimo_skaitymo_p != "s" && ivedimo_skaitymo_p != "T" && ivedimo_skaitymo_p != "t"){
-                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'I' arba 'N'. ");
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp: 'I', 'N', 'S', 'T'. ");
             }
             break;   // Išeiname iš while ciklo, jei įvestis teisinga.
 
@@ -650,6 +656,7 @@ string pasirinkimas_del_programos_vykdymo(){
     return ivedimo_skaitymo_p;
 }
 
+// Funkcija, skirta vartotojui pasirinkti duomenų struktūrą (V - vektorius, S - sąrašas).
 string pasirinkimas_del_duom_strukturos(){
     string vektorius_arba_sarasas;
     cout << "Pasirinkite su kokia duomenų struktūra norite dirbti, su vektoriumi ar su sąrašu (V - vektorius, S - sąrašas): ";
@@ -706,8 +713,8 @@ string pasirinkimas_del_rusiavimo(){
         // Išimčių tvarkymas skirtas patikrinti ar vartotojas pasirinko norimą įvertinimą (VP/PV/GM/GD).
         try{
 
-            if(rusiavimo_p != "VP" && rusiavimo_p != "vp" && rusiavimo_p != "PV" && rusiavimo_p != "pv" && rusiavimo_p != "GM" && rusiavimo_p != "gm" && rusiavimo_p != "GD" && rusiavimo_p != "gd" ){
-                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'V', 'P', 'VP', 'GM' arba 'GD'. ");
+            if(rusiavimo_p != "VP" && rusiavimo_p != "vp" && rusiavimo_p != "Vp" && rusiavimo_p != "vP" && rusiavimo_p != "PV" && rusiavimo_p != "pv" && rusiavimo_p != "Pv" && rusiavimo_p != "pV" && rusiavimo_p != "GM" && rusiavimo_p != "gm" && rusiavimo_p != "Gm" && rusiavimo_p != "gM" && rusiavimo_p != "GD" && rusiavimo_p != "gd" && rusiavimo_p != "Gd" && rusiavimo_p != "gD" ){
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'VP', 'PV', 'GM' arba 'GD'. ");
             }
             break;   // Išeiname iš while ciklo, jei įvestis teisinga.
 
@@ -744,7 +751,8 @@ string pasirinkimas_isvedimo(){
     return isvedimo_pasirinkimas;
 }
 
-int pasirinkimas_del_kategorijos(){
+// Funkcija, skirta vartotojui pasirinkti pagal kurią strategiją norimą skirstyti studentus į dvi grupes (1, 2, 3).
+int pasirinkimas_del_strategijos(){
     int kategorijos_pasirinkimas;
     cout << "Pasirinkite kategorijos priskirimo strategija (1 Strategija - įveskite 1, 2 Strategija - 2, 3 Strategija - 3): ";
 
@@ -772,44 +780,42 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
         cout << endl;
 
         if (kategorijos_strategija == 1){
+            // Studentų rūšiavimas į dvi grupes pagal 1 strategiją.
             Timer t1;
-            // Studentų rūšiavimas į dvi grupes
             Kategorijos_Priskirimas1(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas);
             cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
             cout << endl;
 
         } else if (kategorijos_strategija == 2){
+            // Studentų rūšiavimas į dvi grupes pagal 2 strategiją.
             Timer t1;
-            // Studentų rūšiavimas į dvi grupes
             Kategorijos_Priskirimas2(stud, stud_Vargsiukai, rez_pasirinkimas);
             cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
             cout << endl;
 
         } else if (kategorijos_strategija == 3){
+            // Studentų rūšiavimas į dvi grupes pagal 3 strategiją.
             Timer t1;
-            // Studentų rūšiavimas į dvi grupes
             Kategorijos_Priskirimas3(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas);
             cout << "Failo iš "<< kiekis << " įrašų rūšiavimas į dvi grupes laikas: " << t1.elapsed() << " s.\n";
             cout << endl;
         }
 
-
+        // Studentai įrašomi į Vargsiukai.txt failą
         Timer t2;
-        // Studentai įrašyti i Vargsiukai.txt failą
         FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, isvedimo_pasirinkimas, "Vargsiukai.txt");
         cout << "Failo iš "<< kiekis << " įrašų vargšelių įrašymas į failą laikas: " << t2.elapsed() << " s.\n";
         cout << endl;
         
+        // Studentai įrašyti i Kietiakai.txt failą
         if (kategorijos_strategija == 1){
             Timer t3;
-            // Studentai įrašyti i Kietiakai.txt failą
             FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
             cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
             cout << endl;
 
         } else if (kategorijos_strategija == 2){
             Timer t3;
-            // Studentai įrašyti i Kietiakai.txt failą
             FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
             cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
             cout << endl;
@@ -817,13 +823,11 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
         } else if (kategorijos_strategija == 3){
             if constexpr (is_same_v<Container, vector<Studentas>>){
                 Timer t3;
-                // Studentai įrašyti i Kietiakai.txt failą
                 FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
                 cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
                 cout << endl;
             } else if constexpr (is_same_v<Container, list<Studentas>>){
                 Timer t3;
-                // Studentai įrašyti i Kietiakai.txt failą
                 FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
                 cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
                 cout << endl;

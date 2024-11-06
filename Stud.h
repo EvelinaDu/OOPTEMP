@@ -3,7 +3,7 @@
 
 #include "Mylib.h"
 
-// Studento struktūra, kuri susideda iš vardo, pavardes, namų darbų vektoriaus, egzamino ir įvertinimu.
+// Studento struktūra, kuri susideda iš vardo, pavardes, namų darbų vektoriaus, egzamino ir įvertinimų.
 struct Studentas{
   string vardas, pavarde;
   vector <double> nd;
@@ -26,7 +26,7 @@ void Info_ivedimas_ranka(Container &stud, Studentas &s, int n);
 template <typename Container>
 void Duom_is_failo(Container &stud, Studentas &s);
 
-// Funkcija skirta studentų failo generavimui.
+// Funkcija skirta failo generavimui pagal įrašų kiekį.
 void Stud_failu_generavimas(int kiekis);
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
@@ -35,13 +35,13 @@ void Ivertinimas_vid(Studentas &s);
 // Funkcija skirta galutiniam įvertinimui pagal medianą apskaičiuoti.
 void Ivertinimas_med(Studentas &s);
 
-// Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą ar abu).
+// Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą).
 void Stud_spausdinimas(Studentas &s, ostream &out, string p, string isvedimo_pasirinkimas);
 
 // Funkcija, skirta atspausdinti antraštei pagal vartoto įvertinimo pasirinkimą.
 void Rez_antraste(string pasirinkimas, ostream &out, string isvedimo_pasirinkimas);
 
-// Funkcija skirta studentų vektoriui surušiuoti, rušiuojama pagal vardus, tačiau kai vardai sutampa, rušiuojama pagal pavardes.
+// Funkcija skirta studentų rūšiavimui.
 template <typename Container>
 void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_pasirinkimas);
 
@@ -52,17 +52,21 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s);
 
-// Funkcija, skirta sukurti du naujus vektorius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
+// Funkcija, skirta sukurti du naujus kontainerius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
 template <typename Container>
 void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas);
 
+// Funkcija, kuri surūšiuoja studentus į dvi grupes, jei studento įvertinimas < 5.0, priskiriamas "Vargšiukų" kontaineriui
+// ir studentas ištrinamas iš bendro. Taip bendrame liks tik tie studentai, kurių įvertinimas >= 5.0.
 template <typename Container>
 void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, string pasirinkimas);
 
+// Funkcija, kuri surūšiuoja studentus į dvi grupes, jei vartotojo pasirinkta duomenų struktūra yra vektorius, tai rūšiuojama pagal pirmą strategiją,
+// jei duomenų struktūra - sąrašas, tai rūšiuojama pagal 2 strategiją.
 template <typename Container>
 void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas);
 
-// Funkcija, įrašo į failą pateiktą vektorių.
+// Funkcija, kuri įrašo į failą pateiktą kontainerį.
 template <typename Container>
 void FailasPgalKategorija(Container &studentai, string pasirinkimas, string isvedimo_pasirinkimas, string pav);
 
@@ -81,8 +85,8 @@ string pasirinkimas_del_rusiavimo();
 // Funkcija, skirta vartotojui pasirinkti kur nori matyti rezultatą, ar terminale, ar faile.
 string pasirinkimas_isvedimo();
 
-// Funkcija, suteikianti galimybę vartotojui pasirinkti norimą strategiją.
-int pasirinkimas_del_kategorijos();
+// Funkcija, skirta vartotojui pasirinkti pagal kurią strategiją norimą skirstyti studentus į dvi grupes (1, 2, 3).
+int pasirinkimas_del_strategijos();
 
 // Funkcija skirta duomenų tvarkymui, tai rezultatų įrašymui, kategorijos priskirimui, naujų failų sukūrimui.
 template <typename Container>
