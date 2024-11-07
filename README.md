@@ -75,7 +75,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 
 ## Strategijų aprašymas: (Skirtos studentų skaidymui į dvi grupes)
 
-- ***1 strategija*** Bendro studentai konteinerio (vector ir list tipų) skaidymas į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). 
+- <u>***1 strategija***</u> Bendro studentai konteinerio (vector ir list tipų) skaidymas į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). 
 
 - ***2 strategija*** Bendro studentų konteinerio (vector ir list) skaidymas panaudojant tik vieną naują konteinerį: "vargšiukai". Tokiu būdu, jei studentas yra vargšiukas, jį turime įkelti į naująjį "vargšiukų" konteinerį ir ištrinti iš bendro studentai konteinerio. Po šio žingsnio studentai konteineryje liks vien tik kietiakai.
 
@@ -91,6 +91,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 - `1000000` įrašų: **1.9046325 s.**
 - `10000000` įrašų: **19.2343 s.**
 
+
 ### Testavimo laikai:
 
 ![alt text](image-2.png)
@@ -101,11 +102,26 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 - **Įrašymas į failus:** Tiek sąrašas, tiek vektorius užtrunka panašiai laiko įrašydamas duomenis į "Vargšiukus" ir "Kietiakus" failus. Tačiau vektorius greičiau įrašynėja su didesniu kiekiu įrašų (10 mln.).
 
 
+### Strategijų testavimo laikai dirbant su vektoriu ir sąrašu.
+
+![alt text](Strategiju_testavimo_laikai.png)
 
 
+### Trumpa analizė: (Duomenų skaidymo į dvi grupes, efektyvumas laiko atžvilgiu)
 
+- **1 Strategija:** 
+    - Sąrašąs efektyviau su mažesnių kiekiu duomenų (iki 10mln).
+    - Vektorius efektyviau su 10 mln. kiekiu duomenų.
 
+- **2 Strategija:** 
+    - Sąrašas visais atvejais efektyviau.
 
+- **3 Strategija:** 
+    - Sąrašąs efektyviau su mažesnių kiekiu duomenų (iki 10mln).
+    - Vektorius efektyviau su 10 mln. kiekiu duomenų.
+
+- **Rekomendacija:**
+    - Naudoti 3 strategija laiko atžvilgiu yra efektyviausia.
 
 
 ## Testavimo sistemos parametrai:
