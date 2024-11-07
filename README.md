@@ -8,7 +8,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 
 ### Programos vykdymo pasirinkimas:
 
-**'I' - duomenų įvedimas**:
+***'I' - duomenų įvedimas***:
 - Įveskite 'I' raidę.
 - Pirmas klausimas bus šis: 'Kiek studentų norite įtraukti į sistemą:', įveskite skaičių.
 - Toliau prasidės klausimai susije su pačiais studento duomenimis (šie klausimai kartosis tiek kartų, kiek nurodėte studentų):
@@ -22,7 +22,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 - Pasirinkus 'T' atsakymai iš kart bus pateikti terminale.
 - Pasirinkus 'F' atsakymai bus pateikti 'rez.txt' faile, kurį rasite sugeneruotame aplankale su pavadinimų 'Release'.
 
-**'N' - duomenų nuskaitymas iš failo**:
+***'N' - duomenų nuskaitymas iš failo***:
 - Įveskite 'N' raidę.
 - Toliau reikės įvesti norimo failo pavadinimą. Tačiau pirmiausia įkelkite norimą failą į jau sugeneruotą aplankalą pavadinimu 'Release'.
 - Kitame klausime klaus dėl rezultatų, ar norite, kad bendras įvertinimas būtų apskaičiuotas naudojant vidurkį (V) ar medianą (M). (Galutinis = 0.4 * vidurkis (arba medianą) + 0.6 * egzaminas)
@@ -31,7 +31,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 - Pasirinkus 'T' atsakymai iš kart bus pateikti terminale.
 - Pasirinkus 'F' atsakymai bus pateikti 'rez.txt' faile, kurį rasite sugeneruotame aplankale su pavadinimų 'Release'.
 
-**'G' - atsitiktinių duomenų generavimas**:
+***'G' - atsitiktinių duomenų generavimas***:
 - Įveskite 'G' raidę.
 - Programa sugeneruos 5 studentų duomenų failus su įrašų kiekių: 1000, 10000, 100000, 1000000, 10000000.
 - Failų pavadinimai priklauso nuo įrašų kiekio:
@@ -42,7 +42,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
     - Studentai_10000000.txt
 - Šie failai atsiras naujai sukurtame aplankale su pavadinimu 'Release'.
 
-**'T' - failų testasvimas**:
+***'T' - failų testasvimas***:
 - Įveskite 'T' raidę.
 - Reikės pasirinkti strategiją, tai pasirinkite kuria norite, rekomenduodama 3 strategija. (Strategijų aprašymą rasite žemiau).
 - Kitame klausime klaus dėl rezultatų, ar norite, kad bendras įvertinimas būtų apskaičiuotas naudojant vidurkį (V) ar medianą (M). (Galutinis = 0.4 * vidurkis (arba medianą) + 0.6 * egzaminas)
@@ -62,15 +62,24 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 
 ## Release'ų aprašymas:
 
-- **v0.1 pradinėje** versijoje sukūriama 'Studentas' struktūra studento duomenims saugoti. Vartotojas privalo įvesti kiekį studentų, kuriuos nori įtraukti į sistemą, pateikti jų varbus bei pavardes, gali įvertinimų duomenis įvesti ranka arba sugeneruoti atsitiktinai dešimtbalėje skačiavimo sistemoje. Pagal vartotojo įvestus ar sugeneruotus duomenis yra apskaičiuojamas galutinis įvertinimas pagal vidurkį ir galutinis įvertinimas pagal medianą. Vartotojui pasirinkus norima įvertinimo būdą yra atspausdinama lentelė su pateiktais įvertinimais.
+- ***v0.1 pradinėje*** versijoje sukūriama 'Studentas' struktūra studento duomenims saugoti. Vartotojas privalo įvesti kiekį studentų, kuriuos nori įtraukti į sistemą, pateikti jų varbus bei pavardes, gali įvertinimų duomenis įvesti ranka arba sugeneruoti atsitiktinai dešimtbalėje skačiavimo sistemoje. Pagal vartotojo įvestus ar sugeneruotus duomenis yra apskaičiuojamas galutinis įvertinimas pagal vidurkį ir galutinis įvertinimas pagal medianą. Vartotojui pasirinkus norima įvertinimo būdą yra atspausdinama lentelė su pateiktais įvertinimais.
 
-- **v0.1** versijoje programos vykdymo pasirinkimas yra papildomas duomenų nuskaitymų iš failo (įvedus 'N' raidę) funkcija. Pasirinkus nuskaitymą vartotojas privalo pateikti duomenų failo pavadinimą. Taip pat, įvestas naujas pasirinkimas vartotojui dėl studentų rezultatų išvedimo, pasirinkus 'T' - rezultatas išvedamas terminale, ekrane, pasirinkus 'F' - rezultatas išvedamas 'rez.txt' faile. Rezultatai pateikiami surūšiuoti pagal vardus (ar pavardes), vartotojo įvedimams tikrinti yra panaudojamas išimčių valdymas.
+- ***v0.1*** versijoje programos vykdymo pasirinkimas yra papildomas duomenų nuskaitymų iš failo (įvedus 'N' raidę) funkcija. Pasirinkus nuskaitymą vartotojas privalo pateikti duomenų failo pavadinimą. Taip pat, įvestas naujas pasirinkimas vartotojui dėl studentų rezultatų išvedimo, pasirinkus 'T' - rezultatas išvedamas terminale, ekrane, pasirinkus 'F' - rezultatas išvedamas 'rez.txt' faile. Rezultatai pateikiami surūšiuoti pagal vardus (ar pavardes), vartotojo įvedimams tikrinti yra panaudojamas išimčių valdymas.
 
-- **v0.2** versija yra papildoma studentų duomenų failų generavimų. Yra sugeneruojami 5 failai, sudaryti iš: 1 000, 10 000, 100 000, 1 000 000, 10 000 000 įrašų. Studentai yra suskirstomi į dvi kategorijas (galutinis balas < 5.0 - 'Vargsiukus', galutinis balas >= 5.0 - 'Kietiakus') ir atspausdinimi skiringuose failuose pagal jas. Su sugeneruotais failais atlikta programos veikimo greičio (spartos) analizė.
+- ***v0.2*** versija yra papildoma studentų duomenų failų generavimų. Yra sugeneruojami 5 failai, sudaryti iš: 1 000, 10 000, 100 000, 1 000 000, 10 000 000 įrašų. Studentai yra suskirstomi į dvi kategorijas (galutinis balas < 5.0 - 'Vargsiukus', galutinis balas >= 5.0 - 'Kietiakus') ir atspausdinimi skiringuose failuose pagal jas. Su sugeneruotais failais atlikta programos veikimo greičio (spartos) analizė.
 
-- **v0.3** versija yra papildoma pasirinkimu, dirbti ne tik su vektoriu, bet ir su sąrašu.
+- ***v0.3*** versija yra papildoma pasirinkimu, dirbti ne tik su vektoriu, bet ir su sąrašu.
 
-- **v1.0** versija yra papildoma trejomis strategijomis, kurios skirtos studentų skirstymui į dvi grupes. (Strategijos aprašomos žemiau).
+- ***v1.0*** versija yra papildoma trejomis strategijomis, kurios skirtos studentų skirstymui į dvi grupes. (Strategijos aprašomos žemiau).
+
+
+## Strategijų aprašymas: (Skirtos studentų skaidymui į dvi grupes)
+
+- ***1 strategija*** Bendro studentai konteinerio (vector ir list tipų) skaidymas į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). 
+
+- ***2 strategija*** Bendro studentų konteinerio (vector ir list) skaidymas panaudojant tik vieną naują konteinerį: "vargšiukai". Tokiu būdu, jei studentas yra vargšiukas, jį turime įkelti į naująjį "vargšiukų" konteinerį ir ištrinti iš bendro studentai konteinerio. Po šio žingsnio studentai konteineryje liks vien tik kietiakai.
+
+- ***3 strategija*** Bendro studentų konteinerio (vector ir list) skaidymas (rūšiavimas) panaudojant 1 ir 2 strategiją. Jei konteineris yra parenkamas vektoriu, tai atliekama pirma strategija su funkcija 'std::stable_partition', jei sąrašu - atliekama antra strategija.
 
 
 ## Programos veikimo greičio (spartos) analizė ir Release'ų resultatų analizė:
