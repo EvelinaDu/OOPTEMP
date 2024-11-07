@@ -1,4 +1,4 @@
-# OOP
+# Studentų analizė
 
 ## Struktūra
 ### Struct Studentas
@@ -36,3 +36,36 @@ Vartotojui suteikiamas pasirinkimas tarp duomenų įvedimo ranka, nuskaitymo iš
 - CPU - AMD Ryzen 7 7730U with Radeon Graphics  2.00 GHz
 - RAM - 16.0 GB
 - SSD - INTEL SSDPEKNU512GZH
+
+## Kaip naudotis programa:
+
+Paleidus programą jūs pamatysite pasirinkimą dėl duomenų struktūros, rinktis reikės tarp vektoriaus arba sąrašo, galite rinktis kurį norite, rezultatas nuo to nepasikeis, gali pasikeisti tik vykdymo laikas. Atsakius į šį klausimą, jus pasitiks kitas, reikės pasirinkti dėl programos vykdymo, reikės įvestį raidę, kurį atstovaus jūsų pasirinkimą.
+
+### Programos vykdymo pasirinkimas:
+
+**I - duomenų įvedimas**:
+- Įveskite 'I' raidę.
+- Pirmas klausimas bus šis: 'Kiek studentų norite įtraukti į sistemą:', įveskite skaičių.
+- Toliau prasidės klausimai susije su pačiais studento duomenimis (šie klausimai kartosis tiek kartų, kiek nurodėte studentų):
+    - Reikės pateikti vardą bei pavardę;
+    - Pasirinkti dėl namų darbų bei egzamino įvertinimų įrašymo ranka ar atsitiktinio generavimo.
+    - Jei pasirinksite `taip`, tai duomenis bus sugeneruoti atsitiktinai dešimtbalėje skaičiavimo sistemoje, tačiau reikės nurodyti norimą namų darbų kiekį.
+    - Jei pasirinkite `ne`, tai duomenis reikės įvesti ranka. (pavyzdys: '8' spaudžiate 'enter' klavišą, tada įvedate '9' ir vėl spaudžiate 'enter' klavišą, norėdami užbaigti įvedimą, spauskite du kart 'enter' klavišą).
+- Kitame klausime bus klausiama dėl rezultatų, ar norite, kad bendras įvertinimas būtų apskaičiuotas naudojant vidurkį ar medianą. (Galutinis = 0.4 * vidurkis (arba medianą) + 0.6 * egzaminas).
+- Toliau reikės pasirinkti dėl studentų duomenų rūšiavimo: pagal vardą ir pavarde - 'VP', pagal pavardę ir vardą - 'PV', pagal galutinį įvertinimą mažėjančia tvarka - 'GM', pagal galutinį įvertinimą didėjančia tvarka - 'GD'.
+- Toliau reikės pasirinkti kur norite matyti rezultatus ar terminale (ten kur atsakinėjant į klausimus) ar išvesti juos į rezultatų failą. Tai pasirinksite tarp 'T' - terminalas ir 'F' - Failas.
+- Pasirinkus 'T' atsakymai iš kart bus pateikti terminale.
+- Pasirinkus 'F' atsakymai bus pateikti 'rez.txt' faile, kurį rasite sugeneruotame aplankale su pavadinimų 'Release'.
+
+**N - duomenų nuskaitymas iš failo**:
+- Įveskite 'N' raidę.
+- Toliau reikės įvesti norimo failo pavadinimą. Tačiau pirmiausia įkelkite norimą failą į jau sugeneruotą aplankalą pavadinimu 'Release'.
+- Kitame klausime klaus dėl rezultatų, ar norite, kad bendras įvertinimas būtų apskaičiuotas naudojant vidurkį ar medianą. (Galutinis = 0.4 * vidurkis (arba medianą) + 0.6 * egzaminas)
+- Toliau reikės pasirinkti dėl studentų duomenų rūšiavimo: pagal vardą ir pavarde - 'VP', pagal pavardę ir vardą - 'PV', pagal galutinį įvertinimą mažėjančia tvarka - 'GM', pagal galutinį įvertinimą didėjančia tvarka - 'GD'.
+- Toliau reikės pasirinkti kur norite matyti rezultatus ar terminale (ten kur atsakinėjant į klausimus) ar išvesti juos į rezultatų failą. Tai pasirinksite tarp 'T' - terminalas ir 'F' - Failas. Didesnius failus rekomenduojama išvesti į 'rez.txt' failą.
+- Pasirinkus 'T' atsakymai iš kart bus pateikti terminale.
+- Pasirinkus 'F' atsakymai bus pateikti 'rez.txt' faile, kurį rasite sugeneruotame aplankale su pavadinimų 'Release'.
+
+
+**G - atsitiktinių duomenų generavimas**:
+**T - failų testasvimas**:
