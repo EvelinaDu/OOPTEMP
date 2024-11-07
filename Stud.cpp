@@ -123,7 +123,7 @@ void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
         // Išimčių tvarkymas skirtas patikrinti ar vartotojas tikrai įvedė 'taip' arba 'ne'.
             try{
 
-                if(random_pasirinkimas != "Taip" && random_pasirinkimas != "taip" && random_pasirinkimas != "Ne" && random_pasirinkimas != "ne"){
+                if(random_pasirinkimas != "Taip" && random_pasirinkimas != "taip" && random_pasirinkimas != "TAIP" && random_pasirinkimas != "Ne" && random_pasirinkimas != "ne"&& random_pasirinkimas != "Ne"){
                     throw out_of_range("Netinkama įvestis, turite pasirinkti tarp 'Taip' arba 'Ne'. ");
                 }
                 break;   // Išeiname iš while ciklo, jei įvestis teisinga.
@@ -133,7 +133,7 @@ void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
             }
         }
 
-        if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip"){
+        if(random_pasirinkimas == "Taip" || random_pasirinkimas == "taip" || random_pasirinkimas == "TAIP"){
             int nd_kiekis;
             cout << "Kiek namų darbų norėtumėt, kad būtų sugeneruota? ";
             cin.ignore();
@@ -158,7 +158,7 @@ void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
             stud.push_back(s);
             valymas(s);
         }
-        else if(random_pasirinkimas == "Ne" || random_pasirinkimas == "ne"){
+        else if(random_pasirinkimas == "Ne" || random_pasirinkimas == "ne" || random_pasirinkimas = "NE"){
 
             // cin.ignore() pašalina visus likusius simbolius iš įvesties srauto iki pirmo naujos eilutės simbolio.
             cin.ignore(); 
