@@ -759,9 +759,20 @@ int pasirinkimas_del_strategijos(){
     while(true){
         cin >> kategorijos_pasirinkimas;
 
+        if (cin.fail()){
+            cin.clear();
+            cin.ignore();
+
+            try{
+                throw invalid_argument("Įvestis nėra skaičius. Turite pasirinkti tarp: '1', '2', '3' strategijų. ");
+            } catch (const invalid_argument &e){
+                cout << "Klaida: " << e.what() << "Bandykite dar kartą. ";
+            }
+            continue;
+        }
         try{
             if(kategorijos_pasirinkimas != 1 && kategorijos_pasirinkimas != 2 && kategorijos_pasirinkimas != 3){
-                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp: '1', '2', '3' strategijų");
+                throw out_of_range("Netinkama įvestis, turite pasirinkti tarp: '1', '2', '3' strategijų. ");
             }
             break;
 
