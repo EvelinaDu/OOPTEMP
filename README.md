@@ -1,6 +1,14 @@
 # Studentų analizė
 
-## Programos įsidiegimas ir programos paleidimas:
+## Programos diegimo ir paleidimo instrukcija:
+
+Norint įdiegti ir paleisti programą sekite šiuos žingsnius:
+- Atsisiųskite v1.0 versiją eidami į "Releases", pasirinkite v1.0 versiją ir paspauskite ant *Source code (zip)*;
+- Išskleiskite atsisiųstą failą "OOP-v1.0.zip";
+- Dukart spustelėkite ant failo "run.bat" ir šiek tiek palaukite;
+- Sekite ekrane pateiktas instrukcijas arba vadovaukitės žemiau pateikta programos naudojimosi instrukcija.
+
+Jeigu visus žingsnius atlikote teisingai, tai tame pačiame aplankale turėjo susikurti naujas aplankalas pavadinimu "Release", paspaude ir užėje į aplankalą, matysite aplikacija pavadinimu "Students_analysis", kuria paspaudus du kartus galėsite testi savo darbus.
 
 ## Kaip naudotis programa:
 
