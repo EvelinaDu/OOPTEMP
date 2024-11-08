@@ -83,7 +83,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
 
 ## Strategijų aprašymas: (Skirtos studentų skaidymui į dvi grupes)
 
--***1 strategija*** Bendro studentai konteinerio (vector ir list tipų) skaidymas į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). 
+- ***1 strategija*** Bendro studentai konteinerio (vector ir list tipų) skaidymas į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų". Tokiu būdu tas pats studentas yra dvejuose konteineriuose: bendrame studentai ir viename iš suskaidytų (vargšiukai arba kietiakai). 
 
 - ***2 strategija*** Bendro studentų konteinerio (vector ir list) skaidymas panaudojant tik vieną naują konteinerį: "vargšiukai". Tokiu būdu, jei studentas yra vargšiukas, jį turime įkelti į naująjį "vargšiukų" konteinerį ir ištrinti iš bendro studentai konteinerio. Po šio žingsnio studentai konteineryje liks vien tik kietiakai.
 
@@ -130,7 +130,7 @@ Paleidus programą jūs pamatysite pasirinkimą dėl **duomenų struktūros**, r
     - Vektorius efektyviau su 10 mln. kiekiu duomenų.
 
 - **Rekomendacija:**
-    - Naudoti 3 strategija laiko atžvilgiu yra efektyviausia.
+    - Naudoti 3 strategiją laiko atžvilgiu yra efektyviausia.
 
 
 ## Testavimo sistemos parametrai:
