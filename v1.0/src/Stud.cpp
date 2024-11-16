@@ -555,62 +555,75 @@ void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Conta
 // ir studentas ištrinamas iš bendro. Taip bendrame liks tik tie studentai, kurių įvertinimas >= 5.0.
 template <typename Container>
 void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, string pasirinkimas){
-    for (auto it = stud.begin(); it != stud.end();){
+
+    if constexpr (is_same_v<Container, vector<Studentas>>){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
-            if ((*it).galutinis_vid < 5.0){
-                stud_Vargsiukai.push_back(*it);
-                it = stud.erase(it);
-            } else {
-                ++it;
-            }
-	    }
-        if (pasirinkimas == "M" || pasirinkimas == "m"){
-            if ((*it).galutinis_med < 5.0){
-                stud_Vargsiukai.push_back(*it);
-                it = stud.erase(it);
-            } else {
-                ++it;
-            }
-	    }
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.galutinis_vid > s2.galutinis_vid;
+            });
+        } else if(pasirinkimas == "M" || pasirinkimas == "m"){
+            sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
+            return s1.galutinis_med > s2.galutinis_med;
+            });
+        }
+    }      
+    else if (is_same_v<Container, list<Studentas>>){
+        if (pasirinkimas == "V" || pasirinkimas == "v"){
+                stud.sort([](const Studentas &s1, const Studentas &s2) {
+                    return s1.galutinis_vid > s2.galutinis_vid;
+                });
+        } else if(pasirinkimas == "M" || pasirinkimas == "m"){
+            stud.sort([](const Studentas &s1, const Studentas &s2){
+                return s1.galutinis_med > s2.galutinis_med;
+            });
+        }
+        
     }
+
+    while(!stud.empty()){
+        if((pasirinkimas == "V" || pasirinkimas == "v") && stud.back().galutinis_vid < 5.0){
+            stud_Vargsiukai.push_back(stud.back());
+            stud.pop_back();
+        }
+        else if((pasirinkimas == "M" || pasirinkimas == "m") && stud.back().galutinis_med < 5.0){
+            stud_Vargsiukai.push_back(stud.back());
+            stud.pop_back();
+        }
+        else{
+            break;
+        }
+    }
+
 }
+
 
 // Funkcija, kuri surūšiuoja studentus į dvi grupes, jei vartotojo pasirinkta duomenų struktūra yra vektorius, tai rūšiuojama pagal pirmą strategiją,
 // jei duomenų struktūra - sąrašas, tai rūšiuojama pagal 2 strategiją.
 template <typename Container>
 void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas){
-    if constexpr (is_same_v<Container, vector<Studentas>>){
-        auto it = std::stable_partition(stud.begin(), stud.end(), [&](const auto &studentas){
-            if (pasirinkimas == "V" || pasirinkimas == "v"){
-                return studentas.galutinis_vid >= 5.0;
-            }
-            return studentas.galutinis_med >= 5.0;
-        });
 
-        stud_Kietiakai.assign(stud.begin(), it);
-        stud_Vargsiukai.assign(it, stud.end());
+    std::stable_partition(stud.begin(), stud.end(), [&](const auto &studentas){
+        if (pasirinkimas == "V" || pasirinkimas == "v"){
+            return studentas.galutinis_vid >= 5.0;
+        }
+        return studentas.galutinis_med >= 5.0;
+    });
 
-    } else if constexpr (is_same_v<Container, list<Studentas>>){
-        for (auto it = stud.begin(); it != stud.end();){
-            if (pasirinkimas == "V" || pasirinkimas == "v"){
-                if ((*it).galutinis_vid < 5.0){
-                    stud_Vargsiukai.push_back(*it);
-                    it = stud.erase(it);
-                } else {
-                    ++it;
-                }
-            }
-            if (pasirinkimas == "M" || pasirinkimas == "m"){
-                if ((*it).galutinis_med < 5.0){
-                    stud_Vargsiukai.push_back(*it);
-                    it = stud.erase(it);
-                } else {
-                    ++it;
-                }
-            }
+    while(!stud.empty()){
+        if((pasirinkimas == "V" || pasirinkimas == "v") && stud.back().galutinis_vid < 5.0){
+            stud_Vargsiukai.push_back(stud.back());
+            stud.pop_back();
+        }
+        else if((pasirinkimas == "M" || pasirinkimas == "m") && stud.back().galutinis_med < 5.0){
+            stud_Vargsiukai.push_back(stud.back());
+            stud.pop_back();
+        }
+        else{
+            break;
         }
     }
 }
+
 
 // Funkcija, kuri įrašo į failą pateiktą kontainerį.
 template <typename Container>
@@ -813,6 +826,11 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
             cout << endl;
         }
 
+        // Surūšiuojami pagal vartotojo pasirinkimą, nes skaidymo metu duomenis buvo sumaišyti.
+        Studentu_rusiavimas(stud_Vargsiukai, rusiavimo_p, rez_pasirinkimas);
+        Studentu_rusiavimas(stud, rusiavimo_p, rez_pasirinkimas);
+        
+
         // Studentai įrašomi į Vargsiukai.txt failą
         Timer t2;
         FailasPgalKategorija(stud_Vargsiukai, rez_pasirinkimas, isvedimo_pasirinkimas, "Vargsiukai.txt");
@@ -835,7 +853,7 @@ void Duom_tvarkymas(Container &stud, Container &stud_Vargsiukai, Container &stud
         } else if (kategorijos_strategija == 3){
             if constexpr (is_same_v<Container, vector<Studentas>>){
                 Timer t3;
-                FailasPgalKategorija(stud_Kietiakai, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
+                FailasPgalKategorija(stud, rez_pasirinkimas, isvedimo_pasirinkimas, "Kietiakai.txt");
                 cout << "Failo iš "<< kiekis << " įrašų kietiakų įrašymas į failą laikas: " << t3.elapsed() << " s.\n";
                 cout << endl;
             } else if constexpr (is_same_v<Container, list<Studentas>>){

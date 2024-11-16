@@ -1,6 +1,6 @@
 # Studentų analizė
 
-## Programos diegimo ir paleidimo instrukcija:
+## Programos diegimo ir paleidimo instrukcija: [Butini reikalavimai pateikiami žemiau]
 
 Norint įdiegti ir paleisti programą sekite šiuos žingsnius:
 - Atsisiųskite v1.0 versiją eidami į "Releases", pasirinkite v1.0 versiją ir paspauskite ant *Source code (zip)*;
@@ -9,6 +9,11 @@ Norint įdiegti ir paleisti programą sekite šiuos žingsnius:
 - Sekite ekrane pateiktas instrukcijas arba vadovaukitės žemiau pateikta programos naudojimosi instrukcija.
 
 Jeigu visus žingsnius atlikote teisingai, tai tame pačiame aplankale turėjo susikurti naujas aplankalas pavadinimu "Release", paspaude ir užėje į aplankalą, matysite aplikacija pavadinimu "Students_analysis", kuria paspaudus du kartus galėsite testi savo darbus.
+
+### Reikalavimai:
+- Įsidiegti:
+    - "cmake-3.30.5-windows-x86_64";
+    - "msys2-x86_64-20240113".
 
 ## Kaip naudotis programa:
 
