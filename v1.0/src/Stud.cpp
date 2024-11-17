@@ -97,8 +97,8 @@ template <typename Container>
 void Info_ivedimas_ranka(Container &stud, Studentas &s, int n){
     string eil;
     string random_pasirinkimas;
-    string Vardas;
-    String Pavarde;
+    string vardas;
+    string pavarde;
 
     cout << "Kiek studentų norite įtraukti į sistemą: ";
     cin.ignore();
@@ -425,40 +425,40 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
         if(pasirinkimas == "VP" || pasirinkimas == "vp" || pasirinkimas == "Vp" || pasirinkimas == "vP"){
         // Rūšiavimas pagal vardą ir pavardę
             sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-            if(s1.vardas != s2.vardas){
-                return s1.vardas < s2.vardas;
+            if(s1.getVardas() != s2.getVardas()){
+                return s1.getVardas() < s2.getVardas();
             }
-            return s1.pavarde < s2.pavarde;
+            return s1.getPavarde() < s2.getPavarde();
             });
         } else if(pasirinkimas == "PV" || pasirinkimas == "pv" || pasirinkimas == "Pv" || pasirinkimas == "pV"){
             // Rūšiavimas pagal pavardę ir vardą
             sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2) {
-            if(s1.pavarde != s2.pavarde){
-                return s1.pavarde < s2.pavarde;
+            if(s1.getPavarde() != s2.getPavarde()){
+                return s1.getPavarde() < s2.getPavarde();
             }
-            return s1.vardas < s2.vardas;
+            return s1.getVardas() < s2.getVardas();
             });
         }
         else if(pasirinkimas == "GM" || pasirinkimas == "gm" || pasirinkimas == "Gm" || pasirinkimas == "gM"){
             // Rušiavimas pagal galutinį įvertinimą mažėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-                return s1.galutinis_vid > s2.galutinis_vid;
+                return s1.getGalutinis_vid() > s2.getGalutinis_vid();
             });
             } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-                return s1.galutinis_med > s2.galutinis_med;
+                return s1.getGalutinis_med() > s2.getGalutinis_med();
             });
             }
         } else if(pasirinkimas == "GD" || pasirinkimas == "gd" || pasirinkimas == "Gd" || pasirinkimas == "gD"){
             // Rušiavimas pagal galutinį įvertinimą didėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-                return s1.galutinis_vid < s2.galutinis_vid;
+                return s1.getGalutinis_vid() < s2.getGalutinis_vid();
             });
             } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
                 sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-                return s1.galutinis_med < s2.galutinis_med;
+                return s1.getGalutinis_med() < s2.getGalutinis_med();
             });
             }
         }
@@ -466,39 +466,39 @@ void Studentu_rusiavimas(Container &stud, string pasirinkimas, string galutinis_
         if(pasirinkimas == "VP" || pasirinkimas == "vp" || pasirinkimas == "Vp" || pasirinkimas == "vP"){
             // Rūšiavimas pagal vardą ir pavardę
             stud.sort([](const Studentas &s1, const Studentas &s2) {
-                if (s1.vardas != s2.vardas) {
-                    return s1.vardas < s2.vardas;
+                if (s1.getVardas() != s2.getVardas()) {
+                    return s1.getVardas() < s2.getVardas();
                 }
-                return s1.pavarde < s2.pavarde;
+                return s1.getPavarde() < s2.getPavarde();
             });
         } else if(pasirinkimas == "PV" || pasirinkimas == "pv" || pasirinkimas == "Pv" || pasirinkimas == "pV"){
             // Rūšiavimas pagal pavardę ir vardą
             stud.sort([](const Studentas &s1, const Studentas &s2) {
-                if (s1.pavarde != s2.pavarde) {
-                    return s1.pavarde < s2.pavarde;
+                if (s1.getPavarde() != s2.getPavarde()) {
+                    return s1.getPavarde() < s2.getPavarde();
                 }
-                return s1.vardas < s2.vardas;
+                return s1.getVardas() < s2.getVardas();
             });
         } else if(pasirinkimas == "GM" || pasirinkimas == "gm" || pasirinkimas == "Gm" || pasirinkimas == "gM"){
             // Rušiavimas pagal galutinį įvertinimą mažėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
-                    return s1.galutinis_vid > s2.galutinis_vid;
+                    return s1.getGalutinis_vid() > s2.getGalutinis_vid();
                 });
             } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
                 stud.sort([](const Studentas &s1, const Studentas &s2){
-                    return s1.galutinis_med > s2.galutinis_med;
+                    return s1.getGalutinis_med() > s2.getGalutinis_med();
                 });
             }
         } else if(pasirinkimas == "GD" || pasirinkimas == "gd" || pasirinkimas == "Gd" || pasirinkimas == "gD"){
             // Rušiavimas pagal galutinį įvertinimą didėjančiai
             if (galutinis_pasirinkimas == "V" || galutinis_pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
-                    return s1.galutinis_vid < s2.galutinis_vid;
+                    return s1.getGalutinis_vid() < s2.getGalutinis_vid();
                 });
             } else if(galutinis_pasirinkimas == "M" || galutinis_pasirinkimas == "m"){
                 stud.sort([](const Studentas &s1, const Studentas &s2){
-                    return s1.galutinis_med < s2.galutinis_med;
+                    return s1.getGalutinis_med() < s2.getGalutinis_med();
                 });
             }
         }
