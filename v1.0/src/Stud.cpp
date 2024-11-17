@@ -73,19 +73,23 @@ random_device rd_genrator;
 uniform_int_distribution<int> Ivertinimas(min_rezult, max_result);
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
-// void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
+void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
 
-//     for(int i = 0; i < nd_kiekis; i++){
+    for(int i = 0; i < nd_kiekis; i++){
 
-//         int nd_ivertinimas = Ivertinimas(rd_genrator);
-//         out << setw(5) << left << nd_ivertinimas;
-//         s.nd.push_back(nd_ivertinimas);
+        int nd_ivertinimas = Ivertinimas(rd_genrator);
+        out << setw(5) << left << nd_ivertinimas;
+        s.pridetiIvertinima(nd_ivertinimas);
+        // s.nd.push_back(nd_ivertinimas);
 
-//     }
-
-//     s.egz = Ivertinimas(rd_genrator);
-//     out << s.egz << endl;
-// }
+    }
+    double egzoIvertinimas;
+    egzoIvertinimas = Ivertinimas(rd_genrator);
+    // s.egz = Ivertinimas(rd_genrator);
+    s.setEgz(egzoIvertinimas);
+    out << egzoIvertinimas << endl;
+    // out << s.egz << endl;
+}
 
 // Funkcija, kurioje klausiama kiek studentų vartotojas norėtų įtraukti, klausiama studentų vardų bei pavardžių, 
 // klausiama koks įvertinimų įvedimas(rankinis ar generavimas) ir pagal tai įvykdoma. 
@@ -326,32 +330,38 @@ void Ivertinimas_vid(Studentas &s){
 }
 
 // Funkcija skirta galutiniam įvertinimui pagal medianą apskaičiuoti.
-// void Ivertinimas_med(Studentas &s){
-//     int nd_kiekis = s.nd.size();
+void Ivertinimas_med(Studentas &s){
+    // int nd_kiekis = s.nd.size();
+    int nd_kiekis = s.getNd().size();
 
-//     // Jei namų darbų nėra, tai galutinį įvertinimą nustatome pagal egzaminą.
-//     if (nd_kiekis == 0){
-//         s.galutinis_med = 0.6 * s.egz;
-//         return;
-//     }
+    // Jei namų darbų nėra, tai galutinį įvertinimą nustatome pagal egzaminą.
+    if (nd_kiekis == 0){
+        s.setGalutinis_med(0.6 * s.getEgz());
+        // s.galutinis_med = 0.6 * s.egz;
+        return;
+    }
     
-//     // Surušiuoname namų darbus
-//     sort(begin(s.nd), end(s.nd));
+    // Surušiuoname namų darbus
+    // sort(begin(s.nd), end(s.nd));
+    sort(begin(s.getNd()), end(s.getNd()));
 
 
-// // Medianos ieškojimas
-//     double mediana = 0;
-//     int nr = nd_kiekis / 2;
-//     if (nd_kiekis % 2 == 0){
-//         mediana = (s.nd[nr - 1] + s.nd[nr]) / 2.0;
-//     } else {
-//         mediana = s.nd[nr];
-//     }
+// Medianos ieškojimas
+    double mediana = 0;
+    int nr = nd_kiekis / 2;
+    if (nd_kiekis % 2 == 0){
+        // mediana = (s.nd[nr - 1] + s.nd[nr]) / 2.0;
+        mediana = (s.getNd()[nr - 1] + s.getNd()[nr]) / 2.0;
+    } else {
+        // mediana = s.nd[nr];
+        mediana = s.getNd()[nr];
+    }
 
-// // Ivertinimo apskaičiavimas naudojant medianą.
-//     s.galutinis_med = 0.4 * mediana + 0.6 * s.egz;
+// Ivertinimo apskaičiavimas naudojant medianą.
+    // s.galutinis_med = 0.4 * mediana + 0.6 * s.egz;
+    s.setGalutinis_med( 0.4 * mediana + 0.6 * s.getEgz());
     
-// }
+}
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą).
 void Stud_spausdinimas(Studentas &s, ostream &out, string p, string isvedimo_pasirinkimas){
