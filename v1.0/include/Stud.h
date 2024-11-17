@@ -27,22 +27,28 @@ class Studentas{
   Studentas(const string& vardas, const string& pavarde, const vector <double>& nd, double egz) : 
   vardas_(vardas), pavarde_(pavarde), nd_(nd), egz_(egz), galutinis_vid_(0), galutinis_med_(0) { }
 
-  Studentas(std::istream& is){
-    readStudent(is);
-  }
+  // Studentas(std::istream& is){
+  //   readStudent(is);
+  // }
 
   // get'eriai
-  inline string getvardas() const { return vardas_; }
-  inline string getpavarde() const { return pavarde_; }
-  inline double getegz() const {return egz_; }
-  inline vector<double> getnd() const { return nd_; }
-
+  inline string getVardas() const { return vardas_; }
+  inline string getPavarde() const { return pavarde_; }
+  inline double getEgz() const {return egz_; }
+  inline vector<double> getNd() const { return nd_; }
+  inline double getGalutinis_vid() const { return galutinis_vid_; }
+  inline double getGalutinis_med() const { return galutinis_med_; }
   
   // set'eriai
   void setVardas(const string& vardas) {vardas_ = vardas; }
   void setPavarde(const string& pavarde) {pavarde_ = pavarde; }
   void setNd(const vector<double>& nd) {nd_ = nd; }
   void setEgz(const double& egz) {egz_ = egz; }
+  void setGalutinis_vid(const double& ivertinimas){galutinis_vid_ = ivertinimas; }
+  void setGalutinis_med(const double& ivertinimas){galutinis_med_ = ivertinimas; }
+
+  void pridetiIvertinima(double ivertinimas){ nd_.push_back(ivertinimas); }
+
 
 };
 
