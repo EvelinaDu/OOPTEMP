@@ -192,6 +192,7 @@ void Duom_is_failo(Container &stud, Studentas &s){
     ifstream failasIn;   //Skirtas failo nuskaitymui
     string f_pav;        //Failo pavadinimas
     string eil;
+    string vardas, pavarde;
 
     cout << "Įveskite failo pavadinimą: ";
     while(true){
@@ -210,7 +211,9 @@ void Duom_is_failo(Container &stud, Studentas &s){
 
             while(getline(failasIn, eil)){
                 stringstream ss(eil);
-                ss >> s.vardas >> s.pavarde;
+                ss >> vardas >> pavarde;
+                s.setVardas(vardas);
+                s.setPavarde(pavarde);
 
                 int ivertinimas;
                 string netinkantis_ivertinimas;
@@ -225,7 +228,8 @@ void Duom_is_failo(Container &stud, Studentas &s){
                         if (ivertinimas < 1 || ivertinimas > 10){
                             throw out_of_range("Netinkamas įvertinimas: " + std::to_string(ivertinimas));
                         }
-                        s.nd.push_back(ivertinimas);
+                        s.pridetiIvertinima(ivertinimas);
+                        // s.nd.push_back(ivertinimas);
                     } catch(const invalid_argument &e){
                         cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
                         continue;   //einame prie kito elemento
@@ -235,9 +239,14 @@ void Duom_is_failo(Container &stud, Studentas &s){
                     }               
                 }
 
-                if(!s.nd.empty()){
-                    s.egz = s.nd.back();
-                    s.nd.pop_back();
+                // if(!s.nd.empty()){
+                //     s.egz = s.nd.back();
+                //     s.nd.pop_back();
+                // }
+
+                if(!s.getNd().empty()){
+                    s.setEgz(s.getNd().back());
+                    s.getNd().pop_back();
                 }
                 
                 stud.push_back(s);
@@ -556,10 +565,10 @@ template void SpausdinimasRez<list<Studentas>>(list<Studentas>&, int, string, st
 
 // Funkcija, skirta išvalyti studento duomenis.
 void valymas(Studentas &s){
-    s.vardas.clear();
-    s.pavarde.clear();
-    s.nd.clear();
-    s.egz = 0; 
+    // s.vardas.clear();
+    // s.pavarde.clear();
+    // s.nd.clear();
+    // s.egz = 0; 
 }
 
 // Funkcija, skirta sukurti du naujus kontainerius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.
@@ -567,14 +576,14 @@ template <typename Container>
 void Kategorijos_Priskirimas1(Container &stud, Container &stud_Vargsiukai, Container &stud_Kietiakai, string pasirinkimas){
     for (const auto& studentas : stud){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
-            if (studentas.galutinis_vid < 5.0){
+            if (studentas.getGalutinis_vid() < 5.0){
                 stud_Vargsiukai.push_back(studentas);
             } else {
                 stud_Kietiakai.push_back(studentas);
             }
         } 
         else if(pasirinkimas == "M" || pasirinkimas == "m"){
-            if (studentas.galutinis_med < 5.0){
+            if (studentas.getGalutinis_med() < 5.0){
                 stud_Vargsiukai.push_back(studentas);
             } else {
                 stud_Kietiakai.push_back(studentas);
