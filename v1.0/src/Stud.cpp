@@ -1,6 +1,8 @@
 
 #include "../include/Stud.h"
 #include "../include/timer.h"
+#include <utility>
+
 
 // Funkcija, skirta studento duomenų įvedimui rankiniu būdu.
 void Duom_ivedimas(Studentas &s){
@@ -8,6 +10,7 @@ void Duom_ivedimas(Studentas &s){
     cout << "Įveskite visus namų darbų įvertinimus. Norėdami baigti įvedimą spauskite dukart 'Enter' klavišą" << endl;
     string eil;             // Kintamasis įvesties eilutei saugoti
     int ivertinimas;
+    vector<double> namuDarbai;
 
     // While ciklas, skirtas įrašyti studento namų darbų įvertinimus. Vyksta tol kol vartotojas nuspaudžia du kart "Enter".
     while(true){
@@ -27,9 +30,10 @@ void Duom_ivedimas(Studentas &s){
                 throw out_of_range("Netinkama įvestis, įvertinimas turi būti nuo 1 iki 10. ");
             }
 
-            s.pridetiIvertinima(ivertinimas);
+            // s.pridetiIvertinima(ivertinimas);
             // s.setNd.push_back(ivertinimas);
             // s.nd.push_back(ivertinimas);
+            namuDarbai.push_back(ivertinimas);
 
         } catch (const invalid_argument &e){
             cout << "Klaida: " << e.what() << "Bandykite dar kartą." << endl;
@@ -74,12 +78,14 @@ uniform_int_distribution<int> Ivertinimas(min_rezult, max_result);
 
 // Funkcija, kuri generuoja studento namų darbų ir egzamino įvertinimus.
 void Duom_generavimas(Studentas &s, ostream &out ,int nd_kiekis){
-
+    vector<double> namuDarbai;
     for(int i = 0; i < nd_kiekis; i++){
 
         int nd_ivertinimas = Ivertinimas(rd_genrator);
         out << setw(5) << left << nd_ivertinimas;
-        s.pridetiIvertinima(nd_ivertinimas);
+        // s.pridetiIvertinima(nd_ivertinimas);
+        namuDarbai.push_back(nd_ivertinimas);
+
         // s.nd.push_back(nd_ivertinimas);
 
     }
@@ -188,11 +194,12 @@ template void Info_ivedimas_ranka<list<Studentas>>(list<Studentas>&, Studentas&,
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 template <typename Container>
-void Duom_is_failo(Container &stud, Studentas &s){
+void Duom_is_failo(Container &stud){
     ifstream failasIn;   //Skirtas failo nuskaitymui
     string f_pav;        //Failo pavadinimas
     string eil;
-    string vardas, pavarde;
+    // string vardas, pavarde;
+    // vector<double> namuDarbai;
 
     cout << "Įveskite failo pavadinimą: ";
     while(true){
@@ -211,12 +218,17 @@ void Duom_is_failo(Container &stud, Studentas &s){
 
             while(getline(failasIn, eil)){
                 stringstream ss(eil);
+                Studentas s;
+                string vardas, pavarde;
                 ss >> vardas >> pavarde;
                 s.setVardas(vardas);
                 s.setPavarde(pavarde);
 
+                vector<double> namuDarbai;
+
                 int ivertinimas;
                 string netinkantis_ivertinimas;
+
                 while(true){
                     try{
                         if(!(ss >> ivertinimas)){
@@ -228,14 +240,15 @@ void Duom_is_failo(Container &stud, Studentas &s){
                         if (ivertinimas < 1 || ivertinimas > 10){
                             throw out_of_range("Netinkamas įvertinimas: " + std::to_string(ivertinimas));
                         }
-                        s.pridetiIvertinima(ivertinimas);
+                        // s.pridetiIvertinima(ivertinimas);
+                        namuDarbai.push_back(ivertinimas);
                         // s.nd.push_back(ivertinimas);
                     } catch(const invalid_argument &e){
                         cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
-                        continue;   //einame prie kito elemento
+                        // continue;   //einame prie kito elemento
                     } catch(const out_of_range &e){
                         cout << "Klaida: " << e.what() << ". Šis įvertinimas bus praleistas." << endl;
-                        continue;   //einame prie kito elemento
+                        // continue;   //einame prie kito elemento
                     }               
                 }
 
@@ -244,13 +257,24 @@ void Duom_is_failo(Container &stud, Studentas &s){
                 //     s.nd.pop_back();
                 // }
 
-                if(!s.getNd().empty()){
-                    s.setEgz(s.getNd().back());
-                    s.getNd().pop_back();
-                }
+                // if(!s.getNd().empty()){
+                //     s.setEgz(s.getNd().back());
+                //     s.getNd().pop_back();
+                // }
                 
-                stud.push_back(s);
-                valymas(s);
+                // stud.push_back(s);
+                // valymas(s);
+
+                if(!namuDarbai.empty()){
+                    s.setEgz(namuDarbai.back());
+                    namuDarbai.pop_back();
+                    s.setNd(std::move(namuDarbai));
+                    
+                    // s = Studentas();
+                    // valymas(s);  
+                }
+                stud.push_back(std::move(s));
+                // valymas(s);
             }
             cout << endl;
             cout << "Failas sėkmingai perskaitytas. Studentų kiekis: " << stud.size() << endl; 
@@ -265,8 +289,8 @@ void Duom_is_failo(Container &stud, Studentas &s){
     failasIn.close();
 }
 
-template void Duom_is_failo<vector<Studentas>>(vector<Studentas>&, Studentas& s);
-template void Duom_is_failo<list<Studentas>>(list<Studentas>&, Studentas& s);
+template void Duom_is_failo<vector<Studentas>>(vector<Studentas>&);
+template void Duom_is_failo<list<Studentas>>(list<Studentas>&);
 
 
 // Funkcija skirta failo generavimui pagal įrašų kiekį.
@@ -572,6 +596,10 @@ void valymas(Studentas &s){
     // s.pavarde.clear();
     // s.nd.clear();
     // s.egz = 0; 
+    // s.getVardas().clear();
+    // s.getPavarde().clear();
+    // s.getNd().clear();
+    
 }
 
 // Funkcija, skirta sukurti du naujus kontainerius vargšiukams ir kietiakams, taip studentai yra surūšiuojami į dvi grupes.

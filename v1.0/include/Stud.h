@@ -31,6 +31,13 @@ class Studentas{
   //   readStudent(is);
   // }
 
+  // set'eriai
+  void setVardas(const string& vardas) {vardas_ = vardas; }
+  void setPavarde(const string& pavarde) {pavarde_ = pavarde; }
+  void setNd(const vector<double>& nd) {nd_ = nd; }
+  void setEgz(const double& egz) {egz_ = egz; }
+  void setGalutinis_vid(const double& ivertinimas){galutinis_vid_ = ivertinimas; }
+  void setGalutinis_med(const double& ivertinimas){galutinis_med_ = ivertinimas; }
 
   // get'eriai
   inline string getVardas() const { return vardas_; }
@@ -40,20 +47,17 @@ class Studentas{
   inline double getGalutinis_vid() const { return galutinis_vid_; }
   inline double getGalutinis_med() const { return galutinis_med_; }
   
-  // set'eriai
-  void setVardas(const string& vardas) {vardas_ = vardas; }
-  void setPavarde(const string& pavarde) {pavarde_ = pavarde; }
-  void setNd(const vector<double>& nd) {nd_ = nd; }
-  void setEgz(const double& egz) {egz_ = egz; }
-  void setGalutinis_vid(const double& ivertinimas){galutinis_vid_ = ivertinimas; }
-  void setGalutinis_med(const double& ivertinimas){galutinis_med_ = ivertinimas; }
 
-  void pridetiIvertinima(double ivertinimas){ nd_.push_back(ivertinimas); }
+
+  // void pridetiIvertinima(double ivertinimas){ nd_.push_back(ivertinimas); }
 
   
   void Ivertinimas_vid();
   void Ivertinimas_med();
 
+
+  // ~Studentas() = default;
+  ~Studentas(){};
 };
 
 // Funkcija, skirta studento duomenų įvedimui rankiniu būdu.
@@ -69,7 +73,7 @@ void Info_ivedimas_ranka(Container &stud, Studentas &s, int n);
 
 // Funkcija skirta nuskaityti studento įvertinimus iš failo.
 template <typename Container>
-void Duom_is_failo(Container &stud, Studentas &s);
+void Duom_is_failo(Container &stud);
 
 // Funkcija skirta failo generavimui pagal įrašų kiekį.
 void Stud_failu_generavimas(int kiekis);

@@ -26,7 +26,7 @@ int main() {
         vector<int> kiekis; 
 
         if(ivedimo_skaitymo_p == "N" || ivedimo_skaitymo_p == "n"){
-            Duom_is_failo(stud, s);
+            Duom_is_failo(stud);
         }
         else if(ivedimo_skaitymo_p == "I" || ivedimo_skaitymo_p == "i"){
             Info_ivedimas_ranka(stud, s, n);
@@ -49,7 +49,7 @@ int main() {
             rez_pasirinkimas = pasirinkimas_del_galutinio();
             rusiavimo_p = pasirinkimas_del_rusiavimo();
 
-            Duom_is_failo(stud, s);
+            Duom_is_failo(stud);
 
             n = stud.size();
             Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, skaidymo_strategija, n);
@@ -71,7 +71,7 @@ int main() {
         list<int> kiekis;
 
         if(ivedimo_skaitymo_p == "N" || ivedimo_skaitymo_p == "n"){
-            Duom_is_failo(stud, s);
+            Duom_is_failo(stud);
         }
         else if(ivedimo_skaitymo_p == "I" || ivedimo_skaitymo_p == "i"){
             Info_ivedimas_ranka(stud, s, n);
@@ -96,7 +96,7 @@ int main() {
             rez_pasirinkimas = pasirinkimas_del_galutinio();
             rusiavimo_p = pasirinkimas_del_rusiavimo();
 
-            Duom_is_failo(stud, s);
+            Duom_is_failo(stud);
 
             n = stud.size();
             Duom_tvarkymas(stud, stud_Vargsiukai, stud_Kietiakai, rez_pasirinkimas, rusiavimo_p, isvedimo_pasirinkimas, ivedimo_skaitymo_p, skaidymo_strategija, n);
