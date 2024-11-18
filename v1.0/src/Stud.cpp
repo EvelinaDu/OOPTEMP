@@ -331,7 +331,6 @@ void Stud_failu_generavimas(int kiekis){
     else{
         cout << "ERROR! Nepavyko atidaryti " << pav << " failo" << endl;
     }
-
 }
 
 
