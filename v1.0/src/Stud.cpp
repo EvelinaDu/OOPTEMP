@@ -312,47 +312,45 @@ void Stud_failu_generavimas(int kiekis){
 
 
 // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
-void Ivertinimas_vid(Studentas &s){
+void Studentas :: Ivertinimas_vid(){
     double suma = 0;
     // int nd_kiekis = s.nd.size();   // Gauname namų darbų kiekį.
-    int nd_kiekis = s.getNd().size();
+    int nd_kiekis = nd_.size();
 
     // Pridedame kiekievieną namų darbų įvertinimą prie bendros sumos.
     for (int j = 0; j < nd_kiekis; j++){
         //  suma += s.nd[j];
-         suma += s.getNd()[j];
+         suma += nd_[j];
     }
 
     double ivertinimas;
     // Jei yra bent vienas namų darbas, skaičiuojame galutinį įvertinimą pagal vidurkį.
     if (nd_kiekis > 0 ){
         // s.galutinis_vid = 0.4 * suma/nd_kiekis + 0.6 * s.egz;
-        ivertinimas = 0.4 * suma/nd_kiekis + 0.6 * s.getEgz();
-        s.setGalutinis_vid(ivertinimas);
+        galutinis_vid_ = 0.4 * suma/nd_kiekis + 0.6 * egz_;
     } else {
         // s.galutinis_vid = 0.6 * s.egz;
-        ivertinimas =  0.6 * s.getEgz();
-        s.setGalutinis_vid(ivertinimas);
+        galutinis_vid_ =  0.6 * egz_;
     }
 
 
 }
 
 // Funkcija skirta galutiniam įvertinimui pagal medianą apskaičiuoti.
-void Ivertinimas_med(Studentas &s){
+void Studentas :: Ivertinimas_med(){
     // int nd_kiekis = s.nd.size();
-    int nd_kiekis = s.getNd().size();
+    int nd_kiekis = nd_.size();
 
     // Jei namų darbų nėra, tai galutinį įvertinimą nustatome pagal egzaminą.
     if (nd_kiekis == 0){
-        s.setGalutinis_med(0.6 * s.getEgz());
+        galutinis_med_ = 0.6 * egz_;
         // s.galutinis_med = 0.6 * s.egz;
         return;
     }
     
     // Surušiuoname namų darbus
     // sort(begin(s.nd), end(s.nd));
-    sort(begin(s.getNd()), end(s.getNd()));
+    sort(begin(nd_), end(nd_));
 
 
 // Medianos ieškojimas
@@ -360,15 +358,15 @@ void Ivertinimas_med(Studentas &s){
     int nr = nd_kiekis / 2;
     if (nd_kiekis % 2 == 0){
         // mediana = (s.nd[nr - 1] + s.nd[nr]) / 2.0;
-        mediana = (s.getNd()[nr - 1] + s.getNd()[nr]) / 2.0;
+        mediana = (nd_[nr - 1] + nd_[nr]) / 2.0;
     } else {
         // mediana = s.nd[nr];
-        mediana = s.getNd()[nr];
+        mediana = nd_[nr];
     }
 
 // Ivertinimo apskaičiavimas naudojant medianą.
     // s.galutinis_med = 0.4 * mediana + 0.6 * s.egz;
-    s.setGalutinis_med( 0.4 * mediana + 0.6 * s.getEgz());
+    galutinis_med_ = 0.4 * mediana + 0.6 * egz_;
     
 }
 
@@ -521,11 +519,16 @@ void SpausdinimasRez(Container &stud, int n, string isvedimo_pasirinkimas, strin
     ofstream failasOut;
 
     // Kiekvienam studentui apskaičiuojamas įvertinimas pagal vidurkį ir medianą
-    auto i = stud.begin();          // i - iteratorius, nurodantis į pirmąjį studentą
-    while(i != stud.end()){
-        Ivertinimas_vid(*i);        // *i - studentas, į kuri rodo iteratorius
-        Ivertinimas_med(*i);
-        ++i;
+    // auto i = stud.begin();          // i - iteratorius, nurodantis į pirmąjį studentą
+    // while(i != stud.end()){
+    //     Ivertinimas_vid(*i);        // *i - studentas, į kuri rodo iteratorius
+    //     Ivertinimas_med(*i);
+    //     ++i;
+    // }
+
+    for(auto& studentas : stud){
+        studentas.Ivertinimas_vid();
+        studentas.Ivertinimas_med();
     }
 
     //Rusiavimas
@@ -600,33 +603,33 @@ void Kategorijos_Priskirimas2(Container &stud, Container &stud_Vargsiukai, strin
     if constexpr (is_same_v<Container, vector<Studentas>>){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
             sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-            return s1.galutinis_vid > s2.galutinis_vid;
+            return s1.getGalutinis_vid() > s2.getGalutinis_vid();
             });
         } else if(pasirinkimas == "M" || pasirinkimas == "m"){
             sort(begin(stud), end(stud), [](const Studentas &s1, const Studentas &s2){
-            return s1.galutinis_med > s2.galutinis_med;
+            return s1.getGalutinis_med() > s2.getGalutinis_med();
             });
         }
     }      
     else if (is_same_v<Container, list<Studentas>>){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
                 stud.sort([](const Studentas &s1, const Studentas &s2) {
-                    return s1.galutinis_vid > s2.galutinis_vid;
+                    return s1.getGalutinis_vid() > s2.getGalutinis_vid();
                 });
         } else if(pasirinkimas == "M" || pasirinkimas == "m"){
             stud.sort([](const Studentas &s1, const Studentas &s2){
-                return s1.galutinis_med > s2.galutinis_med;
+                return s1.getGalutinis_med() > s2.getGalutinis_med();
             });
         }
         
     }
 
     while(!stud.empty()){
-        if((pasirinkimas == "V" || pasirinkimas == "v") && stud.back().galutinis_vid < 5.0){
+        if((pasirinkimas == "V" || pasirinkimas == "v") && stud.back().getGalutinis_vid() < 5.0){
             stud_Vargsiukai.push_back(stud.back());
             stud.pop_back();
         }
-        else if((pasirinkimas == "M" || pasirinkimas == "m") && stud.back().galutinis_med < 5.0){
+        else if((pasirinkimas == "M" || pasirinkimas == "m") && stud.back().getGalutinis_med() < 5.0){
             stud_Vargsiukai.push_back(stud.back());
             stud.pop_back();
         }
@@ -645,17 +648,17 @@ void Kategorijos_Priskirimas3(Container &stud, Container &stud_Vargsiukai, Conta
 
     std::stable_partition(stud.begin(), stud.end(), [&](const auto &studentas){
         if (pasirinkimas == "V" || pasirinkimas == "v"){
-            return studentas.galutinis_vid >= 5.0;
+            return studentas.getGalutinis_vid() >= 5.0;
         }
-        return studentas.galutinis_med >= 5.0;
+        return studentas.getGalutinis_med() >= 5.0;
     });
 
     while(!stud.empty()){
-        if((pasirinkimas == "V" || pasirinkimas == "v") && stud.back().galutinis_vid < 5.0){
+        if((pasirinkimas == "V" || pasirinkimas == "v") && stud.back().getGalutinis_vid() < 5.0){
             stud_Vargsiukai.push_back(stud.back());
             stud.pop_back();
         }
-        else if((pasirinkimas == "M" || pasirinkimas == "m") && stud.back().galutinis_med < 5.0){
+        else if((pasirinkimas == "M" || pasirinkimas == "m") && stud.back().getGalutinis_med() < 5.0){
             stud_Vargsiukai.push_back(stud.back());
             stud.pop_back();
         }

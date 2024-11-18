@@ -31,6 +31,7 @@ class Studentas{
   //   readStudent(is);
   // }
 
+
   // get'eriai
   inline string getVardas() const { return vardas_; }
   inline string getPavarde() const { return pavarde_; }
@@ -49,6 +50,9 @@ class Studentas{
 
   void pridetiIvertinima(double ivertinimas){ nd_.push_back(ivertinimas); }
 
+  
+  void Ivertinimas_vid();
+  void Ivertinimas_med();
 
 };
 
@@ -70,11 +74,11 @@ void Duom_is_failo(Container &stud, Studentas &s);
 // Funkcija skirta failo generavimui pagal įrašų kiekį.
 void Stud_failu_generavimas(int kiekis);
 
-// Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
-void Ivertinimas_vid(Studentas &s);
+// // Funkcija skirta galutiniam įvertinimui pagal vidurkį apskaičiuoti.
+// void Ivertinimas_vid(Studentas &s);
 
-// Funkcija skirta galutiniam įvertinimui pagal medianą apskaičiuoti.
-void Ivertinimas_med(Studentas &s);
+// // Funkcija skirta galutiniam įvertinimui pagal medianą apskaičiuoti.
+// void Ivertinimas_med(Studentas &s);
 
 // Funkcija, kuri skirta atspausdinti studento duomenis pagal vartotojo įvertinimo pasirinkimą (pagal vidurkį, medianą).
 void Stud_spausdinimas(Studentas &s, ostream &out, string p, string isvedimo_pasirinkimas);
